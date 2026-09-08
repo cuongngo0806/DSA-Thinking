@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="vi" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Bàn DSA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   LA BÀN DSA — self-contained, bilingual (VI/EN).
+   Relation colors: Identity=sky, Order=brass/amber, Dependency=verdigris,
+   Traverse=pearl. Consistent everywhere.
+   ============================================================ */
+:root{
+  --ink-0:#0a1420;--ink-1:#0d1b2a;--ink-2:#122438;--ink-3:#18314a;
+  --line:#22405f;--line-soft:#1a3149;
+  --pearl:#eef3f7;--pearl-dim:#c3d0dc;--muted:#8ba0b4;--muted-2:#6e8397;
+  --brass:#d4af6a;--brass-deep:#b8923f;--brass-glow:rgba(212,175,106,.16);
+  --identity:#63b0e6;--identity-bg:rgba(99,176,230,.12);--identity-line:rgba(99,176,230,.42);
+  --order:#e0a94a;--order-bg:rgba(224,169,74,.12);--order-line:rgba(224,169,74,.42);
+  --dependency:#4ec9b0;--dependency-bg:rgba(78,201,176,.12);--dependency-line:rgba(78,201,176,.42);
+  --traverse:#e9e2d4;--traverse-bg:rgba(233,226,212,.10);--traverse-line:rgba(233,226,212,.40);
+  --bg:var(--ink-1);--surface:var(--ink-2);--surface-2:var(--ink-3);
+  --text:var(--pearl);--text-dim:var(--pearl-dim);--border:var(--line);
+  --shadow:0 18px 50px -24px rgba(0,0,0,.75);--radius:14px;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --maxw:1080px;
+}
+:root[data-theme="light"]{
+  --ink-1:#f3efe6;--bg:#f4f0e7;--surface:#fbf8f1;--surface-2:#efe9db;
+  --line:#d8cdb6;--line-soft:#e4dcc9;--border:#d8cdb6;
+  --text:#1c2b3a;--text-dim:#33475b;--muted:#5f7183;--muted-2:#7d8ea0;
+  --pearl:#1c2b3a;--pearl-dim:#33475b;
+  --brass:#a97e28;--brass-deep:#8a6717;--brass-glow:rgba(169,126,40,.14);
+  --identity:#1f79bd;--identity-bg:rgba(31,121,189,.10);--identity-line:rgba(31,121,189,.5);
+  --order:#a9761a;--order-bg:rgba(169,118,26,.12);--order-line:rgba(169,118,26,.5);
+  --dependency:#1f8f78;--dependency-bg:rgba(31,143,120,.12);--dependency-line:rgba(31,143,120,.5);
+  --traverse:#5a5142;--traverse-bg:rgba(90,81,66,.08);--traverse-line:rgba(90,81,66,.4);
+  --shadow:0 16px 40px -26px rgba(40,30,10,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(1200px 600px at 78% -10%, var(--brass-glow), transparent 60%),
+    radial-gradient(900px 500px at 0% 100%, rgba(78,201,176,.06), transparent 55%);
+  background-attachment:fixed;}
+:root[data-theme="light"] body{background-image:radial-gradient(1100px 560px at 80% -12%, rgba(169,126,40,.10), transparent 60%);}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:500;letter-spacing:.2px}
+a{color:var(--brass);text-underline-offset:3px}
+code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.9em;background:var(--surface-2);padding:1px 5px;border-radius:5px}
+::selection{background:var(--brass);color:var(--ink-0)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:6px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+
+header.nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
+  background:color-mix(in srgb, var(--bg) 82%, transparent);border-bottom:1px solid var(--line-soft);}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-size:19px;color:var(--text);white-space:nowrap}
+.brand .dot{width:26px;height:26px;flex:0 0 auto}
+.nav-links{display:flex;gap:2px;overflow-x:auto;flex:1;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;padding:7px 11px;border-radius:9px;
+  white-space:nowrap;transition:color .18s,background .18s}
+.nav-links a:hover{color:var(--text);background:var(--surface)}
+.nav-links a.active{color:var(--brass);background:var(--brass-glow)}
+.icon-btn{flex:0 0 auto;background:var(--surface);border:1px solid var(--line);color:var(--text-dim);height:38px;
+  border-radius:10px;cursor:pointer;font-size:15px;display:grid;place-items:center;transition:border-color .18s,color .18s;font-family:var(--sans)}
+.theme-btn{width:38px}
+.lang-btn{padding:0 12px;font-weight:700;font-size:13px;letter-spacing:.5px}
+.icon-btn:hover{border-color:var(--brass);color:var(--brass)}
+
+.hero{position:relative;padding:64px 0 46px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.eyebrow{color:var(--brass);font-weight:600;font-size:13.5px;letter-spacing:.5px;margin:0 0 14px}
+.hero h1{font-size:clamp(34px,5.2vw,54px);line-height:1.06;margin:0 0 22px;font-weight:600}
+.hero h1 em{font-style:italic;color:var(--brass)}
+.aphorism{font-family:var(--serif);font-size:clamp(17px,2.1vw,21px);line-height:1.5;font-style:italic;color:var(--text-dim);
+  border-left:2px solid var(--brass);padding:2px 0 2px 20px;margin:0 0 26px;max-width:52ch}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;border-radius:11px;padding:12px 20px;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;border:1px solid transparent;transition:transform .12s,background .18s,border-color .18s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--brass);color:var(--ink-0);border-color:var(--brass)}
+.btn-primary:hover{background:var(--brass-deep)}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--brass);color:var(--brass)}
+.compass-holder{display:grid;place-items:center}
+.compass{width:min(340px,80vw);height:auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,.4))}
+
+section.block{padding:52px 0;border-top:1px solid var(--line-soft)}
+.sec-head{margin:0 0 8px;font-size:clamp(24px,3.4vw,32px);font-weight:600}
+.sec-head .sub-label{font-size:14px;color:var(--muted-2);font-family:var(--sans);font-weight:400}
+.sec-sub{color:var(--muted);max-width:62ch;margin:0 0 30px;font-size:15.5px}
+
+.qstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:38px}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 16px;position:relative}
+.qcard .qn{font-family:var(--serif);font-size:26px;color:var(--muted-2);line-height:1;margin-bottom:10px}
+.qcard p{margin:0;font-size:14.5px;color:var(--text-dim)}
+.qcard.upstream{border-color:var(--brass);background:linear-gradient(180deg,var(--brass-glow),transparent)}
+.qcard.upstream .qn{color:var(--brass)}
+.qcard.upstream .tag{position:absolute;top:-10px;left:16px;background:var(--brass);color:var(--ink-0);font-size:11px;font-weight:700;
+  padding:2px 9px;border-radius:20px;letter-spacing:.4px}
+
+.ladder-layout{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:26px;align-items:start}
+.ladder{position:relative;padding-left:26px}
+.ladder::before{content:"";position:absolute;left:9px;top:14px;bottom:14px;width:2px;
+  background:linear-gradient(var(--identity-line),var(--order-line),var(--dependency-line),var(--traverse-line))}
+.rung{position:relative;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:13px 15px;margin-bottom:11px;cursor:pointer;color:var(--text);font-family:var(--sans);
+  transition:border-color .18s,transform .12s,background .18s;display:block}
+.rung:hover{transform:translateX(3px)}
+.rung::before{content:"";position:absolute;left:-21px;top:19px;width:12px;height:12px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--rc,var(--muted))}
+.rung[data-rel=identity]{--rc:var(--identity)} .rung[data-rel=order]{--rc:var(--order)}
+.rung[data-rel=dependency]{--rc:var(--dependency)} .rung[data-rel=traverse]{--rc:var(--traverse)}
+.rung.active{border-color:var(--rc);background:linear-gradient(100deg,color-mix(in srgb,var(--rc) 10%,var(--surface)),var(--surface))}
+.rung.active::before{background:var(--rc);box-shadow:0 0 0 4px color-mix(in srgb,var(--rc) 25%,transparent)}
+.rung .r-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.rung .r-name{font-weight:600;font-size:16px}
+.rung .r-verb{font-size:12.5px;color:var(--rc,var(--muted));font-weight:600;white-space:nowrap}
+.rung .r-cost{font-size:12px;color:var(--muted-2);margin-top:3px}
+.rung .r-cheap{color:var(--dependency);font-weight:600}
+.detail{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);position:sticky;top:78px}
+.detail .d-rel{margin-bottom:14px}
+.detail h3{margin:0 0 4px;font-size:24px;font-weight:600}
+.detail .d-verb{color:var(--muted);font-size:14px;margin:0 0 18px}
+.detail .d-field{margin-bottom:16px}
+.detail .d-label{font-size:12px;font-weight:700;letter-spacing:.6px;color:var(--brass);text-transform:uppercase;margin-bottom:5px}
+.detail .d-field p{margin:0;color:var(--text-dim);font-size:15px}
+.detail .d-trigger{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--text)}
+
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.3px}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.pill.identity{color:var(--identity);background:var(--identity-bg)}
+.pill.order{color:var(--order);background:var(--order-bg)}
+.pill.dependency{color:var(--dependency);background:var(--dependency-bg)}
+.pill.traverse{color:var(--traverse);background:var(--traverse-bg)}
+
+.filterbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+.chip{background:var(--surface);border:1px solid var(--line);color:var(--text-dim);padding:7px 14px;border-radius:22px;cursor:pointer;
+  font-size:13.5px;font-weight:500;font-family:var(--sans);transition:border-color .16s,color .16s}
+.chip:hover{color:var(--text)}
+.chip.on{border-color:var(--brass);color:var(--brass);background:var(--brass-glow)}
+.chip.on[data-rel=identity]{border-color:var(--identity);color:var(--identity);background:var(--identity-bg)}
+.chip.on[data-rel=order]{border-color:var(--order);color:var(--order);background:var(--order-bg)}
+.chip.on[data-rel=dependency]{border-color:var(--dependency);color:var(--dependency);background:var(--dependency-bg)}
+.chip.on[data-rel=traverse]{border-color:var(--traverse);color:var(--traverse);background:var(--traverse-bg)}
+.dict-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:15px}
+.dcard{background:var(--surface);border:1px solid color-mix(in srgb,var(--rc,var(--line)) 34%,var(--line));border-radius:12px;padding:17px 18px;position:relative}
+.dcard[data-rel=identity]{--rc:var(--identity)} .dcard[data-rel=order]{--rc:var(--order)}
+.dcard[data-rel=dependency]{--rc:var(--dependency)} .dcard[data-rel=traverse]{--rc:var(--traverse)}
+.dcard .signal{font-size:15.5px;font-weight:500;margin-bottom:8px;color:var(--text)}
+.dcard .arrow{color:var(--rc,var(--brass));font-weight:600}
+.dcard .tool{font-family:var(--serif);font-size:17px;color:var(--rc,var(--brass));margin-bottom:9px;font-weight:600}
+.dcard .why{font-size:13.6px;color:var(--muted);line-height:1.5}
+.dcard .why b{color:var(--text-dim);font-weight:600}
+.dcard .foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:8px}
+.dcard .mine{font-size:11px;font-weight:700;color:var(--brass);letter-spacing:.4px}
+.del{background:none;border:1px solid var(--line);color:var(--muted-2);border-radius:8px;cursor:pointer;font-size:12px;padding:3px 9px;font-family:var(--sans)}
+.del:hover{border-color:#c0554b;color:#e0776c}
+
+.formcard{background:var(--surface);border:1px dashed var(--line);border-radius:var(--radius);padding:20px;margin-bottom:22px}
+.field{margin-bottom:13px}
+label.lbl{display:block;font-size:12.5px;font-weight:600;color:var(--text-dim);margin-bottom:5px}
+input.inp,select.inp,textarea.inp{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:10px;
+  padding:10px 12px;font-family:var(--sans);font-size:14.5px}
+textarea.inp{resize:vertical;min-height:64px;line-height:1.5}
+input.inp:focus,select.inp:focus,textarea.inp:focus{border-color:var(--brass);outline:none}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.guide-stage{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
+.guide-crumbs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;min-height:24px}
+.crumb{font-size:12px;color:var(--muted-2);background:var(--bg);border:1px solid var(--line-soft);padding:3px 9px;border-radius:20px}
+.crumb::after{content:"›";margin-left:7px;color:var(--muted-2)}
+.crumb:last-child::after{content:""}
+.guide-q{font-family:var(--serif);font-size:clamp(20px,2.6vw,26px);line-height:1.35;margin:0 0 22px;font-weight:500}
+.guide-opts{display:grid;gap:11px}
+.opt{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:15px 17px;cursor:pointer;text-align:left;
+  font-family:var(--sans);color:var(--text);font-size:15.5px;transition:border-color .16s,transform .12s;display:flex;gap:11px;align-items:center}
+.opt:hover{border-color:var(--brass);transform:translateX(3px)}
+.opt .oi{color:var(--brass);font-size:18px}
+.guide-verdict{border-radius:12px;padding:22px;border:1px solid var(--rc,var(--brass));background:color-mix(in srgb,var(--rc,var(--brass)) 8%,var(--surface))}
+.guide-verdict[data-rel=identity]{--rc:var(--identity)} .guide-verdict[data-rel=order]{--rc:var(--order)}
+.guide-verdict[data-rel=dependency]{--rc:var(--dependency)} .guide-verdict[data-rel=traverse]{--rc:var(--traverse)}
+.guide-verdict .hyp{font-size:11.5px;font-weight:800;letter-spacing:.6px;color:var(--rc,var(--brass));margin-bottom:9px}
+.guide-verdict h4{font-family:var(--serif);font-size:23px;margin:0 0 10px;font-weight:600;color:var(--text)}
+.guide-verdict p{margin:0 0 12px;color:var(--text-dim);font-size:15px}
+.guide-verdict .verify{font-family:var(--serif);font-style:italic;font-size:16.5px;color:var(--text);border-top:1px solid var(--line);padding-top:14px}
+.guide-back{margin-top:18px;display:flex;gap:10px}
+
+.tutor-layout{display:grid;grid-template-columns:290px 1fr;gap:22px;align-items:start}
+.settings{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.settings h3{font-size:17px;margin:0 0 4px}
+.status{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;margin:8px 0 14px;padding:4px 11px;border-radius:20px;
+  background:var(--bg);border:1px solid var(--line);color:var(--muted)}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--muted-2)}
+.status.ok{color:var(--dependency)} .status.ok::before{background:var(--dependency);box-shadow:0 0 0 3px rgba(78,201,176,.25)}
+.status.err{color:#e0776c} .status.err::before{background:#e0776c}
+.status.wait{color:var(--order)} .status.wait::before{background:var(--order);animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.chat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);display:flex;flex-direction:column;min-height:460px;max-height:640px}
+.chat-log{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px}
+.msg{max-width:82%;padding:12px 15px;border-radius:14px;font-size:15px;line-height:1.55;white-space:pre-wrap}
+.msg.user{align-self:flex-end;background:var(--brass);color:var(--ink-0);border-bottom-right-radius:4px}
+.msg.bot{align-self:flex-start;background:var(--bg);border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.bot b,.msg.bot strong{color:var(--brass)}
+.msg.sys{align-self:center;font-size:13px;color:var(--muted-2);font-style:italic;text-align:center;max-width:90%}
+.suggests{display:flex;gap:8px;flex-wrap:wrap;padding:0 20px 12px}
+.suggests .chip{font-size:12.5px;padding:6px 12px}
+.chat-input{display:flex;gap:9px;padding:14px;border-top:1px solid var(--line)}
+.chat-input textarea{flex:1;background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:11px;padding:11px 13px;
+  font-family:var(--sans);font-size:14.5px;resize:none;min-height:44px;max-height:120px;line-height:1.5}
+.chat-input textarea:focus{border-color:var(--brass);outline:none}
+.send-btn{background:var(--brass);color:var(--ink-0);border:none;border-radius:11px;width:46px;cursor:pointer;font-size:18px;flex:0 0 auto}
+.send-btn:disabled{opacity:.5;cursor:not-allowed}
+.hint-note{font-size:12.5px;color:var(--muted-2);margin-top:12px;line-height:1.5}
+
+.practice-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow);max-width:640px}
+.practice-signal{font-family:var(--serif);font-size:clamp(19px,2.4vw,24px);line-height:1.4;margin:0 0 6px;font-weight:500}
+.practice-sub{color:var(--muted);font-size:14px;margin:0 0 20px}
+.reveal{border-top:1px solid var(--line);margin-top:20px;padding-top:18px}
+.reveal .tool{font-family:var(--serif);font-size:20px;color:var(--rc,var(--brass));font-weight:600;margin-bottom:6px}
+.reveal .why{color:var(--text-dim);font-size:14.5px}
+
+.log-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.log-item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 17px;display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.log-item .lp{font-weight:600;margin-bottom:4px}
+.log-item .lt{color:var(--dependency);font-size:14px}
+.log-item .ld{font-size:11.5px;color:var(--muted-2);margin-top:6px}
+.empty{color:var(--muted-2);font-style:italic;padding:20px 0;font-size:14.5px}
+
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.note{border-left:2px solid var(--brass);padding-left:18px}
+.note h4{font-family:var(--serif);font-size:19px;margin:0 0 8px;font-weight:600}
+.note p{margin:0;color:var(--text-dim);font-size:14.6px;line-height:1.6}
+
+footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--muted-2);font-size:13.5px;text-align:center}
+
+@media (prefers-reduced-motion:no-preference){
+  .needle-anim{animation:settle 2.2s cubic-bezier(.2,.8,.2,1) forwards;transform-origin:150px 150px}
+}
+@keyframes settle{0%{transform:rotate(-520deg)}70%{transform:rotate(18deg)}85%{transform:rotate(-9deg)}100%{transform:rotate(0deg)}}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:26px}
+  .compass-holder{order:-1}
+  .ladder-layout{grid-template-columns:1fr}
+  .detail{position:static}
+  .tutor-layout{grid-template-columns:1fr}
+  .qstrip{grid-template-columns:1fr 1fr}
+}
+@media (max-width:560px){.qstrip{grid-template-columns:1fr}.row2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg class="dot" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="var(--brass)" stroke-width="4"/><path d="M50 12 L60 50 L50 88 L40 50 Z" fill="var(--brass)"/><circle cx="50" cy="50" r="6" fill="var(--ink-0)" stroke="var(--brass)" stroke-width="3"/></svg>
+      <span data-i18n="brand">La Bàn DSA</span>
+    </div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#ban-do" data-i18n="nav_map">Bản đồ tư duy</a>
+      <a href="#tu-dien" data-i18n="nav_dict">Từ điển tín hiệu</a>
+      <a href="#dan-loi" data-i18n="nav_guide">Dẫn lối</a>
+      <a href="#la-ban-song" data-i18n="nav_living">La bàn sống</a>
+      <a href="#luyen-tap" data-i18n="nav_drill">Luyện nén</a>
+      <a href="#nhat-ky" data-i18n="nav_log">Nhật ký</a>
+      <a href="#ghi-chu" data-i18n="nav_notes">Ghi chú</a>
+    </nav>
+    <button class="icon-btn lang-btn" id="langBtn" data-i18n-attr="title:lang_title">EN</button>
+    <button class="icon-btn theme-btn" id="themeBtn" data-i18n-attr="title:theme_title" aria-label="theme">☾</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow" data-i18n="hero_eyebrow">Không phải chìa khóa — mà là la bàn</p>
+      <h1 data-i18n="hero_h1">Học <em>cách nghĩ</em> khi giải thuật, chứ không phải học thuộc lời giải.</h1>
+      <p class="aphorism" data-i18n="hero_aphorism">Giải một bài toán là tìm con đường rẻ nhất để chưng cất thông tin của câu trả lời ra khỏi thông tin của đề bài — bằng cách không bao giờ khám phá lại thứ mình đã biết, và sẵn lòng trả tài nguyên ở chỗ mình không tiếc để mua tốc độ ở chỗ mình cần.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#dan-loi" data-i18n="hero_cta1">Bắt đầu dẫn lối →</a>
+        <a class="btn btn-ghost" href="#ban-do" data-i18n="hero_cta2">Xem bản đồ tư duy</a>
+      </div>
+    </div>
+    <div class="compass-holder">
+      <svg class="compass" viewBox="0 0 300 300" role="img" data-i18n-attr="aria-label:compass_aria">
+        <defs><radialGradient id="face" cx="50%" cy="42%" r="65%"><stop offset="0%" stop-color="var(--ink-3)"/><stop offset="100%" stop-color="var(--ink-0)"/></radialGradient></defs>
+        <circle cx="150" cy="150" r="140" fill="url(#face)" stroke="var(--brass)" stroke-width="3"/>
+        <circle cx="150" cy="150" r="120" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+        <g stroke="var(--muted-2)" stroke-width="1.5"><line x1="150" y1="18" x2="150" y2="34"/><line x1="150" y1="266" x2="150" y2="282"/><line x1="18" y1="150" x2="34" y2="150"/><line x1="266" y1="150" x2="282" y2="150"/></g>
+        <text x="150" y="52" text-anchor="middle" font-family="Newsreader,serif" font-size="14" fill="var(--traverse)" font-style="italic">Traverse</text>
+        <text x="150" y="256" text-anchor="middle" font-family="Newsreader,serif" font-size="13" fill="var(--dependency)">Dependency</text>
+        <text x="58" y="154" text-anchor="middle" font-family="Newsreader,serif" font-size="13" fill="var(--identity)">Identity</text>
+        <text x="242" y="154" text-anchor="middle" font-family="Newsreader,serif" font-size="13" fill="var(--order)">Order</text>
+        <g class="needle-anim"><path d="M150 40 L162 150 L150 162 L138 150 Z" fill="var(--brass)"/><path d="M150 260 L138 150 L150 138 L162 150 Z" fill="var(--brass-deep)" opacity=".55"/></g>
+        <circle cx="150" cy="150" r="10" fill="var(--ink-0)" stroke="var(--brass)" stroke-width="3"/>
+        <circle cx="150" cy="150" r="3" fill="var(--brass)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="ban-do">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="map_head">Bản đồ tư duy</h2>
+    <p class="sec-sub" data-i18n="map_sub">Bốn câu hỏi la bàn định tuyến suy nghĩ của bạn. Câu <b style="color:var(--brass)">thượng nguồn</b> phải hỏi trước — hầu hết bế tắc đến từ việc trả lời sai chính nó.</p>
+    <div class="qstrip" id="qstrip"></div>
+    <h3 style="font-size:20px;margin:0 0 6px;font-weight:600" data-i18n="ladder_head">Thang chi phí tư duy</h3>
+    <p class="sec-sub" style="margin-bottom:24px" data-i18n="ladder_sub">Thử từ bậc <b style="color:var(--dependency)">rẻ nhất để nghĩ</b> đến đắt nhất. Mỗi thuật toán nhanh đều khai thác một <i>cấu trúc</i> nào đó của dữ liệu; "lãng phí" chỉ là dấu chân mà cấu trúc để lại. Bấm vào từng bậc để xem chi tiết.</p>
+    <div class="ladder-layout">
+      <div class="ladder" id="ladder"></div>
+      <div class="detail" id="rungDetail"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="tu-dien">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="dict_head">Từ điển tín hiệu</h2>
+    <p class="sec-sub" data-i18n="dict_sub">14 mục cô đọng — phần "20%" quan trọng nhất. Mỗi mục: tín hiệu trong đề → công cụ, kèm cái "vì sao" nói rõ <i>thông tin phân biệt</i> để bạn không học vẹt. Hãy <b style="color:var(--brass)">tự thêm mục của riêng mình</b> — đó là lúc bạn tập tự đi.</p>
+    <div class="formcard">
+      <label class="lbl" style="font-size:13.5px;color:var(--brass);font-weight:700;margin-bottom:12px" data-i18n="dict_form_label">＋ Thêm tín hiệu của bạn</label>
+      <div class="row2">
+        <div class="field"><label class="lbl" data-i18n="dict_f_signal_lbl">Tín hiệu trong đề</label><input class="inp" id="fSignal" data-i18n-attr="placeholder:dict_f_signal_ph"></div>
+        <div class="field"><label class="lbl" data-i18n="dict_f_tool_lbl">Công cụ gợi ra</label><input class="inp" id="fTool" data-i18n-attr="placeholder:dict_f_tool_ph"></div>
+      </div>
+      <div class="field"><label class="lbl" data-i18n="dict_f_why_lbl">Vì sao (thông tin phân biệt)</label><textarea class="inp" id="fWhy" data-i18n-attr="placeholder:dict_f_why_ph"></textarea></div>
+      <div class="field"><label class="lbl" data-i18n="dict_f_rel_lbl">Loại quan hệ</label>
+        <select class="inp" id="fRel">
+          <option value="identity" data-i18n="rel_opt_identity">Danh tính — cái gì giống / đã thấy</option>
+          <option value="order" data-i18n="rel_opt_order">Thứ tự — cái gì lớn hơn / trước / gần</option>
+          <option value="dependency" data-i18n="rel_opt_dependency">Phụ thuộc — đáp án lớn lắp từ đáp án con</option>
+          <option value="traverse" data-i18n="rel_opt_traverse">Duyệt — đi qua một không gian</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" id="addEntry" data-i18n="dict_add_btn">Thêm vào từ điển</button>
+    </div>
+    <div class="filterbar" id="dictFilter">
+      <button class="chip on" data-rel="all" data-i18n="filter_all">Tất cả</button>
+      <button class="chip" data-rel="identity" data-i18n="rel_identity">Danh tính</button>
+      <button class="chip" data-rel="order" data-i18n="rel_order">Thứ tự</button>
+      <button class="chip" data-rel="dependency" data-i18n="rel_dependency">Phụ thuộc</button>
+      <button class="chip" data-rel="traverse" data-i18n="rel_traverse">Duyệt</button>
+    </div>
+    <div class="dict-grid" id="dictGrid"></div>
+  </div>
+</section>
+
+<section class="block" id="dan-loi">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="guide_head">Chế độ dẫn lối <span class="sub-label">— chạy offline, không cần AI</span></h2>
+    <p class="sec-sub" data-i18n="guide_sub">Bắt đầu từ câu thượng nguồn: <b>đầu ra của bài toán thật sự đòi kiểu thông tin gì?</b> Rồi men theo các câu hỏi kích hoạt để tới một <b style="color:var(--brass)">GIẢ THUYẾT</b> — không phải đáp án, mà là một hướng để bạn tự bước tiếp.</p>
+    <div class="guide-stage">
+      <div class="guide-crumbs" id="guideCrumbs"></div>
+      <div id="guideBody"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="la-ban-song">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="living_head">La bàn sống <span class="sub-label">— gia sư Socratic (mô hình local)</span></h2>
+    <p class="sec-sub" data-i18n="living_sub">Nối tới một endpoint OpenAI-compatible chạy trên máy bạn (Ollama <code>:11434/v1</code>, LM Studio <code>:1234/v1</code>, llama.cpp, vLLM). Gia sư <b>không bao giờ đưa lời giải</b> — chỉ hỏi đúng câu để bạn tự tìm ra. Bạn viết tiếng nào, nó đáp tiếng đó.</p>
+    <div class="tutor-layout">
+      <div class="settings">
+        <h3 data-i18n="set_head">Thiết lập</h3>
+        <div class="status" id="aiStatus" data-i18n="status_untested">Chưa kiểm tra</div>
+        <div class="field"><label class="lbl" data-i18n="set_url_lbl">Base URL</label><input class="inp" id="aiUrl" placeholder="http://localhost:11434/v1"></div>
+        <div class="field"><label class="lbl" data-i18n="set_model_lbl">Tên model</label><input class="inp" id="aiModel" placeholder="llama3.1 / qwen2.5 ..."></div>
+        <div class="field"><label class="lbl" data-i18n="set_key_lbl">API key (tùy chọn)</label><input class="inp" id="aiKey" type="password" data-i18n-attr="placeholder:set_key_ph"></div>
+        <button class="btn btn-primary" id="aiTest" style="width:100%" data-i18n="set_test_btn">Lưu & kiểm tra kết nối</button>
+        <p class="hint-note" data-i18n="set_hint">Nếu mở file bằng <code>file://</code>, trình duyệt có thể chặn CORS. Hãy bật CORS ở endpoint (ví dụ <code>OLLAMA_ORIGINS=*</code>) hoặc chạy một máy chủ tĩnh cho trang này.</p>
+      </div>
+      <div class="chat">
+        <div class="chat-log" id="chatLog">
+          <div class="msg sys" data-i18n="chat_init">Cấu hình endpoint bên trái, rồi kể cho tôi bài toán bạn đang mắc. Tôi sẽ chỉ hỏi — không giải thay.</div>
+        </div>
+        <div class="suggests" id="suggests">
+          <button class="chip" data-i18n="sug1">Tôi không biết bắt đầu từ đâu</button>
+          <button class="chip" data-i18n="sug2">Tôi có brute force nhưng quá chậm</button>
+          <button class="chip" data-i18n="sug3">Cho tôi một gợi ý lớn hơn</button>
+        </div>
+        <div class="chat-input">
+          <textarea id="chatInput" data-i18n-attr="placeholder:chat_ph" rows="1"></textarea>
+          <button class="send-btn" id="chatSend" title="Send">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="luyen-tap">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="drill_head">Luyện nén</h2>
+    <p class="sec-sub" data-i18n="drill_sub">Rút ngẫu nhiên một tín hiệu (gồm cả mục của bạn). Tự trả lời <b>công cụ</b> VÀ <b>vì sao</b> trước khi lật đáp án. Học bằng nén, không phải bằng số lượng.</p>
+    <div class="practice-card" id="practiceCard"></div>
+  </div>
+</section>
+
+<section class="block" id="nhat-ky">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="log_head">Nhật ký va chạm</h2>
+    <p class="sec-sub" data-i18n="log_sub">Ghi lại "bài toán tôi đã va phải" và tín hiệu bạn rút ra được. Theo dõi từ điển của chính bạn dần hội tụ.</p>
+    <div class="formcard">
+      <div class="row2">
+        <div class="field"><label class="lbl" data-i18n="log_problem_lbl">Bài toán</label><input class="inp" id="logProblem" data-i18n-attr="placeholder:log_problem_ph"></div>
+        <div class="field"><label class="lbl" data-i18n="log_trigger_lbl">Tín hiệu tôi rút ra</label><input class="inp" id="logTrigger" data-i18n-attr="placeholder:log_trigger_ph"></div>
+      </div>
+      <button class="btn btn-primary" id="addLog" data-i18n="log_add_btn">Ghi vào nhật ký</button>
+    </div>
+    <div class="log-grid" id="logGrid"></div>
+  </div>
+</section>
+
+<section class="block" id="ghi-chu">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="notes_head">Ghi chú phương pháp</h2>
+    <p class="sec-sub" data-i18n="notes_sub">Những điều thành thật về cách công cụ này hoạt động.</p>
+    <div class="notes-grid" id="notesGrid"></div>
+  </div>
+</section>
+
+<footer><div class="wrap" data-i18n="footer">La Bàn DSA — một chiếc la bàn, không phải chìa khóa. Dữ liệu của bạn (từ điển, nhật ký, thiết lập) lưu cục bộ trong trình duyệt này.</div></footer>
+
+<script>
+/* ============================================================ i18n STATIC STRINGS */
+const T = {
+vi:{
+  brand:"La Bàn DSA", title:"La Bàn DSA",
+  nav_map:"Bản đồ tư duy", nav_dict:"Từ điển tín hiệu", nav_guide:"Dẫn lối", nav_living:"La bàn sống", nav_drill:"Luyện nén", nav_log:"Nhật ký", nav_notes:"Ghi chú",
+  lang_title:"Switch to English", theme_title:"Đổi giao diện sáng/tối",
+  hero_eyebrow:"Không phải chìa khóa — mà là la bàn",
+  hero_h1:"Học <em>cách nghĩ</em> khi giải thuật, chứ không phải học thuộc lời giải.",
+  hero_aphorism:"Giải một bài toán là tìm con đường rẻ nhất để chưng cất thông tin của câu trả lời ra khỏi thông tin của đề bài — bằng cách không bao giờ khám phá lại thứ mình đã biết, và sẵn lòng trả tài nguyên ở chỗ mình không tiếc để mua tốc độ ở chỗ mình cần.",
+  hero_cta1:"Bắt đầu dẫn lối →", hero_cta2:"Xem bản đồ tư duy",
+  compass_aria:"La bàn với kim chỉ về hướng Traverse",
+  map_head:"Bản đồ tư duy",
+  map_sub:'Bốn câu hỏi la bàn định tuyến suy nghĩ của bạn. Câu <b style="color:var(--brass)">thượng nguồn</b> phải hỏi trước — hầu hết bế tắc đến từ việc trả lời sai chính nó.',
+  ladder_head:"Thang chi phí tư duy",
+  ladder_sub:'Thử từ bậc <b style="color:var(--dependency)">rẻ nhất để nghĩ</b> đến đắt nhất. Mỗi thuật toán nhanh đều khai thác một <i>cấu trúc</i> nào đó của dữ liệu; "lãng phí" chỉ là dấu chân mà cấu trúc để lại. Bấm vào từng bậc để xem chi tiết.',
+  d_verb:"Động từ:", d_label_trigger:"Câu hỏi kích hoạt", d_label_why:"Vì sao công cụ này", d_label_space:"Bạn duyệt không gian nào",
+  dict_head:"Từ điển tín hiệu",
+  dict_sub:'14 mục cô đọng — phần "20%" quan trọng nhất. Mỗi mục: tín hiệu trong đề → công cụ, kèm cái "vì sao" nói rõ <i>thông tin phân biệt</i> để bạn không học vẹt. Hãy <b style="color:var(--brass)">tự thêm mục của riêng mình</b> — đó là lúc bạn tập tự đi.',
+  dict_form_label:"＋ Thêm tín hiệu của bạn",
+  dict_f_signal_lbl:"Tín hiệu trong đề", dict_f_signal_ph:"Ví dụ: đề hỏi khoảng cách nhỏ nhất giữa hai điểm...",
+  dict_f_tool_lbl:"Công cụ gợi ra", dict_f_tool_ph:"Ví dụ: sắp xếp + quét...",
+  dict_f_why_lbl:"Vì sao (thông tin phân biệt)", dict_f_why_ph:"Vì thông tin nào trong đề khiến công cụ này đúng?",
+  dict_f_rel_lbl:"Loại quan hệ", dict_add_btn:"Thêm vào từ điển",
+  rel_opt_identity:"Danh tính — cái gì giống / đã thấy", rel_opt_order:"Thứ tự — cái gì lớn hơn / trước / gần",
+  rel_opt_dependency:"Phụ thuộc — đáp án lớn lắp từ đáp án con", rel_opt_traverse:"Duyệt — đi qua một không gian",
+  filter_all:"Tất cả", rel_identity:"Danh tính", rel_order:"Thứ tự", rel_dependency:"Phụ thuộc", rel_traverse:"Duyệt",
+  dict_mine:"CỦA BẠN", dict_del:"Xóa", dict_empty:"Chưa có mục nào cho bộ lọc này.",
+  dict_alert:"Cần ít nhất tín hiệu và công cụ.", dict_why_todo:"(tự bổ sung vì sao sau)",
+  guide_head:'Chế độ dẫn lối <span class="sub-label">— chạy offline, không cần AI</span>',
+  guide_sub:'Bắt đầu từ câu thượng nguồn: <b>đầu ra của bài toán thật sự đòi kiểu thông tin gì?</b> Rồi men theo các câu hỏi kích hoạt để tới một <b style="color:var(--brass)">GIẢ THUYẾT</b> — không phải đáp án, mà là một hướng để bạn tự bước tiếp.',
+  guide_root_crumb:"Đầu ra?", guide_hyp:"◆ GIẢ THUYẾT — không phải đáp án, mà là một hướng để bạn tự bước",
+  guide_verify_prefix:"Tự kiểm chứng: ", guide_back:"← Lùi một bước", guide_restart:"Bắt đầu lại",
+  living_head:'La bàn sống <span class="sub-label">— gia sư Socratic (mô hình local)</span>',
+  living_sub:'Nối tới một endpoint OpenAI-compatible chạy trên máy bạn (Ollama <code>:11434/v1</code>, LM Studio <code>:1234/v1</code>, llama.cpp, vLLM). Gia sư <b>không bao giờ đưa lời giải</b> — chỉ hỏi đúng câu để bạn tự tìm ra. Bạn viết tiếng nào, nó đáp tiếng đó.',
+  set_head:"Thiết lập", status_untested:"Chưa kiểm tra", set_url_lbl:"Base URL", set_model_lbl:"Tên model",
+  set_key_lbl:"API key (tùy chọn)", set_key_ph:"để trống nếu không cần", set_test_btn:"Lưu & kiểm tra kết nối",
+  set_hint:'Nếu mở file bằng <code>file://</code>, trình duyệt có thể chặn CORS. Hãy bật CORS ở endpoint (ví dụ <code>OLLAMA_ORIGINS=*</code>) hoặc chạy một máy chủ tĩnh cho trang này.',
+  chat_init:"Cấu hình endpoint bên trái, rồi kể cho tôi bài toán bạn đang mắc. Tôi sẽ chỉ hỏi — không giải thay.",
+  sug1:"Tôi không biết bắt đầu từ đâu", sug2:"Tôi có brute force nhưng quá chậm", sug3:"Cho tôi một gợi ý lớn hơn",
+  chat_ph:"Mô tả bài toán bạn đang mắc...", chat_thinking:"…đang nghĩ một câu hỏi cho bạn…",
+  need_config:"Hãy cấu hình endpoint và tên model ở bên trái trước đã.",
+  status_testing:"Đang kiểm tra...", status_ok:"Kết nối tốt", status_need_model:"Nhập tên model đã",
+  err_no_url:"Chưa nhập Base URL", err_no_model:"Chưa nhập tên model", err_no_content:"(không có nội dung trả về)",
+  chat_err_prefix:"Lỗi gọi mô hình: ", chat_err_suffix:" — kiểm tra endpoint/CORS.", status_err:"Lỗi: ",
+  drill_head:"Luyện nén",
+  drill_sub:'Rút ngẫu nhiên một tín hiệu (gồm cả mục của bạn). Tự trả lời <b>công cụ</b> VÀ <b>vì sao</b> trước khi lật đáp án. Học bằng nén, không phải bằng số lượng.',
+  drill_prompt:"Tín hiệu trong đề — hãy tự nói: công cụ gì? và VÌ SAO?", drill_reveal:"Lật đáp án", drill_next:"Rút tín hiệu khác",
+  log_head:"Nhật ký va chạm",
+  log_sub:'Ghi lại "bài toán tôi đã va phải" và tín hiệu bạn rút ra được. Theo dõi từ điển của chính bạn dần hội tụ.',
+  log_problem_lbl:"Bài toán", log_problem_ph:"Tên / mô tả ngắn bài toán",
+  log_trigger_lbl:"Tín hiệu tôi rút ra", log_trigger_ph:"Đặc trưng nào lẽ ra phải kích hoạt công cụ nào?",
+  log_add_btn:"Ghi vào nhật ký", log_empty:"Chưa có va chạm nào được ghi. Mỗi bài bạn mắc rồi rút được một tín hiệu — ghi lại đây.",
+  log_alert:"Cần tên bài toán.", log_no_trigger:"(chưa rút được tín hiệu)", log_del:"Xóa",
+  notes_head:"Ghi chú phương pháp", notes_sub:"Những điều thành thật về cách công cụ này hoạt động.",
+  footer:"La Bàn DSA — một chiếc la bàn, không phải chìa khóa. Dữ liệu của bạn (từ điển, nhật ký, thiết lập) lưu cục bộ trong trình duyệt này.",
+  q_upstream_tag:"THƯỢNG NGUỒN"
+},
+en:{
+  brand:"DSA Compass", title:"DSA Compass",
+  nav_map:"Thinking Map", nav_dict:"Trigger Dictionary", nav_guide:"Guided", nav_living:"Living Compass", nav_drill:"Compression Drill", nav_log:"Log", nav_notes:"Notes",
+  lang_title:"Chuyển sang Tiếng Việt", theme_title:"Toggle light/dark theme",
+  hero_eyebrow:"Not a key — a compass",
+  hero_h1:"Learn <em>how to think</em> in algorithms, not how to memorize solutions.",
+  hero_aphorism:"Solving a problem is finding the cheapest path to distill the answer's information out of the problem's information — by never rediscovering what you already know, and by willingly paying resources where you don't mind to buy speed where you need it.",
+  hero_cta1:"Start guiding →", hero_cta2:"See the thinking map",
+  compass_aria:"A compass whose needle settles pointing to Traverse",
+  map_head:"Thinking Map",
+  map_sub:'Four compass questions route your thinking. The <b style="color:var(--brass)">upstream</b> one must be asked first — most dead-ends come from answering it wrong.',
+  ladder_head:"The cost-of-thinking ladder",
+  ladder_sub:'Try from the <b style="color:var(--dependency)">cheapest-to-think</b> rung to the most expensive. Every fast algorithm exploits some <i>structure</i> in the data; "waste" is just the footprint that structure leaves. Click a rung for details.',
+  d_verb:"Verb:", d_label_trigger:"Trigger question", d_label_why:"Why this tool", d_label_space:"Which space you traverse",
+  dict_head:"Trigger Dictionary",
+  dict_sub:'14 compressed entries — the vital "20%". Each: signal-in-the-problem → tool, plus a "why" that names the <i>distinguishing information</i> so it is not rote. <b style="color:var(--brass)">Add your own entries</b> — that is when you learn to walk on your own.',
+  dict_form_label:"＋ Add your own signal",
+  dict_f_signal_lbl:"Signal in the problem", dict_f_signal_ph:"e.g. the problem asks for the smallest distance between two points...",
+  dict_f_tool_lbl:"Tool it triggers", dict_f_tool_ph:"e.g. sort + sweep...",
+  dict_f_why_lbl:"Why (distinguishing info)", dict_f_why_ph:"Which piece of information makes this tool correct?",
+  dict_f_rel_lbl:"Relation type", dict_add_btn:"Add to dictionary",
+  rel_opt_identity:"Identity — what is the same / already seen", rel_opt_order:"Order — what is bigger / before / nearer",
+  rel_opt_dependency:"Dependency — big answer assembles from sub-answers", rel_opt_traverse:"Traverse — walking through a space",
+  filter_all:"All", rel_identity:"Identity", rel_order:"Order", rel_dependency:"Dependency", rel_traverse:"Traverse",
+  dict_mine:"YOURS", dict_del:"Delete", dict_empty:"No entries for this filter yet.",
+  dict_alert:"Need at least a signal and a tool.", dict_why_todo:"(fill in the why later)",
+  guide_head:'Guided mode <span class="sub-label">— runs offline, no AI needed</span>',
+  guide_sub:'Start from the upstream question: <b>what type of information does the problem\\u2019s output truly demand?</b> Then follow the trigger questions to a <b style="color:var(--brass)">HYPOTHESIS</b> — not an answer, but a direction to walk yourself.',
+  guide_root_crumb:"Output?", guide_hyp:"◆ HYPOTHESIS — not an answer, a direction to walk yourself",
+  guide_verify_prefix:"Verify it yourself: ", guide_back:"← Back one step", guide_restart:"Start over",
+  living_head:'Living Compass <span class="sub-label">— a Socratic tutor (local model)</span>',
+  living_sub:'Connect to an OpenAI-compatible endpoint on your machine (Ollama <code>:11434/v1</code>, LM Studio <code>:1234/v1</code>, llama.cpp, vLLM). The tutor <b>never hands you a solution</b> — it only asks the right question. Whatever language you write in, it replies in.',
+  set_head:"Settings", status_untested:"Not tested", set_url_lbl:"Base URL", set_model_lbl:"Model name",
+  set_key_lbl:"API key (optional)", set_key_ph:"leave empty if not needed", set_test_btn:"Save & test connection",
+  set_hint:'Opening via <code>file://</code> may hit CORS. Enable CORS on the endpoint (e.g. <code>OLLAMA_ORIGINS=*</code>) or serve this page from a static server.',
+  chat_init:"Configure the endpoint on the left, then tell me the problem you're stuck on. I'll only ask — never solve it for you.",
+  sug1:"I don't know where to start", sug2:"I have brute force but it's too slow", sug3:"Give me a bigger hint",
+  chat_ph:"Describe the problem you're stuck on...", chat_thinking:"…thinking of a question for you…",
+  need_config:"Configure the endpoint and model name on the left first.",
+  status_testing:"Testing...", status_ok:"Connection OK", status_need_model:"Enter a model name first",
+  err_no_url:"No Base URL entered", err_no_model:"No model name entered", err_no_content:"(no content returned)",
+  chat_err_prefix:"Model call failed: ", chat_err_suffix:" — check the endpoint / CORS.", status_err:"Error: ",
+  drill_head:"Compression Drill",
+  drill_sub:'Draw a random signal (including your own). Answer the <b>tool</b> AND the <b>why</b> before revealing. Learn by compression, not by volume.',
+  drill_prompt:"A signal in the problem — say it yourself: which tool? and WHY?", drill_reveal:"Reveal", drill_next:"Draw another",
+  log_head:"Collision Log",
+  log_sub:'Record "a problem I collided with" and the trigger you extracted. Watch your own dictionary converge.',
+  log_problem_lbl:"Problem", log_problem_ph:"Short name / description of the problem",
+  log_trigger_lbl:"Trigger I extracted", log_trigger_ph:"Which feature should have triggered which tool?",
+  log_add_btn:"Add to log", log_empty:"No collisions recorded yet. Every problem you hit and distill into one trigger — record it here.",
+  log_alert:"Need a problem name.", log_no_trigger:"(no trigger extracted yet)", log_del:"Delete",
+  notes_head:"Method notes", notes_sub:"Honest caveats about how this tool works.",
+  footer:"DSA Compass — a compass, not a key. Your data (dictionary, log, settings) is stored locally in this browser.",
+  q_upstream_tag:"UPSTREAM"
+}
+};
+// fix an escaped placeholder
+T.en.guide_sub = T.en.guide_sub.replace("problem\\u2019s","problem’s");
+
+/* ============================================================ BILINGUAL DATA */
+const REL = {
+  identity:{vi:"Danh tính", en:"Identity"},
+  order:{vi:"Thứ tự", en:"Order"},
+  dependency:{vi:"Phụ thuộc", en:"Dependency"},
+  traverse:{vi:"Duyệt", en:"Traverse"}
+};
+
+const QUESTIONS = [
+  {n:1, upstream:true, text:{vi:"ĐẦU RA thật sự đòi KIỂU / BAO NHIÊU thông tin? Phần lớn rối loạn đến từ việc trả lời sai câu này.",
+    en:"What TYPE / how much information does the OUTPUT truly require? Most confusion comes from answering this one wrong."}},
+  {n:2, text:{vi:"ĐẦU VÀO đang cho tôi cấu trúc gì mà tôi chưa dùng đến?", en:"What structure is the INPUT already giving me that I haven't used?"}},
+  {n:3, text:{vi:"Tôi đang TÍNH LẠI thứ gì mà mình vốn đã biết?", en:"What am I RE-computing that I already know?"}},
+  {n:4, text:{vi:"Tôi sẵn lòng ĐÁNH ĐỔI tài nguyên nào để mua tốc độ ở chỗ mình cần?", en:"What resource am I willing to TRADE to buy speed where I need it?"}}
+];
+
+const LADDER = [
+  {id:"brute", rel:"traverse", cheap:false,
+   name:{vi:"Bậc 0 — Vét cạn", en:"Rung 0 — Brute force"}, verb:{vi:"để lộ ra hình dạng", en:"to reveal the shape"},
+   cost:{vi:"Baseline — thước đo cho mọi tối ưu", en:"Baseline — the yardstick for every optimization"},
+   trigger:{vi:"Chưa tối ưu gì. Chạy thô để trả lời: đề muốn KIỂU đáp án nào, và tôi đang lặp lại cái gì?",
+     en:"No optimization yet. Run it raw to answer: what TYPE of answer does the problem want, and what am I repeating?"},
+   why:{vi:"Bạn không thể định tuyến trước khi thấy hình dạng bài toán. Vét cạn = 'tôi giả vờ đầu vào không có tính chất đặc biệt nào'. Mỗi lần lặp lại đặt tên cho một lãng phí; lãng phí là dấu chân của cấu trúc.",
+     en:"You can't route before you see the problem's shape. Brute force = 'I pretend the input has no special property.' Each repetition names a waste; waste is the footprint of structure."},
+   space:{vi:"Duyệt toàn bộ không gian thô (mọi cặp, mọi chuỗi con, mọi khả năng). Là baseline mà mọi tối ưu đo lường dựa vào.",
+     en:"Traverse the full raw space (all pairs, all substrings, all possibilities). The baseline every optimization is measured against."}},
+  {id:"hash", rel:"identity", cheap:true,
+   name:{vi:"Bậc 1 — Danh tính → Hash", en:"Rung 1 — Identity → Hash"}, verb:{vi:"Nhớ", en:"Remember"},
+   cost:{vi:"RẺ NHẤT để nghĩ — thử trước tiên · đổi lấy bộ nhớ", en:"CHEAPEST to think — try first · costs memory"},
+   trigger:{vi:"Bài này có quy về 'tôi đã thấy chưa / có trùng không / đếm tần suất' được không?",
+     en:"Can this reduce to 'have I seen it / is there a duplicate / count frequency'?"},
+   why:{vi:"Hash sống ở nơi THỨ TỰ không tồn tại hoặc không quan trọng. Nó không hỏi 'cái nào lớn hơn' — chỉ hỏi 'cái này CÓ GIỐNG cái kia không'. Rẻ vì bạn không phát minh gì cả: chỉ lưu rồi tra.",
+     en:"Hash lives where ORDER doesn't exist or doesn't matter. It never asks 'which is bigger' — only 'is this THE SAME as that.' Cheap because you invent nothing: just store and look up."},
+   space:{vi:"Nó XÓA một chiều duyệt — thay vì tìm 'cái này ở đâu', nó nhảy thẳng tới ô của phần tử. Giá phải trả: bộ nhớ. Nó cố tình phá thứ tự để mua tra cứu O(1).",
+     en:"It DELETES a traversal dimension — instead of searching 'where is this', it jumps straight to the item's bucket. Cost: memory. It deliberately destroys order to buy O(1) lookup."}},
+  {id:"order", rel:"order", cheap:false,
+   name:{vi:"Bậc 2 — Thứ tự → họ đơn điệu", en:"Rung 2 — Order → the monotonic family"}, verb:{vi:"Sắp xếp", en:"Sort"},
+   cost:{vi:"Chi phí TRUNG BÌNH · two pointer · binary search · sliding window · greedy · heap", en:"MEDIUM cost · two pointer · binary search · sliding window · greedy · heap"},
+   trigger:{vi:"Có một thứ tự (cho sẵn, hoặc tạo ra bằng sắp xếp) khiến một đại lượng thay đổi ĐƠN ĐIỆU, để mỗi bước loại được cả một mảng khả năng không?",
+     en:"Is there an order (given, or created by sorting) that makes a quantity change MONOTONICALLY, so each step eliminates a whole batch of possibilities?"},
+   why:{vi:"Kích hoạt thật KHÔNG phải 'mảng đã sắp xếp' — mà là 'tồn tại cách di chuyển sao cho đại lượng tôi quan tâm thay đổi đơn điệu, cho phép vứt bỏ cả một khoảng mỗi bước mà không cần kiểm từng phần tử'. Sắp xếp chỉ là NGUỒN phổ biến nhất của tính đơn điệu đó. two pointer / binary search / sliding window / greedy đều uống từ dòng sữa này.",
+     en:"The real trigger is NOT 'the array is sorted' — it's 'there exists a way to move so the quantity I care about changes monotonically, letting me discard a whole range each step without checking each item.' Sorting is just the most common SOURCE of that monotonicity. two pointer / binary search / sliding window / greedy all drink from this same milk."},
+   space:{vi:"Thu không gian duyệt từ 2D (mọi cặp, O(n²)) xuống 1D (O(n)). Two pointer chỉ là cách bạn đi trên đường thẳng đã thu gọn đó. Chọn công cụ = nhìn HÌNH DẠNG đáp án: một ngưỡng → binary search; hai đầu khép lại → two pointer; một cửa sổ liền kề trượt → sliding window; một chuỗi lựa chọn cục bộ → greedy.",
+     en:"Collapses the traversal space from 2D (all pairs, O(n²)) to a 1D line (O(n)). Two pointers are just how you walk the collapsed line. Choosing the tool = look at the SHAPE of the answer: one threshold → binary search; two ends closing in → two pointer; a sliding contiguous window → sliding window; a chain of local choices → greedy."}},
+  {id:"dp", rel:"dependency", cheap:false,
+   name:{vi:"Bậc 3 — Phụ thuộc → DP", en:"Rung 3 — Dependency → DP"}, verb:{vi:"Nhớ", en:"Remember"},
+   cost:{vi:"ĐẮT NHẤT để nghĩ — thử sau cùng · bạn phải tự phát minh không gian trạng thái", en:"MOST EXPENSIVE to think — try last · you must invent the state space yourself"},
+   trigger:{vi:"Đáp án lớn có LẮP RÁP được từ đáp án của vài bài con cùng hình dạng không — và những bài con đó có lặp lại (chồng lấn) không?",
+     en:"Can the big answer be ASSEMBLED from the answers of a few same-shaped sub-problems — and do those sub-problems repeat (overlap)?"},
+   why:{vi:"DP khai thác quan hệ thứ ba, PHỤ THUỘC — 'đáp án lớn vốn đã nằm trong các đáp án con'. Đắt vì bạn phải TỰ PHÁT MINH không gian trạng thái; không ai đưa nó cho bạn. Cần hai điều kiện: cấu trúc con tối ưu (cha lắp từ con) + bài con chồng lấn (con lặp lại). Thiếu điều đầu → lùi về Duyệt thô (backtracking). Thiếu điều sau → đệ quy thường là đủ.",
+     en:"DP exploits the third relation, DEPENDENCY — 'the big answer is already contained in the sub-answers.' Expensive because you must INVENT the state space yourself; nobody hands it to you. Needs two conditions: optimal substructure (parent assembles from children) + overlapping subproblems (children repeat). Missing the first → fall back to raw Traverse (backtracking). Missing the second → plain recursion is enough."},
+   space:{vi:"Bạn XÂY một không gian mới không có trong đề — không gian các bài con — rồi duyệt từ nhỏ tới lớn, lắp đáp án con thành đáp án lớn hơn, Nhớ lại để không bao giờ lắp lại.",
+     en:"You BUILD a new space not present in the problem — the space of sub-problems — and traverse it small-to-large, assembling child answers into larger ones, Remembering so you never reassemble."}},
+  {id:"transform", rel:"traverse", cheap:false,
+   name:{vi:"Bậc ✦ — Biến đổi", en:"Rung ✦ — Transformation"}, verb:{vi:"nghệ thuật", en:"art"},
+   cost:{vi:"Khi KHÔNG bậc nào kích hoạt", en:"When NO rung fires"},
+   trigger:{vi:"Không gì cho đáp án trực tiếp? Bài toán đang bị NGỤY TRANG. Việc của bạn: biến đổi nó cho tới khi một loại quan hệ lộ ra.",
+     en:"Nothing gives the answer directly? The problem is DISGUISED. Your job: transform it until one relation type surfaces."},
+   why:{vi:"Một bài 'tìm min/max' thật ra có thể là binary search trên KHÔNG GIAN ĐÁP ÁN — bạn phát minh một trục đơn điệu ở nơi đề không cho mảng nào để sắp. Một 'mảng số' thật ra có thể là ĐỒ THỊ NGỤY TRANG — mỗi số một đỉnh, quan hệ là cạnh. Cái 'aha' khi thấy bài X là bài Y là nghệ thuật, chỉ mài sắc bằng va chạm, không bằng đọc.",
+     en:"A 'find min/max' problem may really be binary search on the ANSWER space — you invent a monotonic axis where the problem gave no array to sort. An 'array of numbers' may really be a DISGUISED GRAPH — each number a node, relations are edges. The 'aha' of seeing problem X as problem Y is art, sharpened only by collision, not by reading."},
+   space:{vi:"Bạn không tìm một không gian có sẵn — bạn KIẾN TẠO một không gian mới để một mẫu quen thuộc áp dụng được.",
+     en:"You don't find an existing space — you CONSTRUCT a new one so a familiar pattern applies."}}
+];
+
+const BUILTIN_DICT = [
+  {rel:"identity", signal:{vi:"Hỏi 'có tồn tại cặp/phần tử bằng nhau hay trùng lặp không'", en:"Asks whether an equal/duplicate pair or element exists"}, tool:{vi:"Hash set / map", en:"Hash set / map"}, why:{vi:"Chỉ cần **danh tính** (tồn tại/trùng), không cần cái nào lớn hơn.", en:"Only **identity** (existence/duplicate) is needed — never which is bigger."}},
+  {rel:"identity", signal:{vi:"Đếm tần suất, tìm phần tử xuất hiện k lần", en:"Count frequency, find an element appearing k times"}, tool:{vi:"Hash đếm", en:"Hash count"}, why:{vi:"Câu hỏi là **'bao nhiêu cái giống nhau'**, thứ tự vô nghĩa ở đây.", en:"The question is **'how many alike'**; order is meaningless here."}},
+  {rel:"identity", signal:{vi:"Mảng CHƯA sắp xếp và KHÔNG được sắp (cần chỉ số gốc)", en:"Array is UNSORTED and must NOT be sorted (original index needed)"}, tool:{vi:"Hash thay cho two pointer", en:"Hash instead of two pointer"}, why:{vi:"Thông tin thứ tự không dùng được → **chỉ còn danh tính**.", en:"Order info is unusable → **only identity is left**."}},
+  {rel:"order", signal:{vi:"Mảng ĐÃ sắp xếp, hoặc sắp được mà không mất thông tin cần thiết", en:"Array IS sorted, or can be sorted without losing needed info"}, tool:{vi:"two pointer / binary search", en:"two pointer / binary search"}, why:{vi:"Thứ tự cho phép **vứt cả một mảng mỗi bước**.", en:"Order lets you **discard a whole batch each step**."}},
+  {rel:"order", signal:{vi:"Một đại lượng thay đổi ĐƠN ĐIỆU khi bạn trượt/di chuyển", en:"A quantity changes MONOTONICALLY as you slide/move"}, tool:{vi:"sliding window / two pointer", en:"sliding window / two pointer"}, why:{vi:"ĐÂY mới là kích hoạt thật, không phải 'đã sắp'. **Đơn điệu = an toàn để vứt bỏ.**", en:"THIS is the real trigger, not 'sorted'. **Monotonic = safe to discard.**"}},
+  {rel:"order", signal:{vi:"Cần một đoạn con LIỀN KỀ thỏa điều kiện", en:"Need a CONTIGUOUS sub-segment satisfying a condition"}, tool:{vi:"sliding window", en:"sliding window"}, why:{vi:"Hai con trỏ cùng chiều, một cửa sổ đặc ở giữa — **một biến thể của two pointer.**", en:"Two pointers same direction, a solid window between — **a two-pointer variant.**"}},
+  {rel:"order", signal:{vi:"Tìm một NGƯỠNG/biên trong một chiều đơn điệu", en:"Find a THRESHOLD/boundary in a monotonic dimension"}, tool:{vi:"binary search", en:"binary search"}, why:{vi:"Một biên để dò, **chia đôi không gian mỗi bước.**", en:"One boundary to probe, **halve the space each step.**"}},
+  {rel:"order", signal:{vi:"min/max mà KIỂM TRA một đáp án ứng viên dễ hơn tìm ra nó", en:"min/max where CHECKING a candidate is easier than finding it"}, tool:{vi:"binary search trên ĐÁP ÁN", en:"binary search on the ANSWER"}, why:{vi:"Biến đổi — **dựng một trục đơn điệu trên không gian đáp án** dù đề không cho mảng nào để sắp.", en:"Transformation — **build a monotonic axis on the answer space** though the problem gave no array to sort."}},
+  {rel:"order", signal:{vi:"Liên tục lấy phần tử lớn/nhỏ nhất với chèn/xóa động", en:"Repeatedly extract the largest/smallest with dynamic insert/remove"}, tool:{vi:"heap", en:"heap"}, why:{vi:"Giữ một **thứ tự cục bộ** để mỗi cực trị là O(log n).", en:"Keep a **partial order** so each extreme is O(log n)."}},
+  {rel:"dependency", signal:{vi:"Đáp án lớn = LẮP vài đáp án con cùng hình dạng, và chúng lặp lại", en:"Big answer = ASSEMBLE a few same-shaped sub-answers, and they repeat"}, tool:{vi:"DP / memoization", en:"DP / memoization"}, why:{vi:"**Cấu trúc con tối ưu + bài con chồng lấn.**", en:"**Optimal substructure + overlapping subproblems.**"}},
+  {rel:"dependency", signal:{vi:"Đếm số CÁCH, hoặc tối ưu trên chuỗi quyết định chồng lấn", en:"Count the number of WAYS, or optimize over overlapping decision chains"}, tool:{vi:"DP", en:"DP"}, why:{vi:"Mỗi lựa chọn phụ thuộc kết quả trước → **xây không gian trạng thái, lắp từ dưới lên.**", en:"Each choice depends on prior results → **build a state space, assemble upward.**"}},
+  {rel:"traverse", signal:{vi:"Quan hệ 'ai nối với ai', hỏi đường đi / tới được / ngắn nhất", en:"Relation 'who connects to whom', asks path / reachability / shortest"}, tool:{vi:"BFS / DFS / Dijkstra", en:"BFS / DFS / Dijkstra"}, why:{vi:"Dữ liệu là một **mạng lưới** — để các liên kết dẫn đường, đừng mò.", en:"The data is a **network** — let the links guide, don't grope."}},
+  {rel:"traverse", signal:{vi:"Liệt kê MỌI cấu hình hợp lệ (hoán vị, tổ hợp, tô màu)", en:"Enumerate EVERY valid configuration (perms, combos, colorings)"}, tool:{vi:"backtracking + cắt tỉa", en:"backtracking + pruning"}, why:{vi:"Đi cây lựa chọn một cách hệ thống, **cắt sớm các nhánh chết.**", en:"Walk the choice tree systematically, **cut dead branches early.**"}},
+  {rel:"traverse", signal:{vi:"Hỏi tổng/đếm trên NHIỀU đoạn con khác nhau", en:"Ask sum/count over MANY different sub-ranges"}, tool:{vi:"prefix sum (Nhớ)", en:"prefix sum (Remember)"}, why:{vi:"Tính trước một lần, mỗi truy vấn O(1) — **đừng cộng lại vùng đã cộng.**", en:"Precompute once, each query O(1) — **don't re-add an already-added region.**"}}
+];
+
+const NOTES = [
+  {t:{vi:"Không có công thức vạn năng", en:"No universal formula"}, b:{vi:"Không tồn tại một công thức giải mọi bài — đó là một định luật, không phải lỗ hổng. Cái ta có là la bàn: nó không đi thay bạn, nhưng ở bất kỳ điểm nào cũng chỉ được bước kế tiếp.", en:"There is no formula that solves every problem — that's a law, not a gap. What we have is a compass: it never walks for you, but at any point it points to the next step."}},
+  {t:{vi:"Học bằng nén, không bằng số lượng", en:"Learn by compression, not by volume"}, b:{vi:"Sau khi đọc một lời giải, đừng code lại. Chỉ rút một dòng: \"đặc trưng duy nhất nào của đề lẽ ra phải kích hoạt công cụ này?\" Vài chục bài học kiểu này hơn hàng trăm bài cày cho quen tay.", en:"After reading a solution, don't re-code it. Extract one line: \"which single feature of the problem should have triggered this tool?\" A few dozen problems learned this way beats hundreds grinded for familiarity."}},
+  {t:{vi:"Bước biến đổi là nghệ thuật", en:"The transformation step is art"}, b:{vi:"Cái \"aha\" khi thấy bài X thật ra là bài Y chỉ sắc bén lên nhờ va chạm, không phải nhờ đọc. Mắc kẹt ở đây là bản chất của bài khó, không phải vì bạn kém.", en:"The \"aha\" of seeing problem X as problem Y is sharpened only by collision, not by reading. Being stuck here is the nature of hard problems, not stupidity."}},
+  {t:{vi:"Mọi thứ đều là Duyệt", en:"Everything is Traverse"}, b:{vi:"Nhớ và Sắp xếp chỉ là chuẩn bị. Muốn lấy đáp án bạn phải ĐỌC dữ liệu, mà đọc chính là duyệt. Trò chơi thật sự: duyệt KHÔNG GIAN nào? — và không gian đó thường phải tự phát minh ra.", en:"Remember and Order are only preparation. To extract the answer you must READ the data, and reading is traversing. The real game: WHICH SPACE do you traverse? — and that space often must be invented."}}
+];
+
+/* ============================================================ GUIDED TREE */
+const GUIDE = {
+  start:{ q:{vi:"Câu THƯỢNG NGUỒN trước tiên: đầu ra của bài toán thật sự đòi KIỂU thông tin gì?", en:"The UPSTREAM question first: what TYPE of information does the problem's output truly demand?"},
+    opts:[
+      {t:{vi:"Có / không, hoặc một con số / đếm", en:"Yes/no, or a number / count"}, go:"yn"},
+      {t:{vi:"Tối ưu — nhỏ nhất / lớn nhất", en:"Optimize — minimum / maximum"}, go:"opt"},
+      {t:{vi:"Liệt kê MỌI cấu hình", en:"Enumerate EVERY configuration"}, go:"enum"},
+      {t:{vi:"Một thứ tự, hoặc một đường đi / kết nối", en:"An ordering, or a path / connection"}, go:"pathorder"}
+    ]},
+  yn:{ q:{vi:"Nó có quy về 'đã thấy chưa / có trùng không / đếm tần suất' được không? (bậc rẻ nhất — thử trước)", en:"Can it reduce to 'seen before / duplicate / count frequency'? (cheapest rung — try first)"},
+    opts:[
+      {t:{vi:"Có — chỉ cần biết cái gì giống / đã xuất hiện", en:"Yes — I only need to know what is the same / has appeared"}, verdict:"v_hash"},
+      {t:{vi:"Không, nhưng dữ liệu có thứ tự / sắp được và một đại lượng biến thiên đơn điệu", en:"No, but the data has (or can take) an order where a quantity moves monotonically"}, verdict:"v_order"},
+      {t:{vi:"Không — nó hỏi tổng/đếm trên NHIỀU đoạn con khác nhau", en:"No — it asks sum/count over MANY different sub-ranges"}, verdict:"v_prefix"},
+      {t:{vi:"Không — đáp án lắp từ các bài con lặp lại", en:"No — the answer assembles from repeating sub-problems"}, verdict:"v_dp"}
+    ]},
+  opt:{ q:{vi:"Với bài tối ưu: KIỂM TRA một đáp án ứng viên có dễ hơn TÌM ra nó không?", en:"For an optimization: is CHECKING a candidate answer easier than FINDING it?"},
+    opts:[
+      {t:{vi:"Có — cho một giá trị, tôi kiểm 'khả thi không' dễ dàng, và tính khả thi đơn điệu", en:"Yes — given a value I can test 'feasible?' easily, and feasibility is monotonic"}, verdict:"v_bsans"},
+      {t:{vi:"Không, nhưng có một chuỗi lựa chọn cục bộ mà chọn tốt nhất mỗi bước là an toàn", en:"No, but there's a chain of local choices where picking the best each step is safe"}, verdict:"v_greedy"},
+      {t:{vi:"Không — đáp án tối ưu lắp từ đáp án tối ưu của bài con lặp lại", en:"No — the optimum assembles from the optima of repeating sub-problems"}, verdict:"v_dp"},
+      {t:{vi:"Không — tôi phải liên tục lấy cực trị với chèn/xóa động", en:"No — I must repeatedly pull the extreme with dynamic insert/remove"}, verdict:"v_heap"}
+    ]},
+  enum:{ q:{vi:"Liệt kê mọi cấu hình: bạn có tiêu chí để CẮT sớm các nhánh không dẫn tới đâu không?", en:"Enumerating every configuration: do you have a criterion to CUT branches early that lead nowhere?"},
+    opts:[
+      {t:{vi:"Có — tôi đi cây lựa chọn và cắt tỉa nhánh chết", en:"Yes — I walk the choice tree and prune dead branches"}, verdict:"v_backtrack"},
+      {t:{vi:"Nhiều cấu hình chia sẻ cùng bài con đã tính → tôi chỉ cần ĐẾM số cách", en:"Many configurations share the same computed sub-problem → I only need to COUNT the ways"}, verdict:"v_dp"}
+    ]},
+  pathorder:{ q:{vi:"Đây là quan hệ 'ai nối với ai' (mạng lưới), hay chỉ là sắp thứ tự trên một chiều?", en:"Is this a 'who connects to whom' relation (a network), or just ordering along one dimension?"},
+    opts:[
+      {t:{vi:"Mạng lưới — hỏi đường đi / tới được / ngắn nhất", en:"A network — asks path / reachability / shortest"}, verdict:"v_graph"},
+      {t:{vi:"Một chiều — một đại lượng biến thiên đơn điệu khi tôi trượt/di chuyển", en:"One dimension — a quantity moves monotonically as I slide/move"}, verdict:"v_order"},
+      {t:{vi:"Không gì khớp — có lẽ bài đang bị ngụy trang", en:"Nothing fits — maybe the problem is disguised"}, verdict:"v_transform"}
+    ]}
+};
+const VERDICTS = {
+  v_hash:{rel:"identity", tool:{vi:"Nghĩ theo hướng HASH (danh tính)", en:"Think HASH (identity)"}, body:{vi:"Nếu chỉ cần biết 'cái gì giống / đã thấy / đếm bao nhiêu', thứ tự là vô nghĩa — bạn có thể xóa hẳn một chiều duyệt và tra cứu trực tiếp bằng bộ nhớ.", en:"If you only need 'what is the same / seen / how many', order is meaningless — you can delete a whole traversal dimension and look up directly using memory."}, verify:{vi:"Hãy tự kiểm: bài của bạn có THẬT sự chỉ cần danh tính không, hay bạn vẫn cần biết 'cái nào lớn hơn / ở vị trí nào'? Nếu cần vị trí gốc, đây có thể là dấu hiệu hash đúng hơn two pointer.", en:"Check yourself: does your problem TRULY need only identity, or do you still need 'which is bigger / at what position'? If you need the original position, that's a hint hash fits better than two pointer."}},
+  v_order:{rel:"order", tool:{vi:"Nghĩ theo họ ĐƠN ĐIỆU (two pointer / binary search / sliding window)", en:"Think the MONOTONIC family (two pointer / binary search / sliding window)"}, body:{vi:"Kích hoạt thật không phải 'mảng đã sắp' mà là 'có một đại lượng biến thiên đơn điệu để mỗi bước vứt cả một khoảng'.", en:"The real trigger isn't 'the array is sorted' but 'a quantity moves monotonically so each step discards a whole range'."}, verify:{vi:"Hãy tự chỉ ra: đại lượng NÀO của bạn biến thiên đơn điệu, và vì sao vứt bỏ cả một khoảng là AN TOÀN? Nếu không chứng minh được tính đơn điệu, công cụ này chưa áp dụng được.", en:"Point it out yourself: WHICH quantity of yours moves monotonically, and why is discarding a whole range SAFE? If you can't prove monotonicity, this tool doesn't apply yet."}},
+  v_prefix:{rel:"traverse", tool:{vi:"Nghĩ theo PREFIX SUM (nhớ để không cộng lại)", en:"Think PREFIX SUM (remember, don't re-add)"}, body:{vi:"Nhiều truy vấn tổng/đếm trên các đoạn khác nhau → tính trước một lần, mỗi truy vấn O(1). Bạn đang tránh cộng lại vùng đã cộng.", en:"Many sum/count queries over different ranges → precompute once, each query O(1). You're avoiding re-adding an already-added region."}, verify:{vi:"Hãy tự hỏi: bạn có thật sự truy vấn NHIỀU đoạn không, hay chỉ một? Và đại lượng của bạn có cộng dồn được (khả nghịch) để trừ hai tiền tố không?", en:"Ask yourself: do you really query MANY ranges, or just one? And is your quantity accumulative (invertible) so two prefixes can be subtracted?"}},
+  v_dp:{rel:"dependency", tool:{vi:"Nghĩ theo DP (phụ thuộc)", en:"Think DP (dependency)"}, body:{vi:"Đáp án lớn lắp từ đáp án của vài bài con cùng hình dạng, và các bài con đó lặp lại. Bạn phải TỰ phát minh không gian trạng thái.", en:"The big answer assembles from a few same-shaped sub-problems, and those sub-problems repeat. You must INVENT the state space yourself."}, verify:{vi:"Hãy tự kiểm hai điều kiện: (1) cha có lắp được từ con không (cấu trúc con tối ưu)? (2) con có LẶP LẠI không? Thiếu (1) → lùi về backtracking; thiếu (2) → đệ quy thường là đủ. Trạng thái của bạn là gì?", en:"Check the two conditions: (1) does the parent assemble from children (optimal substructure)? (2) do children REPEAT? Missing (1) → fall back to backtracking; missing (2) → plain recursion is enough. What is your state?"}},
+  v_bsans:{rel:"order", tool:{vi:"Nghĩ theo BINARY SEARCH trên ĐÁP ÁN", en:"Think BINARY SEARCH on the ANSWER"}, body:{vi:"Khi kiểm tra một ứng viên dễ hơn tìm nó, và tính khả thi đơn điệu theo giá trị, bạn dựng một trục đơn điệu trên không gian đáp án dù đề không cho mảng nào để sắp.", en:"When testing a candidate is easier than finding it, and feasibility is monotonic in the value, you build a monotonic axis over the answer space though the problem gave no array to sort."}, verify:{vi:"Hãy tự chứng minh: nếu giá trị x khả thi thì mọi giá trị 'dễ hơn' cũng khả thi (tính đơn điệu)? Và hàm kiểm tra của bạn có rẻ hơn tìm trực tiếp không?", en:"Prove it yourself: if value x is feasible, is every 'easier' value also feasible (monotonicity)? And is your check cheaper than finding directly?"}},
+  v_greedy:{rel:"order", tool:{vi:"Nghĩ theo GREEDY", en:"Think GREEDY"}, body:{vi:"Một chuỗi lựa chọn cục bộ mà chọn tốt nhất mỗi bước dẫn tới tối ưu toàn cục — nhưng chỉ khi bạn chứng minh được nó an toàn.", en:"A chain of local choices where picking the best each step reaches the global optimum — but only if you can prove it's safe."}, verify:{vi:"Hãy tự tìm phản ví dụ: có trường hợp nào lựa chọn tham lam cục bộ lại phá tối ưu toàn cục không? Nếu không loại được nghi ngờ, có thể bài này thật ra là DP.", en:"Hunt for a counter-example yourself: is there a case where the locally-greedy choice breaks the global optimum? If you can't dismiss the doubt, this may really be DP."}},
+  v_heap:{rel:"order", tool:{vi:"Nghĩ theo HEAP", en:"Think HEAP"}, body:{vi:"Liên tục lấy cực trị với chèn/xóa động → giữ một thứ tự cục bộ để mỗi thao tác cực trị là O(log n).", en:"Repeatedly pulling the extreme with dynamic insert/remove → keep a partial order so each extreme operation is O(log n)."}, verify:{vi:"Hãy tự hỏi: bạn có cần TOÀN BỘ thứ tự (thì hãy sắp xếp) hay chỉ cần cực trị hiện tại lặp đi lặp lại (thì mới là heap)?", en:"Ask yourself: do you need the FULL order (then sort) or just the current extreme, again and again (then it's a heap)?"}},
+  v_backtrack:{rel:"traverse", tool:{vi:"Nghĩ theo BACKTRACKING + cắt tỉa", en:"Think BACKTRACKING + pruning"}, body:{vi:"Đi cây lựa chọn một cách hệ thống, cắt sớm các nhánh không thể dẫn tới nghiệm.", en:"Walk the choice tree systematically, cutting off branches that can't lead to a solution early."}, verify:{vi:"Hãy tự chỉ ra: tiêu chí CẮT của bạn là gì? Nếu không có nhánh nào cắt được và các bài con lặp lại, hãy cân nhắc DP thay vì duyệt thô.", en:"Point out your PRUNING criterion. If nothing can be pruned and sub-problems repeat, consider DP instead of raw traversal."}},
+  v_graph:{rel:"traverse", tool:{vi:"Nghĩ theo ĐỒ THỊ (BFS / DFS / Dijkstra)", en:"Think GRAPH (BFS / DFS / Dijkstra)"}, body:{vi:"Dữ liệu là một mạng lưới các quan hệ — để các liên kết dẫn đường thay vì mò từng khả năng.", en:"The data is a network of relations — let the links guide instead of groping through every possibility."}, verify:{vi:"Hãy tự vẽ ra: đỉnh của bạn là gì, cạnh là gì? Và bạn cần 'tới được' (BFS/DFS) hay 'ngắn nhất có trọng số' (Dijkstra)?", en:"Draw it yourself: what are your vertices, what are your edges? And do you need 'reachability' (BFS/DFS) or 'weighted shortest' (Dijkstra)?"}},
+  v_transform:{rel:"traverse", tool:{vi:"Bài toán đang bị NGỤY TRANG — hãy BIẾN ĐỔI", en:"The problem is DISGUISED — TRANSFORM it"}, body:{vi:"Không bậc nào khớp trực tiếp. Có thể một 'mảng số' thật ra là đồ thị, hoặc một 'tìm min/max' thật ra là binary search trên không gian đáp án. Cái aha này là nghệ thuật, mài bằng va chạm.", en:"No rung fits directly. Maybe an 'array of numbers' is really a graph, or a 'find min/max' is really binary search on the answer space. This aha is art, sharpened by collision."}, verify:{vi:"Hãy tự hỏi: đây có phải một bài quen thuộc trong lớp áo khác không? Nếu tôi đổi tên các đối tượng trong đề thành đỉnh/cạnh/trạng thái, có mẫu nào lộ ra không?", en:"Ask yourself: is this a familiar problem in another coat? If I rename the objects in the statement as vertices/edges/states, does a pattern surface?"}}
+};
+
+/* ============================================================ STORAGE + HELPERS */
+const LS = {
+  get(k,def){ try{const v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch(e){return def;} },
+  set(k,v){ try{localStorage.setItem(k,JSON.stringify(v));}catch(e){} }
+};
+let lang = LS.get("dsac_lang","en"); if(lang!=="vi") lang="en";
+let userDict = LS.get("dsac_userdict", []);
+let sessionLog = LS.get("dsac_log", []);
+let aiCfg = LS.get("dsac_ai", {url:"http://localhost:11434/v1", model:"", key:""});
+
+const $ = s=>document.querySelector(s);
+const $$ = s=>document.querySelectorAll(s);
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mdBold = s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+const t = k => (T[lang][k] ?? T.vi[k] ?? k);
+const tx = o => (o && (o[lang] ?? o.vi)) || "";
+
+/* ============================================================ THEME */
+const themeBtn = $("#themeBtn");
+function applyTheme(th){ document.documentElement.setAttribute("data-theme",th); themeBtn.textContent = th==="dark"?"☾":"☀"; LS.set("dsac_theme",th); }
+applyTheme(LS.get("dsac_theme","dark"));
+themeBtn.onclick = ()=>applyTheme(document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark");
+
+/* ============================================================ STATIC i18n APPLY */
+function applyStatic(){
+  document.documentElement.lang = lang;
+  document.title = t("title");
+  $("#langBtn").textContent = lang==="vi"?"EN":"VI";
+  $$("[data-i18n]").forEach(el=>{ el.innerHTML = t(el.getAttribute("data-i18n")); });
+  $$("[data-i18n-attr]").forEach(el=>{
+    el.getAttribute("data-i18n-attr").split(";").forEach(pair=>{
+      const [attr,key] = pair.split(":"); if(attr&&key) el.setAttribute(attr, t(key.trim()));
+    });
+  });
+}
+
+/* ============================================================ NAV active */
+const navLinks = [...$$("#navLinks a")];
+const io = new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ const id=e.target.id;
+  navLinks.forEach(a=>a.classList.toggle("active", a.getAttribute("href")==="#"+id)); }}); },{rootMargin:"-45% 0px -50% 0px"});
+$$("section.block").forEach(s=>io.observe(s));
+
+/* ============================================================ RENDERERS */
+function renderQuestions(){
+  $("#qstrip").innerHTML = QUESTIONS.map(q=>`
+    <div class="qcard ${q.upstream?'upstream':''}">
+      ${q.upstream?`<span class="tag">${esc(t("q_upstream_tag"))}</span>`:''}
+      <div class="qn">${q.n}</div><p>${esc(tx(q.text))}</p>
+    </div>`).join("");
+}
+
+let currentRung = "hash";
+function renderLadder(activeId){
+  currentRung = activeId;
+  $("#ladder").innerHTML = LADDER.map(r=>`
+    <button class="rung ${r.id===activeId?'active':''}" data-rel="${r.rel}" data-id="${r.id}">
+      <div class="r-top"><span class="r-name">${esc(tx(r.name))}</span><span class="r-verb">${esc(tx(r.verb))}</span></div>
+      <div class="r-cost ${r.cheap?'r-cheap':''}">${esc(tx(r.cost))}</div>
+    </button>`).join("");
+  $("#ladder").querySelectorAll(".rung").forEach(b=>b.onclick=()=>renderLadder(b.dataset.id));
+  const r = LADDER.find(x=>x.id===activeId);
+  $("#rungDetail").innerHTML = `
+    <span class="d-rel pill ${r.rel}">${esc(tx(REL[r.rel]))}</span>
+    <h3>${esc(tx(r.name))}</h3>
+    <p class="d-verb">${esc(t("d_verb"))} <b style="color:var(--${r.rel})">${esc(tx(r.verb))}</b> · ${esc(tx(r.cost))}</p>
+    <div class="d-field"><div class="d-label">${esc(t("d_label_trigger"))}</div><p class="d-trigger">"${esc(tx(r.trigger))}"</p></div>
+    <div class="d-field"><div class="d-label">${esc(t("d_label_why"))}</div><p>${esc(tx(r.why))}</p></div>
+    <div class="d-field"><div class="d-label">${esc(t("d_label_space"))}</div><p>${esc(tx(r.space))}</p></div>`;
+}
+
+let dictFilterRel = "all";
+function allDict(){ return [...BUILTIN_DICT.map(d=>({...d,builtin:true})), ...userDict.map((d,i)=>({...d,builtin:false,idx:i}))]; }
+function dGet(d,f){ const v=d[f]; return (v&&typeof v==="object")?tx(v):v; } // user entries are plain strings
+function renderDict(){
+  const list = allDict().filter(d=>dictFilterRel==="all"||d.rel===dictFilterRel);
+  $("#dictGrid").innerHTML = list.map(d=>`
+    <div class="dcard" data-rel="${d.rel}">
+      <div class="signal">${esc(dGet(d,"signal"))}</div>
+      <div class="tool"><span class="arrow">→</span> ${esc(dGet(d,"tool"))}</div>
+      <div class="why">${mdBold(dGet(d,"why"))}</div>
+      <div class="foot">
+        <span class="pill ${d.rel}">${esc(tx(REL[d.rel]))}</span>
+        ${d.builtin?'':`<span style="display:flex;gap:8px;align-items:center"><span class="mine">${esc(t("dict_mine"))}</span><button class="del" data-del="${d.idx}">${esc(t("dict_del"))}</button></span>`}
+      </div>
+    </div>`).join("") || `<p class="empty">${esc(t("dict_empty"))}</p>`;
+  $$("#dictGrid .del").forEach(b=>b.onclick=()=>{ userDict.splice(+b.dataset.del,1); LS.set("dsac_userdict",userDict); renderDict(); });
+}
+
+let currentGuideNode = GUIDE.start, guidePath = [];
+function renderGuide(node){
+  currentGuideNode = node;
+  const crumbs = [t("guide_root_crumb"), ...guidePath.map(p=>p.crumb)];
+  $("#guideCrumbs").innerHTML = crumbs.map(c=>`<span class="crumb">${esc(c)}</span>`).join("");
+  if(node.verdict){
+    const v = VERDICTS[node.verdict];
+    $("#guideBody").innerHTML = `
+      <div class="guide-verdict" data-rel="${v.rel}">
+        <div class="hyp">${esc(t("guide_hyp"))}</div>
+        <h4>${esc(tx(v.tool))}</h4>
+        <p>${esc(tx(v.body))}</p>
+        <div class="verify">${esc(t("guide_verify_prefix"))}${esc(tx(v.verify))}</div>
+      </div>
+      <div class="guide-back">
+        <button class="btn btn-ghost" id="gBack">${esc(t("guide_back"))}</button>
+        <button class="btn btn-primary" id="gRestart">${esc(t("guide_restart"))}</button>
+      </div>`;
+    $("#gRestart").onclick=()=>{guidePath=[];renderGuide(GUIDE.start);};
+    $("#gBack").onclick=()=>{guidePath.pop();renderGuide(guidePath.length?guidePath[guidePath.length-1].node:GUIDE.start);};
+    return;
+  }
+  $("#guideBody").innerHTML = `
+    <p class="guide-q">${esc(tx(node.q))}</p>
+    <div class="guide-opts">
+      ${node.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="oi">◇</span>${esc(tx(o.t))}</button>`).join("")}
+    </div>
+    ${guidePath.length?`<div class="guide-back"><button class="btn btn-ghost" id="gBack">${esc(t("guide_back"))}</button></div>`:""}`;
+  $$("#guideBody .opt").forEach(b=>b.onclick=()=>{
+    const o = node.opts[+b.dataset.i];
+    const next = o.verdict ? {verdict:o.verdict} : GUIDE[o.go];
+    const label = tx(o.t);
+    guidePath.push({crumb: label.length>28?label.slice(0,26)+"…":label, node:next, optRef:o});
+    renderGuide(next);
+  });
+  if($("#gBack")) $("#gBack").onclick=()=>{guidePath.pop();renderGuide(guidePath.length?guidePath[guidePath.length-1].node:GUIDE.start);};
+}
+// re-translate crumbs on language switch by recomputing from stored optRefs
+function retranslateGuide(){
+  guidePath.forEach(p=>{ if(p.optRef){ const l=tx(p.optRef.t); p.crumb = l.length>28?l.slice(0,26)+"…":l; } });
+  renderGuide(currentGuideNode);
+}
+
+let currentPractice = null;
+function renderPractice(item){
+  const pool = allDict();
+  const d = item || pool[Math.floor(Math.random()*pool.length)];
+  currentPractice = d;
+  $("#practiceCard").innerHTML = `
+    <p class="practice-sub">${esc(t("drill_prompt"))}</p>
+    <p class="practice-signal">"${esc(dGet(d,"signal"))}"</p>
+    <span class="pill ${d.rel}">${esc(tx(REL[d.rel]))}</span>
+    <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-primary" id="pReveal">${esc(t("drill_reveal"))}</button>
+      <button class="btn btn-ghost" id="pNext">${esc(t("drill_next"))}</button>
+    </div>
+    <div id="pRevealBox"></div>`;
+  $("#pNext").onclick=()=>renderPractice();
+  $("#pReveal").onclick=()=>{
+    $("#pRevealBox").innerHTML = `
+      <div class="reveal" data-rel="${d.rel}" style="--rc:var(--${d.rel})">
+        <div class="tool">→ ${esc(dGet(d,"tool"))}</div>
+        <div class="why">${mdBold(dGet(d,"why"))}</div>
+      </div>`;
+    $("#pReveal").disabled=true; $("#pReveal").style.opacity=.5;
+  };
+}
+
+function renderLog(){
+  $("#logGrid").innerHTML = sessionLog.length ? sessionLog.map((l,i)=>`
+    <div class="log-item">
+      <div><div class="lp">${esc(l.problem)}</div><div class="lt">→ ${esc(l.trigger)}</div><div class="ld">${esc(l.date)}</div></div>
+      <button class="del" data-dl="${i}">${esc(t("log_del"))}</button>
+    </div>`).join("") : `<p class="empty">${esc(t("log_empty"))}</p>`;
+  $$("#logGrid .del").forEach(b=>b.onclick=()=>{sessionLog.splice(+b.dataset.dl,1);LS.set("dsac_log",sessionLog);renderLog();});
+}
+
+function renderNotes(){
+  $("#notesGrid").innerHTML = NOTES.map(n=>`<div class="note"><h4>${esc(tx(n.t))}</h4><p>${esc(tx(n.b))}</p></div>`).join("");
+}
+
+/* ============================================================ DICT / LOG actions */
+$$("#dictFilter .chip").forEach(c=>c.onclick=()=>{
+  $$("#dictFilter .chip").forEach(x=>x.classList.remove("on"));
+  c.classList.add("on"); dictFilterRel=c.dataset.rel; renderDict();
+});
+$("#addEntry").onclick = ()=>{
+  const signal=$("#fSignal").value.trim(), tool=$("#fTool").value.trim(), why=$("#fWhy").value.trim(), rel=$("#fRel").value;
+  if(!signal||!tool){ alert(t("dict_alert")); return; }
+  userDict.push({signal,tool,why:why||t("dict_why_todo"),rel});
+  LS.set("dsac_userdict",userDict);
+  $("#fSignal").value=$("#fTool").value=$("#fWhy").value="";
+  dictFilterRel="all"; $$("#dictFilter .chip").forEach(x=>x.classList.toggle("on",x.dataset.rel==="all"));
+  renderDict();
+};
+$("#addLog").onclick=()=>{
+  const problem=$("#logProblem").value.trim(), trigger=$("#logTrigger").value.trim();
+  if(!problem){alert(t("log_alert"));return;}
+  sessionLog.unshift({problem,trigger:trigger||t("log_no_trigger"),date:new Date().toLocaleDateString(lang==="vi"?"vi-VN":"en-US")});
+  LS.set("dsac_log",sessionLog);
+  $("#logProblem").value=$("#logTrigger").value="";
+  renderLog();
+};
+
+/* ============================================================ AI TUTOR */
+const SYSTEM_PROMPT = `You are 'DSA Compass' — a Socratic mentor who guides a learner to find algorithmic
+solutions themselves. You NEVER give a complete solution, code, or a pattern name
+as a command. You only ASK the right question so the learner discovers it.
+
+Guide strictly along this framework, top-down, ONE step and ONE question per turn:
+1. UPSTREAM — first clarify: "What TYPE of answer does the problem truly ask for?"
+   (yes/no · a number/count · optimize min-max · enumerate all configurations · an
+   ordering · a path). Most dead-ends come from answering this wrong.
+2. If they have nothing yet: have them think brute force to REVEAL the problem's
+   shape and see what they're repeating (waste is the footprint of structure).
+3. Climb the cost ladder from CHEAP to EXPENSIVE in thinking effort, asking each
+   tier's trigger:
+   - IDENTITY (hash): "Does this reduce to 'seen / duplicate / count'?" — try first.
+   - ORDER (two pointer, binary search, sliding window, greedy): "Is there an order
+     making a quantity change MONOTONICALLY, so each step eliminates a whole batch?"
+   - DEPENDENCY (DP): "Does the big answer ASSEMBLE from a few repeating sub-problems?"
+4. Throughout, pull them back to the core: "WHICH SPACE do you need to traverse?" —
+   remind them that space sometimes must be INVENTED (answer space, state space, a
+   disguised graph), not found in the problem.
+5. If no tier fits: gently suggest the problem may be DISGUISED, and ask "is this a
+   familiar problem in disguise?" — still let them see it themselves.
+
+HARD RULES:
+- Each reply: 2–5 sentences, warm, ending with exactly ONE guiding question. Never
+  list multiple questions.
+- Absolutely no code, no final complexity, never say "use X" outright.
+- When the learner reaches the right idea themselves, confirm and praise briefly,
+  then push one step deeper.
+- If they beg for the answer: give a BIGGER HINT (an observation about the
+  structure, or narrow it to two choices) — NOT the answer.
+- __LANG_RULE__`;
+
+const LANG_RULE = {
+  en:`- REPLY IN ENGLISH. The learner has set the interface to English, so write every reply in English, in a warm, respectful, conversational tone. You may use **bold** for one key phrase.`,
+  vi:`- TRẢ LỜI BẰNG TIẾNG VIỆT. Người học đã đặt giao diện sang tiếng Việt, nên hãy viết mọi câu trả lời bằng tiếng Việt, giọng ấm áp, tôn trọng, trò chuyện. Bạn có thể dùng **in đậm** cho đúng một cụm từ khóa.`
+};
+function buildSystemPrompt(){ return SYSTEM_PROMPT.replace("__LANG_RULE__", LANG_RULE[lang]||LANG_RULE.en); }
+
+let chatHistory = [{role:"system", content:buildSystemPrompt()}];
+$("#aiUrl").value = aiCfg.url||""; $("#aiModel").value = aiCfg.model||""; $("#aiKey").value = aiCfg.key||"";
+
+function setStatus(cls,text){ const s=$("#aiStatus"); s.className="status "+cls; s.removeAttribute("data-i18n"); s.textContent=text; }
+function normUrl(u){ u=(u||"").trim().replace(/\/+$/,""); if(!/\/v1$/.test(u)&&!/\/chat\/completions$/.test(u)) u+= u.match(/\/v\d+$/)?"":"/v1"; return u; }
+
+async function aiCall(messages, {test=false}={}){
+  const base = normUrl($("#aiUrl").value);
+  const model = $("#aiModel").value.trim();
+  const key = $("#aiKey").value.trim();
+  aiCfg = {url:$("#aiUrl").value.trim(), model, key}; LS.set("dsac_ai",aiCfg);
+  if(!base){ throw new Error(t("err_no_url")); }
+  if(!model && !test){ throw new Error(t("err_no_model")); }
+  const headers = {"Content-Type":"application/json"};
+  if(key) headers["Authorization"]="Bearer "+key;
+  const res = await fetch(base+"/chat/completions",{ method:"POST", headers,
+    body:JSON.stringify({model:model||"test", messages, temperature:0.6, stream:false}) });
+  if(!res.ok){ const tx2=await res.text().catch(()=>""); throw new Error(`HTTP ${res.status} ${tx2.slice(0,120)}`); }
+  const data = await res.json();
+  return data.choices?.[0]?.message?.content ?? t("err_no_content");
+}
+
+$("#aiTest").onclick = async ()=>{
+  setStatus("wait",t("status_testing"));
+  try{
+    if(!$("#aiModel").value.trim()){ setStatus("err",t("status_need_model")); return; }
+    await aiCall([{role:"system",content:"ping"},{role:"user",content:"Reply with exactly one word: OK"}],{test:true});
+    setStatus("ok",t("status_ok"));
+  }catch(e){ setStatus("err",t("status_err")+e.message); }
+};
+
+const chatLog = $("#chatLog"), chatInput = $("#chatInput"), chatSend = $("#chatSend");
+function addMsg(role,text){
+  const d=document.createElement("div");
+  d.className="msg "+(role==="user"?"user":role==="system"?"sys":"bot");
+  d.innerHTML = role==="assistant"?mdBold(text):esc(text);
+  chatLog.appendChild(d); chatLog.scrollTop=chatLog.scrollHeight; return d;
+}
+async function sendChat(text){
+  text=text.trim(); if(!text) return;
+  if(!$("#aiModel").value.trim()){ addMsg("system",t("need_config")); return; }
+  addMsg("user",text); chatHistory.push({role:"user",content:text});
+  chatInput.value=""; chatInput.style.height="auto"; chatSend.disabled=true;
+  const wait = addMsg("assistant",t("chat_thinking"));
+  try{
+    const reply = await aiCall(chatHistory);
+    chatHistory.push({role:"assistant",content:reply});
+    wait.innerHTML = mdBold(reply);
+  }catch(e){
+    wait.className="msg sys"; wait.textContent=t("chat_err_prefix")+e.message+t("chat_err_suffix");
+    setStatus("err",t("status_err")+e.message);
+  }finally{ chatSend.disabled=false; chatLog.scrollTop=chatLog.scrollHeight; }
+}
+chatSend.onclick=()=>sendChat(chatInput.value);
+chatInput.addEventListener("keydown",e=>{ if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendChat(chatInput.value);} });
+chatInput.addEventListener("input",()=>{ chatInput.style.height="auto"; chatInput.style.height=Math.min(chatInput.scrollHeight,120)+"px"; });
+$$("#suggests .chip").forEach(c=>c.onclick=()=>sendChat(c.textContent));
+
+/* ============================================================ LANGUAGE SWITCH */
+function applyLang(){
+  chatHistory[0] = {role:"system", content:buildSystemPrompt()}; // chat replies follow the UI language
+  applyStatic();
+  renderQuestions();
+  renderLadder(currentRung);
+  renderDict();
+  retranslateGuide();
+  renderPractice(currentPractice);
+  renderLog();
+  renderNotes();
+}
+$("#langBtn").onclick = ()=>{ lang = lang==="vi"?"en":"vi"; LS.set("dsac_lang",lang); applyLang(); };
+
+/* ============================================================ INIT */
+applyStatic();
+renderQuestions();
+renderLadder("hash");
+renderDict();
+renderGuide(GUIDE.start);
+renderPractice();
+renderLog();
+renderNotes();
+</script>
+</body>
+</html>
