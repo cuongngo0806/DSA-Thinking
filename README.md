@@ -45,12 +45,36 @@ npx serve .
 | **Bản đồ tư duy** | Thinking Map | 4 câu hỏi la bàn (câu *thượng nguồn* hỏi trước) + thang chi phí tư duy 5 bậc. Bấm từng bậc để xem câu hỏi kích hoạt, "vì sao công cụ này", và "duyệt không gian nào". |
 | **Từ điển tín hiệu** | Trigger Dictionary | 14 mục cô đọng: tín hiệu trong đề → công cụ + vì sao. Lọc theo loại quan hệ. **Tự thêm mục của riêng bạn** (lưu cục bộ) — đây là phần cốt lõi để bạn tập tự đi. |
 | **Dẫn lối** | Guided | Cây quyết định **offline, không cần AI**. Bắt đầu từ "đầu ra đòi kiểu thông tin gì?", đi tới một **GIẢ THUYẾT** (không phải đáp án) kèm câu tự kiểm chứng. |
+| **Lộ trình 150** | Roadmap 150 | Kế hoạch ôn **Top Interview 150** trong 2 tháng: check-off hằng ngày, streak + lịch nhiệt, spaced-repetition, radar chủ đề yếu, và ETA thích ứng. Đồng bộ tùy chọn với LeetCode. Xem mục riêng bên dưới. |
 | **La bàn sống** | Living Compass | Gia sư AI Socratic nối mô hình local (xem dưới). |
 | **Luyện nén** | Compression Drill | Rút ngẫu nhiên một tín hiệu; tự nói *công cụ* và *vì sao* trước khi lật. |
 | **Nhật ký** | Log | Ghi "bài toán tôi va phải" + tín hiệu rút ra. Lưu cục bộ. |
 | **Ghi chú** | Notes | Các lưu ý thành thật về phương pháp. |
 
-### Nút trên thanh điều hướng · Toolbar
+---
+
+## 🗺️ Lộ trình 150 · Roadmap 150 (Top Interview 150)
+
+Một kế hoạch ôn luyện [**Top Interview 150**](https://leetcode.com/studyplan/top-interview-150/) đặt ngay trong ứng dụng — vẫn theo tinh thần *nén, không phải cày*: mỗi câu giải xong hãy rút **một dòng tín hiệu** ("đặc trưng nào lẽ ra phải kích hoạt công cụ này?").
+
+A built-in study plan for the **Top Interview 150** list — still in the compass spirit: for each solved problem, compress it into **one line of signal**.
+
+### Tính năng · Features
+- **Bàn làm việc 2 cột · Two-column workbench** — không cần lướt: bên **trái** là *Hôm nay cần giải* + *Ôn lại*, bên **phải** là gia sư AL (*La bàn sống*) luôn kề bên để hỏi ngay. Thống kê, lịch nhiệt, radar và *toàn bộ 150 câu* nằm gọn sau tab **Tiến độ / Toàn bộ 150 câu**; thiết lập AI ẩn sau nút ⚙. On narrow screens the two columns stack.
+- **Kế hoạch hằng ngày trộn chủ đề · Interleaved daily plan** — đặt *ngày bắt đầu* và *số câu/ngày* (mặc định 3/ngày ≈ 50 ngày cho 150 câu). Lô mỗi ngày **luân phiên qua nhiều chủ đề** (round-robin) và tăng độ khó nhẹ từ dễ → khó, để **không đóng khung tư duy** vào một dạng bài duy nhất. Danh sách *Toàn bộ 150 câu* vẫn nhóm theo chủ đề để dễ tra cứu.
+- **Check-off + streak** — tick từng câu là xong; **chuỗi ngày** (streak) và **lịch nhiệt** kiểu GitHub theo dõi đều đặn.
+- **Đồng bộ LeetCode · Sync** — nhập **username công khai** rồi bấm *Đồng bộ*: app đọc các bài **Accepted gần đây** qua một API cộng đồng và tự tick các câu khớp. Không cần mật khẩu, không gửi dữ liệu riêng tư. Nếu API lỗi/offline → cứ dùng check-off thủ công.
+- **Spaced repetition · Ôn lại** — câu đã giải tự quay lại sau **3 / 7 / 21 ngày**; đánh dấu *Chưa chắc* sẽ được đẩy lịch ôn sớm hơn.
+- **Đánh giá độ chắc · Confidence** — mỗi câu: *Chưa chắc / Chắc*, dùng để ưu tiên ôn.
+- **Ghi chú nén · Compression note** — một ô một dòng cho mỗi câu, nối thẳng với triết lý Từ điển tín hiệu.
+- **Radar chủ đề · Weak-topic map** — 23 nhóm chủ đề, nhóm yếu nhất nổi lên đầu để bạn tái cân bằng.
+- **Dự báo tiến độ · Adaptive ETA** — tính lại *cần bao nhiêu câu/ngày* và *ngày dự kiến xong* từ nhịp thực tế so với mốc 2 tháng.
+
+> **Lưu ý sync · Sync note:** LeetCode không có API chính thức thân thiện CORS cho danh sách đã giải, nên đồng bộ dùng một API cộng đồng công khai chỉ với username của bạn. Nó có thể tạm lỗi khi dịch vụ miễn phí đó gián đoạn — khi ấy check-off thủ công vẫn hoạt động 100% offline.
+
+Toàn bộ tiến độ, streak, ghi chú, cấu hình kế hoạch đều lưu trong `localStorage` của trình duyệt này.
+
+---
 - **EN / VI** — đổi ngôn ngữ toàn bộ giao diện. Gia sư AI cũng **trả lời theo đúng ngôn ngữ đang chọn**.
 - **☾ / ☀** — đổi giao diện tối / sáng.
 
@@ -60,7 +84,7 @@ Mặc định: **tiếng Anh + nền tối**. Mọi lựa chọn được nhớ 
 
 ## 🤖 Cấu hình gia sư AI · Configure the AI tutor
 
-Gia sư gọi một endpoint **OpenAI-compatible** chạy trên máy bạn. Vào phần **La bàn sống → Thiết lập**, điền:
+Gia sư gọi một endpoint **OpenAI-compatible** chạy trên máy bạn. Trong bàn làm việc **Lộ trình 150**, bấm nút **⚙** ở cột *La bàn sống* để mở **Thiết lập**, điền:
 
 - **Base URL** — ví dụ:
   - Ollama: `http://localhost:11434/v1`

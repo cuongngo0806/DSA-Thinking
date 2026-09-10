@@ -253,6 +253,119 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
   .qstrip{grid-template-columns:1fr 1fr}
 }
 @media (max-width:560px){.qstrip{grid-template-columns:1fr}.row2{grid-template-columns:1fr}}
+
+/* ============================================================ ROADMAP 150 */
+.lc-cfgbar{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:22px}
+.lc-cfgbar .field{margin:0}
+.lc-cfgbar .inp{min-width:120px}
+.lc-cfgbar .lc-userwrap{flex:1;min-width:180px}
+.lc-cfgbar .lc-actions{display:flex;gap:8px;flex-wrap:wrap}
+.lc-syncstate{font-size:12.5px;color:var(--muted);align-self:center;margin-left:auto}
+.lc-syncstate.ok{color:var(--dependency)} .lc-syncstate.err{color:#e07a6a} .lc-syncstate.wait{color:var(--order)}
+.lc-privacy{flex-basis:100%;font-size:12px;color:var(--muted-2);margin:2px 0 0}
+
+.lc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.lc-stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 15px}
+.lc-stat .num{font-family:var(--serif);font-size:30px;line-height:1;color:var(--brass)}
+.lc-stat .lbl{font-size:12.5px;color:var(--muted);margin-top:6px}
+.lc-progress{height:9px;border-radius:6px;background:var(--surface-2);overflow:hidden;margin:6px 0 20px;border:1px solid var(--line-soft)}
+.lc-progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--dependency),var(--brass));transition:width .4s}
+.lc-pace{display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px;color:var(--text-dim);margin:-12px 0 22px}
+.lc-pace span{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:5px 13px}
+.lc-pace .good{border-color:var(--dependency-line);color:var(--dependency)}
+.lc-pace .bad{border-color:#e07a6a;color:#e07a6a}
+
+.lc-panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:18px}
+.lc-panel h3{font-size:18px;margin:0 0 4px;font-weight:600}
+.lc-panel .lc-psub{font-size:13px;color:var(--muted);margin:0 0 14px}
+.lc-two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.lc-two .lc-panel{margin-bottom:18px}
+
+.lc-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line-soft)}
+.lc-row:first-of-type{border-top:none}
+.lc-check{flex:0 0 auto;width:22px;height:22px;border-radius:6px;border:2px solid var(--line);background:var(--bg);cursor:pointer;display:grid;place-items:center;color:transparent;font-size:13px;transition:border-color .15s,background .15s}
+.lc-check.on{background:var(--dependency);border-color:var(--dependency);color:#08221c}
+.lc-check:hover{border-color:var(--brass)}
+.lc-main{flex:1;min-width:0}
+.lc-title{font-size:14.5px;color:var(--text);text-decoration:none}
+.lc-title:hover{color:var(--brass)}
+.lc-meta{display:flex;gap:8px;align-items:center;margin-top:3px;flex-wrap:wrap}
+.lc-diff{font-size:11px;font-weight:700;letter-spacing:.3px;padding:1px 7px;border-radius:20px}
+.lc-diff.E{color:var(--dependency);background:var(--dependency-bg)}
+.lc-diff.M{color:var(--order);background:var(--order-bg)}
+.lc-diff.H{color:#e07a6a;background:rgba(224,122,106,.12)}
+.lc-gtag{font-size:11.5px;color:var(--muted-2)}
+.lc-note{width:100%;margin-top:8px;background:var(--bg);border:1px solid var(--line-soft);border-radius:8px;color:var(--text);
+  font-family:var(--sans);font-size:12.5px;padding:6px 9px;resize:vertical}
+.lc-confbtns{display:flex;gap:6px;flex:0 0 auto}
+.lc-cbtn{font-size:11px;font-weight:600;border:1px solid var(--line);background:var(--bg);color:var(--muted);border-radius:16px;padding:3px 10px;cursor:pointer;font-family:var(--sans)}
+.lc-cbtn.shaky.on{border-color:#e07a6a;color:#e07a6a;background:rgba(224,122,106,.1)}
+.lc-cbtn.solid.on{border-color:var(--dependency);color:var(--dependency);background:var(--dependency-bg)}
+.lc-cbtn:hover{border-color:var(--brass)}
+.lc-open{flex:0 0 auto;font-size:12px;color:var(--brass);text-decoration:none;border:1px solid var(--line);border-radius:8px;padding:4px 9px}
+.lc-open:hover{border-color:var(--brass)}
+.lc-badge{font-size:11px;font-weight:700;color:var(--order);background:var(--order-bg);border-radius:20px;padding:1px 9px}
+.lc-mastered{font-size:11px;color:var(--dependency)}
+.lc-rvbtn{flex:0 0 auto}
+
+.lc-grouphead{display:flex;align-items:center;gap:10px;margin:18px 0 2px;font-size:13px;font-weight:700;color:var(--text-dim)}
+.lc-grouphead .gcount{font-weight:500;color:var(--muted-2);font-size:12px}
+.lc-grouphead .gbar{flex:1;height:5px;border-radius:4px;background:var(--surface-2);overflow:hidden;max-width:160px}
+.lc-grouphead .gbar > i{display:block;height:100%;background:var(--brass)}
+
+.lc-heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3px;margin-top:4px;overflow-x:auto}
+.lc-cell{width:13px;height:13px;border-radius:3px;background:var(--surface-2);border:1px solid var(--line-soft)}
+.lc-cell.h1{background:color-mix(in srgb,var(--brass) 32%,var(--surface-2))}
+.lc-cell.h2{background:color-mix(in srgb,var(--brass) 58%,var(--surface))}
+.lc-cell.h3{background:color-mix(in srgb,var(--brass) 82%,var(--surface))}
+.lc-cell.h4{background:var(--brass)}
+.lc-heatleg{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--muted-2);margin-top:12px}
+.lc-heatleg .lc-cell{width:11px;height:11px}
+
+.lc-radarrow{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12.5px}
+.lc-radarrow .rn{flex:0 0 128px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lc-radarrow .rbar{flex:1;height:8px;border-radius:5px;background:var(--surface-2);overflow:hidden}
+.lc-radarrow .rbar > i{display:block;height:100%;border-radius:5px}
+.lc-radarrow .rc{flex:0 0 auto;color:var(--muted-2);font-size:11.5px;width:38px;text-align:right}
+
+.lc-listhead{font-size:20px;margin:6px 0 6px;font-weight:600}
+.lc-filterbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.lc-empty{color:var(--muted);font-style:italic;padding:14px 0}
+
+/* --- workbench: solve (left) + ask AI (right) --- */
+.lc-ministat{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:12px 18px;margin-bottom:18px}
+.lc-ms{display:flex;align-items:baseline;gap:7px}
+.lc-ms b{font-family:var(--serif);font-size:22px;color:var(--brass);line-height:1}
+.lc-ms span{font-size:12.5px;color:var(--muted)}
+.lc-ms-bar{flex:1;min-width:120px;height:8px;border-radius:6px;background:var(--surface-2);overflow:hidden;border:1px solid var(--line-soft)}
+.lc-ms-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--dependency),var(--brass));transition:width .4s}
+.lc-ms-pace{font-size:12.5px;padding:3px 11px;border-radius:20px;border:1px solid var(--line)}
+.lc-ms-pace.good{border-color:var(--dependency-line);color:var(--dependency)}
+.lc-ms-pace.bad{border-color:#e07a6a;color:#e07a6a}
+
+.wb{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;margin-bottom:26px}
+.wb-solve{display:flex;flex-direction:column;gap:16px;min-width:0}
+.wb-solve .lc-panel{margin-bottom:0}
+.wb-ask{position:sticky;top:64px;min-width:0}
+.wb-ask .chat{min-height:520px;max-height:calc(100vh - 90px)}
+.chat-head{display:flex;align-items:center;justify-content:space-between;padding:13px 16px 11px;border-bottom:1px solid var(--line)}
+.chat-head h3{margin:0;font-size:16px;font-weight:600}
+.lc-gear{background:var(--bg);border:1px solid var(--line);color:var(--text-dim);width:32px;height:32px;border-radius:9px;cursor:pointer;font-size:15px}
+.lc-gear:hover{border-color:var(--brass);color:var(--brass)}
+.wb-ask .settings{border:none;border-bottom:1px solid var(--line);border-radius:0;padding:14px 16px}
+
+.lc-tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.lc-tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--sans);font-size:14.5px;
+  font-weight:600;padding:9px 14px;cursor:pointer;margin-bottom:-1px}
+.lc-tab:hover{color:var(--text)}
+.lc-tab.on{color:var(--brass);border-bottom-color:var(--brass)}
+.lc-cfgwrap{margin-top:22px;border:1px solid var(--line);border-radius:12px;padding:6px 14px;background:var(--surface)}
+.lc-cfgwrap summary{cursor:pointer;font-size:13.5px;font-weight:600;color:var(--text-dim);padding:8px 0}
+.lc-cfgwrap[open] summary{margin-bottom:8px}
+
+@media (max-width:720px){.lc-stats{grid-template-columns:repeat(2,1fr)}.lc-two{grid-template-columns:1fr}.lc-radarrow .rn{flex-basis:96px}}
+@media (max-width:860px){.wb{grid-template-columns:1fr}.wb-ask{position:static}.wb-ask .chat{max-height:640px}}
 </style>
 </head>
 <body>
@@ -267,7 +380,7 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
       <a href="#ban-do" data-i18n="nav_map">Bản đồ tư duy</a>
       <a href="#tu-dien" data-i18n="nav_dict">Từ điển tín hiệu</a>
       <a href="#dan-loi" data-i18n="nav_guide">Dẫn lối</a>
-      <a href="#la-ban-song" data-i18n="nav_living">La bàn sống</a>
+      <a href="#lo-trinh" data-i18n="nav_roadmap">Lộ trình 150</a>
       <a href="#luyen-tap" data-i18n="nav_drill">Luyện nén</a>
       <a href="#nhat-ky" data-i18n="nav_log">Nhật ký</a>
       <a href="#ghi-chu" data-i18n="nav_notes">Ghi chú</a>
@@ -363,34 +476,72 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
   </div>
 </section>
 
-<section class="block" id="la-ban-song">
+<section class="block" id="lo-trinh">
   <div class="wrap">
-    <h2 class="sec-head" data-i18n="living_head">La bàn sống <span class="sub-label">— gia sư Socratic (mô hình local)</span></h2>
-    <p class="sec-sub" data-i18n="living_sub">Nối tới một endpoint OpenAI-compatible chạy trên máy bạn (Ollama <code>:11434/v1</code>, LM Studio <code>:1234/v1</code>, llama.cpp, vLLM). Gia sư <b>không bao giờ đưa lời giải</b> — chỉ hỏi đúng câu để bạn tự tìm ra. Bạn viết tiếng nào, nó đáp tiếng đó.</p>
-    <div class="tutor-layout">
-      <div class="settings">
-        <h3 data-i18n="set_head">Thiết lập</h3>
-        <div class="status" id="aiStatus" data-i18n="status_untested">Chưa kiểm tra</div>
-        <div class="field"><label class="lbl" data-i18n="set_url_lbl">Base URL</label><input class="inp" id="aiUrl" placeholder="http://localhost:11434/v1"></div>
-        <div class="field"><label class="lbl" data-i18n="set_model_lbl">Tên model</label><input class="inp" id="aiModel" placeholder="llama3.1 / qwen2.5 ..."></div>
-        <div class="field"><label class="lbl" data-i18n="set_key_lbl">API key (tùy chọn)</label><input class="inp" id="aiKey" type="password" data-i18n-attr="placeholder:set_key_ph"></div>
-        <button class="btn btn-primary" id="aiTest" style="width:100%" data-i18n="set_test_btn">Lưu & kiểm tra kết nối</button>
-        <p class="hint-note" data-i18n="set_hint">Nếu mở file bằng <code>file://</code>, trình duyệt có thể chặn CORS. Hãy bật CORS ở endpoint (ví dụ <code>OLLAMA_ORIGINS=*</code>) hoặc chạy một máy chủ tĩnh cho trang này.</p>
+    <h2 class="sec-head" data-i18n="lc_head">Lộ trình 150 <span class="sub-label">— Top Interview 150</span></h2>
+    <p class="sec-sub" data-i18n="lc_sub">Một kế hoạch hằng ngày để đi hết 150 câu trong 2 tháng — nhưng vẫn theo tinh thần la bàn: mỗi câu bạn giải xong, hãy nén nó thành <b>một dòng tín hiệu</b>. Dữ liệu ở lại trong trình duyệt này.</p>
+
+    <div class="lc-ministat" id="lcMiniStat"></div>
+
+    <div class="wb">
+      <div class="wb-solve">
+        <div class="lc-panel" id="lcToday"></div>
+        <div class="lc-panel" id="lcReview"></div>
       </div>
-      <div class="chat">
-        <div class="chat-log" id="chatLog">
-          <div class="msg sys" data-i18n="chat_init">Cấu hình endpoint bên trái, rồi kể cho tôi bài toán bạn đang mắc. Tôi sẽ chỉ hỏi — không giải thay.</div>
-        </div>
-        <div class="suggests" id="suggests">
-          <button class="chip" data-i18n="sug1">Tôi không biết bắt đầu từ đâu</button>
-          <button class="chip" data-i18n="sug2">Tôi có brute force nhưng quá chậm</button>
-          <button class="chip" data-i18n="sug3">Cho tôi một gợi ý lớn hơn</button>
-        </div>
-        <div class="chat-input">
-          <textarea id="chatInput" data-i18n-attr="placeholder:chat_ph" rows="1"></textarea>
-          <button class="send-btn" id="chatSend" title="Send">➤</button>
+      <div class="wb-ask">
+        <div class="chat" id="tutorChat">
+          <div class="chat-head">
+            <h3 data-i18n="wb_ask_head">Hỏi la bàn sống</h3>
+            <button class="lc-gear" id="aiGear" data-i18n-attr="title:wb_ai_settings" aria-label="AI settings">⚙</button>
+          </div>
+          <div class="settings" id="aiSettings" hidden>
+            <div class="status" id="aiStatus" data-i18n="status_untested">Chưa kiểm tra</div>
+            <div class="field"><label class="lbl" data-i18n="set_url_lbl">Base URL</label><input class="inp" id="aiUrl" placeholder="http://localhost:11434/v1"></div>
+            <div class="field"><label class="lbl" data-i18n="set_model_lbl">Tên model</label><input class="inp" id="aiModel" placeholder="llama3.1 / qwen2.5 ..."></div>
+            <div class="field"><label class="lbl" data-i18n="set_key_lbl">API key (tùy chọn)</label><input class="inp" id="aiKey" type="password" data-i18n-attr="placeholder:set_key_ph"></div>
+            <button class="btn btn-primary" id="aiTest" style="width:100%" data-i18n="set_test_btn">Lưu & kiểm tra kết nối</button>
+            <p class="hint-note" data-i18n="set_hint">Nếu mở file bằng <code>file://</code>, trình duyệt có thể chặn CORS. Hãy bật CORS ở endpoint (ví dụ <code>OLLAMA_ORIGINS=*</code>) hoặc chạy một máy chủ tĩnh cho trang này.</p>
+          </div>
+          <div class="chat-log" id="chatLog">
+            <div class="msg sys" data-i18n="chat_init">Cấu hình endpoint bên trái, rồi kể cho tôi bài toán bạn đang mắc. Tôi sẽ chỉ hỏi — không giải thay.</div>
+          </div>
+          <div class="suggests" id="suggests">
+            <button class="chip" data-i18n="sug1">Tôi không biết bắt đầu từ đâu</button>
+            <button class="chip" data-i18n="sug2">Tôi có brute force nhưng quá chậm</button>
+            <button class="chip" data-i18n="sug3">Cho tôi một gợi ý lớn hơn</button>
+          </div>
+          <div class="chat-input">
+            <textarea id="chatInput" data-i18n-attr="placeholder:chat_ph" rows="1"></textarea>
+            <button class="send-btn" id="chatSend" title="Send">➤</button>
+          </div>
         </div>
       </div>
+    </div>
+
+    <div class="lc-tabs" id="lcTabs">
+      <button class="lc-tab on" data-tab="progress" data-i18n="lc_tab_progress">Tiến độ</button>
+      <button class="lc-tab" data-tab="list" data-i18n="lc_tab_list">Toàn bộ 150 câu</button>
+    </div>
+
+    <div class="lc-tabpane" id="lcTabProgress">
+      <div class="lc-stats" id="lcStats"></div>
+      <div class="lc-two">
+        <div class="lc-panel" id="lcHeat"></div>
+        <div class="lc-panel" id="lcRadar"></div>
+      </div>
+    </div>
+
+    <div class="lc-tabpane" id="lcTabList" hidden>
+      <div class="lc-filterbar" id="lcFilter">
+        <button class="chip on" data-f="todo" data-i18n="lc_filter_todo">Chưa giải</button>
+        <button class="chip" data-f="all" data-i18n="lc_filter_all">Tất cả</button>
+        <button class="chip" data-f="done" data-i18n="lc_filter_done">Đã giải</button>
+        <button class="chip" data-f="review" data-i18n="lc_filter_review">Cần ôn</button>
+      </div>
+      <div class="lc-list" id="lcList"></div>
+      <details class="lc-cfgwrap"><summary data-i18n="lc_cfg_summary">Cấu hình kế hoạch & đồng bộ</summary>
+        <div class="lc-cfgbar" id="lcCfgBar"></div>
+      </details>
     </div>
   </div>
 </section>
@@ -466,7 +617,7 @@ vi:{
   set_head:"Thiết lập", status_untested:"Chưa kiểm tra", set_url_lbl:"Base URL", set_model_lbl:"Tên model",
   set_key_lbl:"API key (tùy chọn)", set_key_ph:"để trống nếu không cần", set_test_btn:"Lưu & kiểm tra kết nối",
   set_hint:'Nếu mở file bằng <code>file://</code>, trình duyệt có thể chặn CORS. Hãy bật CORS ở endpoint (ví dụ <code>OLLAMA_ORIGINS=*</code>) hoặc chạy một máy chủ tĩnh cho trang này.',
-  chat_init:"Cấu hình endpoint bên trái, rồi kể cho tôi bài toán bạn đang mắc. Tôi sẽ chỉ hỏi — không giải thay.",
+  chat_init:"Nhấn ⚙ để cấu hình endpoint, rồi kể cho tôi bài toán bạn đang mắc. Tôi sẽ chỉ hỏi — không giải thay.",
   sug1:"Tôi không biết bắt đầu từ đâu", sug2:"Tôi có brute force nhưng quá chậm", sug3:"Cho tôi một gợi ý lớn hơn",
   chat_ph:"Mô tả bài toán bạn đang mắc...", chat_thinking:"…đang nghĩ một câu hỏi cho bạn…",
   need_config:"Hãy cấu hình endpoint và tên model ở bên trái trước đã.",
@@ -521,7 +672,7 @@ en:{
   set_head:"Settings", status_untested:"Not tested", set_url_lbl:"Base URL", set_model_lbl:"Model name",
   set_key_lbl:"API key (optional)", set_key_ph:"leave empty if not needed", set_test_btn:"Save & test connection",
   set_hint:'Opening via <code>file://</code> may hit CORS. Enable CORS on the endpoint (e.g. <code>OLLAMA_ORIGINS=*</code>) or serve this page from a static server.',
-  chat_init:"Configure the endpoint on the left, then tell me the problem you're stuck on. I'll only ask — never solve it for you.",
+  chat_init:"Tap ⚙ to configure the endpoint, then tell me the problem you're stuck on. I'll only ask — never solve it for you.",
   sug1:"I don't know where to start", sug2:"I have brute force but it's too slow", sug3:"Give me a bigger hint",
   chat_ph:"Describe the problem you're stuck on...", chat_thinking:"…thinking of a question for you…",
   need_config:"Configure the endpoint and model name on the left first.",
@@ -970,6 +1121,556 @@ chatInput.addEventListener("keydown",e=>{ if(e.key==="Enter"&&!e.shiftKey){e.pre
 chatInput.addEventListener("input",()=>{ chatInput.style.height="auto"; chatInput.style.height=Math.min(chatInput.scrollHeight,120)+"px"; });
 $$("#suggests .chip").forEach(c=>c.onclick=()=>sendChat(c.textContent));
 
+/* ============================================================ ROADMAP 150 (Top Interview 150) */
+Object.assign(T.vi, {
+  nav_roadmap:"Lộ trình 150",
+  wb_ask_head:"Hỏi la bàn sống", wb_ai_settings:"Thiết lập AI",
+  lc_tab_progress:"Tiến độ", lc_tab_list:"Toàn bộ 150 câu", lc_cfg_summary:"Cấu hình kế hoạch & đồng bộ",
+  lc_head:'Lộ trình 150 <span class="sub-label">— Top Interview 150</span>',
+  lc_sub:'Một kế hoạch hằng ngày để đi hết 150 câu trong 2 tháng — nhưng vẫn theo tinh thần la bàn: mỗi câu bạn giải xong, hãy nén nó thành <b>một dòng tín hiệu</b>. Dữ liệu ở lại trong trình duyệt này.',
+  lc_cfg_start:"Ngày bắt đầu", lc_cfg_perday:"Số câu / ngày", lc_cfg_user:"Username LeetCode (tùy chọn)",
+  lc_cfg_save:"Lưu kế hoạch", lc_sync_btn:"⟳ Đồng bộ từ LeetCode",
+  lc_privacy:"Đồng bộ chỉ gửi username công khai của bạn tới một API cộng đồng để đọc các bài Accepted gần đây — không cần mật khẩu, không gửi dữ liệu riêng tư.",
+  lc_sync_idle:"Chưa đồng bộ", lc_sync_need_user:"Hãy nhập username trước", lc_sync_running:"Đang đồng bộ…",
+  lc_sync_done:"Đã đồng bộ: +{n} câu mới", lc_sync_fail:"Đồng bộ lỗi: ",
+  lc_stat_solved:"Đã giải", lc_stat_remaining:"Còn lại", lc_stat_streak:"Chuỗi ngày", lc_stat_longest:"Dài nhất",
+  lc_unit_day:"ngày",
+  lc_pace_deadline:"Hạn 2 tháng: {d}", lc_pace_need:"Cần {n} câu/ngày để kịp", lc_pace_eta:"Dự kiến xong: {d}",
+  lc_pace_ahead:"Đang vượt tiến độ 🎉", lc_pace_ontrack:"Đúng tiến độ ✓", lc_pace_behind:"Đang chậm {n} câu",
+  lc_pace_finished:"Đã hoàn thành cả 150 câu 🏁", lc_pace_nopace:"Giải câu đầu tiên để có dự báo",
+  lc_today_head:"Hôm nay cần giải", lc_today_overdue:"⚠ {n} câu trễ hạn", lc_today_clear:"Đã xong phần hôm nay 🎯 — nghỉ hoặc kéo thêm câu bên dưới.",
+  lc_review_head:"Cần ôn lại — spaced repetition", lc_review_sub:"Câu đã giải sẽ quay lại sau 3 / 7 / 21 ngày. Ôn = giải lại trong đầu, không nhìn code.",
+  lc_review_none:"Không có câu nào tới hạn ôn hôm nay.", lc_review_btn:"Đã ôn ✓",
+  lc_heat_head:"Lịch hoạt động", lc_heat_sub:"Mỗi ô là một ngày; càng đậm càng nhiều hoạt động (giải + ôn).",
+  lc_heat_less:"ít", lc_heat_more:"nhiều",
+  lc_radar_head:"Bản đồ chủ đề", lc_radar_sub:"Chủ đề yếu nhất xếp trên cùng — ưu tiên kéo lên.",
+  lc_list_head:"Toàn bộ 150 câu", lc_filter_all:"Tất cả", lc_filter_todo:"Chưa giải", lc_filter_done:"Đã giải", lc_filter_review:"Cần ôn",
+  lc_note_ph:"Tín hiệu nào lẽ ra phải kích hoạt công cụ? (1 dòng)",
+  lc_conf_shaky:"Chưa chắc", lc_conf_solid:"Chắc", lc_open:"Mở ↗", lc_mastered:"✓ Thuộc", lc_reviewdue:"tới hạn ôn",
+  lc_list_empty:"Không có câu nào khớp bộ lọc."
+});
+Object.assign(T.en, {
+  nav_roadmap:"Roadmap 150",
+  wb_ask_head:"Ask the living compass", wb_ai_settings:"AI settings",
+  lc_tab_progress:"Progress", lc_tab_list:"All 150 problems", lc_cfg_summary:"Plan config & sync",
+  lc_head:'Roadmap 150 <span class="sub-label">— Top Interview 150</span>',
+  lc_sub:'A daily plan to clear all 150 problems in 2 months — still in the compass spirit: for every problem you solve, compress it into <b>one line of signal</b>. Your data stays in this browser.',
+  lc_cfg_start:"Start date", lc_cfg_perday:"Problems / day", lc_cfg_user:"LeetCode username (optional)",
+  lc_cfg_save:"Save plan", lc_sync_btn:"⟳ Sync from LeetCode",
+  lc_privacy:"Sync only sends your public username to a community API to read your recent Accepted problems — no password, no private data.",
+  lc_sync_idle:"Not synced", lc_sync_need_user:"Enter a username first", lc_sync_running:"Syncing…",
+  lc_sync_done:"Synced: +{n} new", lc_sync_fail:"Sync failed: ",
+  lc_stat_solved:"Solved", lc_stat_remaining:"Remaining", lc_stat_streak:"Streak", lc_stat_longest:"Longest",
+  lc_unit_day:"days",
+  lc_pace_deadline:"2-month deadline: {d}", lc_pace_need:"Need {n}/day to hit it", lc_pace_eta:"Projected finish: {d}",
+  lc_pace_ahead:"Ahead of schedule 🎉", lc_pace_ontrack:"On track ✓", lc_pace_behind:"Behind by {n}",
+  lc_pace_finished:"All 150 done 🏁", lc_pace_nopace:"Solve your first to get a projection",
+  lc_today_head:"Today's target", lc_today_overdue:"⚠ {n} overdue", lc_today_clear:"Today's batch cleared 🎯 — rest, or pull more below.",
+  lc_review_head:"Due for review — spaced repetition", lc_review_sub:"Solved problems return after 3 / 7 / 21 days. Review = re-solve in your head, no peeking at code.",
+  lc_review_none:"Nothing due for review today.", lc_review_btn:"Reviewed ✓",
+  lc_heat_head:"Activity calendar", lc_heat_sub:"Each cell is a day; darker means more activity (solves + reviews).",
+  lc_heat_less:"less", lc_heat_more:"more",
+  lc_radar_head:"Topic map", lc_radar_sub:"Weakest topics on top — pull these up first.",
+  lc_list_head:"All 150 problems", lc_filter_all:"All", lc_filter_todo:"To-do", lc_filter_done:"Solved", lc_filter_review:"Review",
+  lc_note_ph:"Which signal should have triggered the tool? (1 line)",
+  lc_conf_shaky:"Shaky", lc_conf_solid:"Solid", lc_open:"Open ↗", lc_mastered:"✓ Mastered", lc_reviewdue:"review due",
+  lc_list_empty:"No problems match this filter."
+});
+
+const LC_GROUPS = {
+  arr:{vi:"Mảng / Chuỗi",en:"Array / String"}, twoptr:{vi:"Hai con trỏ",en:"Two Pointers"},
+  window:{vi:"Cửa sổ trượt",en:"Sliding Window"}, matrix:{vi:"Ma trận",en:"Matrix"},
+  hash:{vi:"Hash map",en:"Hashmap"}, intervals:{vi:"Đoạn / Khoảng",en:"Intervals"},
+  stack:{vi:"Ngăn xếp",en:"Stack"}, list:{vi:"Danh sách liên kết",en:"Linked List"},
+  tree:{vi:"Cây nhị phân",en:"Binary Tree"}, treebfs:{vi:"Cây nhị phân — BFS",en:"Binary Tree BFS"},
+  bst:{vi:"Cây tìm kiếm nhị phân",en:"Binary Search Tree"}, graph:{vi:"Đồ thị",en:"Graph"},
+  graphbfs:{vi:"Đồ thị — BFS",en:"Graph BFS"}, trie:{vi:"Trie",en:"Trie"},
+  backtrack:{vi:"Quay lui",en:"Backtracking"}, divide:{vi:"Chia để trị",en:"Divide & Conquer"},
+  kadane:{vi:"Kadane",en:"Kadane's Algorithm"}, bsearch:{vi:"Tìm kiếm nhị phân",en:"Binary Search"},
+  heap:{vi:"Heap",en:"Heap"}, bit:{vi:"Thao tác bit",en:"Bit Manipulation"},
+  math:{vi:"Toán",en:"Math"}, dp1d:{vi:"Quy hoạch động 1D",en:"1D DP"}, dp2d:{vi:"Quy hoạch động nhiều chiều",en:"Multidimensional DP"}
+};
+const LC150 = [
+  {s:"merge-sorted-array",t:"Merge Sorted Array",d:"E",g:"arr"},
+  {s:"remove-element",t:"Remove Element",d:"E",g:"arr"},
+  {s:"remove-duplicates-from-sorted-array",t:"Remove Duplicates from Sorted Array",d:"E",g:"arr"},
+  {s:"remove-duplicates-from-sorted-array-ii",t:"Remove Duplicates from Sorted Array II",d:"M",g:"arr"},
+  {s:"majority-element",t:"Majority Element",d:"E",g:"arr"},
+  {s:"rotate-array",t:"Rotate Array",d:"M",g:"arr"},
+  {s:"best-time-to-buy-and-sell-stock",t:"Best Time to Buy and Sell Stock",d:"E",g:"arr"},
+  {s:"best-time-to-buy-and-sell-stock-ii",t:"Best Time to Buy and Sell Stock II",d:"M",g:"arr"},
+  {s:"jump-game",t:"Jump Game",d:"M",g:"arr"},
+  {s:"jump-game-ii",t:"Jump Game II",d:"M",g:"arr"},
+  {s:"h-index",t:"H-Index",d:"M",g:"arr"},
+  {s:"insert-delete-getrandom-o1",t:"Insert Delete GetRandom O(1)",d:"M",g:"arr"},
+  {s:"product-of-array-except-self",t:"Product of Array Except Self",d:"M",g:"arr"},
+  {s:"gas-station",t:"Gas Station",d:"M",g:"arr"},
+  {s:"candy",t:"Candy",d:"H",g:"arr"},
+  {s:"trapping-rain-water",t:"Trapping Rain Water",d:"H",g:"arr"},
+  {s:"roman-to-integer",t:"Roman to Integer",d:"E",g:"arr"},
+  {s:"integer-to-roman",t:"Integer to Roman",d:"M",g:"arr"},
+  {s:"length-of-last-word",t:"Length of Last Word",d:"E",g:"arr"},
+  {s:"longest-common-prefix",t:"Longest Common Prefix",d:"E",g:"arr"},
+  {s:"reverse-words-in-a-string",t:"Reverse Words in a String",d:"M",g:"arr"},
+  {s:"zigzag-conversion",t:"Zigzag Conversion",d:"M",g:"arr"},
+  {s:"find-the-index-of-the-first-occurrence-in-a-string",t:"Find the Index of the First Occurrence in a String",d:"E",g:"arr"},
+  {s:"text-justification",t:"Text Justification",d:"H",g:"arr"},
+  {s:"valid-palindrome",t:"Valid Palindrome",d:"E",g:"twoptr"},
+  {s:"is-subsequence",t:"Is Subsequence",d:"E",g:"twoptr"},
+  {s:"two-sum-ii-input-array-is-sorted",t:"Two Sum II - Input Array Is Sorted",d:"M",g:"twoptr"},
+  {s:"container-with-most-water",t:"Container With Most Water",d:"M",g:"twoptr"},
+  {s:"3sum",t:"3Sum",d:"M",g:"twoptr"},
+  {s:"minimum-size-subarray-sum",t:"Minimum Size Subarray Sum",d:"M",g:"window"},
+  {s:"longest-substring-without-repeating-characters",t:"Longest Substring Without Repeating Characters",d:"M",g:"window"},
+  {s:"substring-with-concatenation-of-all-words",t:"Substring with Concatenation of All Words",d:"H",g:"window"},
+  {s:"minimum-window-substring",t:"Minimum Window Substring",d:"H",g:"window"},
+  {s:"valid-sudoku",t:"Valid Sudoku",d:"M",g:"matrix"},
+  {s:"spiral-matrix",t:"Spiral Matrix",d:"M",g:"matrix"},
+  {s:"rotate-image",t:"Rotate Image",d:"M",g:"matrix"},
+  {s:"set-matrix-zeroes",t:"Set Matrix Zeroes",d:"M",g:"matrix"},
+  {s:"game-of-life",t:"Game of Life",d:"M",g:"matrix"},
+  {s:"ransom-note",t:"Ransom Note",d:"E",g:"hash"},
+  {s:"isomorphic-strings",t:"Isomorphic Strings",d:"E",g:"hash"},
+  {s:"word-pattern",t:"Word Pattern",d:"E",g:"hash"},
+  {s:"valid-anagram",t:"Valid Anagram",d:"E",g:"hash"},
+  {s:"group-anagrams",t:"Group Anagrams",d:"M",g:"hash"},
+  {s:"two-sum",t:"Two Sum",d:"E",g:"hash"},
+  {s:"happy-number",t:"Happy Number",d:"E",g:"hash"},
+  {s:"contains-duplicate-ii",t:"Contains Duplicate II",d:"E",g:"hash"},
+  {s:"longest-consecutive-sequence",t:"Longest Consecutive Sequence",d:"M",g:"hash"},
+  {s:"summary-ranges",t:"Summary Ranges",d:"E",g:"intervals"},
+  {s:"merge-intervals",t:"Merge Intervals",d:"M",g:"intervals"},
+  {s:"insert-interval",t:"Insert Interval",d:"M",g:"intervals"},
+  {s:"minimum-number-of-arrows-to-burst-balloons",t:"Minimum Number of Arrows to Burst Balloons",d:"M",g:"intervals"},
+  {s:"valid-parentheses",t:"Valid Parentheses",d:"E",g:"stack"},
+  {s:"simplify-path",t:"Simplify Path",d:"M",g:"stack"},
+  {s:"min-stack",t:"Min Stack",d:"M",g:"stack"},
+  {s:"evaluate-reverse-polish-notation",t:"Evaluate Reverse Polish Notation",d:"M",g:"stack"},
+  {s:"basic-calculator",t:"Basic Calculator",d:"H",g:"stack"},
+  {s:"linked-list-cycle",t:"Linked List Cycle",d:"E",g:"list"},
+  {s:"add-two-numbers",t:"Add Two Numbers",d:"M",g:"list"},
+  {s:"merge-two-sorted-lists",t:"Merge Two Sorted Lists",d:"E",g:"list"},
+  {s:"copy-list-with-random-pointer",t:"Copy List with Random Pointer",d:"M",g:"list"},
+  {s:"reverse-linked-list-ii",t:"Reverse Linked List II",d:"M",g:"list"},
+  {s:"reverse-nodes-in-k-group",t:"Reverse Nodes in k-Group",d:"H",g:"list"},
+  {s:"remove-nth-node-from-end-of-list",t:"Remove Nth Node From End of List",d:"M",g:"list"},
+  {s:"remove-duplicates-from-sorted-list-ii",t:"Remove Duplicates from Sorted List II",d:"M",g:"list"},
+  {s:"rotate-list",t:"Rotate List",d:"M",g:"list"},
+  {s:"partition-list",t:"Partition List",d:"M",g:"list"},
+  {s:"lru-cache",t:"LRU Cache",d:"M",g:"list"},
+  {s:"maximum-depth-of-binary-tree",t:"Maximum Depth of Binary Tree",d:"E",g:"tree"},
+  {s:"same-tree",t:"Same Tree",d:"E",g:"tree"},
+  {s:"invert-binary-tree",t:"Invert Binary Tree",d:"E",g:"tree"},
+  {s:"symmetric-tree",t:"Symmetric Tree",d:"E",g:"tree"},
+  {s:"construct-binary-tree-from-preorder-and-inorder-traversal",t:"Construct Binary Tree from Preorder and Inorder Traversal",d:"M",g:"tree"},
+  {s:"construct-binary-tree-from-inorder-and-postorder-traversal",t:"Construct Binary Tree from Inorder and Postorder Traversal",d:"M",g:"tree"},
+  {s:"populating-next-right-pointers-in-each-node-ii",t:"Populating Next Right Pointers in Each Node II",d:"M",g:"tree"},
+  {s:"flatten-binary-tree-to-linked-list",t:"Flatten Binary Tree to Linked List",d:"M",g:"tree"},
+  {s:"path-sum",t:"Path Sum",d:"E",g:"tree"},
+  {s:"sum-root-to-leaf-numbers",t:"Sum Root to Leaf Numbers",d:"M",g:"tree"},
+  {s:"binary-tree-maximum-path-sum",t:"Binary Tree Maximum Path Sum",d:"H",g:"tree"},
+  {s:"binary-search-tree-iterator",t:"Binary Search Tree Iterator",d:"M",g:"tree"},
+  {s:"count-complete-tree-nodes",t:"Count Complete Tree Nodes",d:"E",g:"tree"},
+  {s:"lowest-common-ancestor-of-a-binary-tree",t:"Lowest Common Ancestor of a Binary Tree",d:"M",g:"tree"},
+  {s:"binary-tree-right-side-view",t:"Binary Tree Right Side View",d:"M",g:"treebfs"},
+  {s:"average-of-levels-in-binary-tree",t:"Average of Levels in Binary Tree",d:"E",g:"treebfs"},
+  {s:"binary-tree-level-order-traversal",t:"Binary Tree Level Order Traversal",d:"M",g:"treebfs"},
+  {s:"binary-tree-zigzag-level-order-traversal",t:"Binary Tree Zigzag Level Order Traversal",d:"M",g:"treebfs"},
+  {s:"minimum-absolute-difference-in-bst",t:"Minimum Absolute Difference in BST",d:"E",g:"bst"},
+  {s:"kth-smallest-element-in-a-bst",t:"Kth Smallest Element in a BST",d:"M",g:"bst"},
+  {s:"validate-binary-search-tree",t:"Validate Binary Search Tree",d:"M",g:"bst"},
+  {s:"number-of-islands",t:"Number of Islands",d:"M",g:"graph"},
+  {s:"surrounded-regions",t:"Surrounded Regions",d:"M",g:"graph"},
+  {s:"clone-graph",t:"Clone Graph",d:"M",g:"graph"},
+  {s:"evaluate-division",t:"Evaluate Division",d:"M",g:"graph"},
+  {s:"course-schedule",t:"Course Schedule",d:"M",g:"graph"},
+  {s:"course-schedule-ii",t:"Course Schedule II",d:"M",g:"graph"},
+  {s:"snakes-and-ladders",t:"Snakes and Ladders",d:"M",g:"graphbfs"},
+  {s:"minimum-genetic-mutation",t:"Minimum Genetic Mutation",d:"M",g:"graphbfs"},
+  {s:"word-ladder",t:"Word Ladder",d:"H",g:"graphbfs"},
+  {s:"implement-trie-prefix-tree",t:"Implement Trie (Prefix Tree)",d:"M",g:"trie"},
+  {s:"design-add-and-search-words-data-structure",t:"Design Add and Search Words Data Structure",d:"M",g:"trie"},
+  {s:"word-search-ii",t:"Word Search II",d:"H",g:"trie"},
+  {s:"letter-combinations-of-a-phone-number",t:"Letter Combinations of a Phone Number",d:"M",g:"backtrack"},
+  {s:"combinations",t:"Combinations",d:"M",g:"backtrack"},
+  {s:"permutations",t:"Permutations",d:"M",g:"backtrack"},
+  {s:"combination-sum",t:"Combination Sum",d:"M",g:"backtrack"},
+  {s:"n-queens-ii",t:"N-Queens II",d:"H",g:"backtrack"},
+  {s:"generate-parentheses",t:"Generate Parentheses",d:"M",g:"backtrack"},
+  {s:"word-search",t:"Word Search",d:"M",g:"backtrack"},
+  {s:"convert-sorted-array-to-binary-search-tree",t:"Convert Sorted Array to Binary Search Tree",d:"E",g:"divide"},
+  {s:"sort-list",t:"Sort List",d:"M",g:"divide"},
+  {s:"construct-quad-tree",t:"Construct Quad Tree",d:"M",g:"divide"},
+  {s:"merge-k-sorted-lists",t:"Merge k Sorted Lists",d:"H",g:"divide"},
+  {s:"maximum-subarray",t:"Maximum Subarray",d:"M",g:"kadane"},
+  {s:"maximum-sum-circular-subarray",t:"Maximum Sum Circular Subarray",d:"M",g:"kadane"},
+  {s:"search-insert-position",t:"Search Insert Position",d:"E",g:"bsearch"},
+  {s:"search-a-2d-matrix",t:"Search a 2D Matrix",d:"M",g:"bsearch"},
+  {s:"find-peak-element",t:"Find Peak Element",d:"M",g:"bsearch"},
+  {s:"search-in-rotated-sorted-array",t:"Search in Rotated Sorted Array",d:"M",g:"bsearch"},
+  {s:"find-first-and-last-position-of-element-in-sorted-array",t:"Find First and Last Position of Element in Sorted Array",d:"M",g:"bsearch"},
+  {s:"find-minimum-in-rotated-sorted-array",t:"Find Minimum in Rotated Sorted Array",d:"M",g:"bsearch"},
+  {s:"median-of-two-sorted-arrays",t:"Median of Two Sorted Arrays",d:"H",g:"bsearch"},
+  {s:"kth-largest-element-in-an-array",t:"Kth Largest Element in an Array",d:"M",g:"heap"},
+  {s:"ipo",t:"IPO",d:"H",g:"heap"},
+  {s:"find-k-pairs-with-smallest-sums",t:"Find K Pairs with Smallest Sums",d:"M",g:"heap"},
+  {s:"find-median-from-data-stream",t:"Find Median from Data Stream",d:"H",g:"heap"},
+  {s:"add-binary",t:"Add Binary",d:"E",g:"bit"},
+  {s:"reverse-bits",t:"Reverse Bits",d:"E",g:"bit"},
+  {s:"number-of-1-bits",t:"Number of 1 Bits",d:"E",g:"bit"},
+  {s:"single-number",t:"Single Number",d:"E",g:"bit"},
+  {s:"single-number-ii",t:"Single Number II",d:"M",g:"bit"},
+  {s:"bitwise-and-of-numbers-range",t:"Bitwise AND of Numbers Range",d:"M",g:"bit"},
+  {s:"palindrome-number",t:"Palindrome Number",d:"E",g:"math"},
+  {s:"plus-one",t:"Plus One",d:"E",g:"math"},
+  {s:"factorial-trailing-zeroes",t:"Factorial Trailing Zeroes",d:"M",g:"math"},
+  {s:"sqrtx",t:"Sqrt(x)",d:"E",g:"math"},
+  {s:"powx-n",t:"Pow(x, n)",d:"M",g:"math"},
+  {s:"max-points-on-a-line",t:"Max Points on a Line",d:"H",g:"math"},
+  {s:"climbing-stairs",t:"Climbing Stairs",d:"E",g:"dp1d"},
+  {s:"house-robber",t:"House Robber",d:"M",g:"dp1d"},
+  {s:"word-break",t:"Word Break",d:"M",g:"dp1d"},
+  {s:"coin-change",t:"Coin Change",d:"M",g:"dp1d"},
+  {s:"longest-increasing-subsequence",t:"Longest Increasing Subsequence",d:"M",g:"dp1d"},
+  {s:"triangle",t:"Triangle",d:"M",g:"dp2d"},
+  {s:"minimum-path-sum",t:"Minimum Path Sum",d:"M",g:"dp2d"},
+  {s:"unique-paths-ii",t:"Unique Paths II",d:"M",g:"dp2d"},
+  {s:"longest-palindromic-substring",t:"Longest Palindromic Substring",d:"M",g:"dp2d"},
+  {s:"interleaving-string",t:"Interleaving String",d:"M",g:"dp2d"},
+  {s:"edit-distance",t:"Edit Distance",d:"M",g:"dp2d"},
+  {s:"best-time-to-buy-and-sell-stock-iii",t:"Best Time to Buy and Sell Stock III",d:"H",g:"dp2d"},
+  {s:"best-time-to-buy-and-sell-stock-iv",t:"Best Time to Buy and Sell Stock IV",d:"H",g:"dp2d"},
+  {s:"maximal-square",t:"Maximal Square",d:"M",g:"dp2d"}
+];
+const LC_INDEX = {}; LC150.forEach((p,i)=>LC_INDEX[p.s]=i);
+const REV_INTERVALS = [3,7,21]; // days after solve for spaced-repetition reviews
+const GOAL_DAYS = 60;           // "2 months" target
+
+// Interleaved study order: round-robin across topic groups + gentle easy→hard ramp.
+// Purpose: never march through one topic in a row, so the mind isn't boxed into a single pattern.
+const LC_ORDER = (()=>{
+  const DW={E:0,M:1,H:2};
+  const buckets={};
+  Object.keys(LC_GROUPS).forEach(g=>buckets[g]=[]);
+  LC150.forEach(p=>buckets[p.g].push(p));
+  // within each group, easiest first (stable on original index for ties)
+  Object.keys(buckets).forEach(g=>buckets[g].sort((a,b)=>(DW[a.d]-DW[b.d])||(LC_INDEX[a.s]-LC_INDEX[b.s])));
+  // group visiting order: bigger groups first so they don't clump at the tail
+  const groupOrder=Object.keys(buckets).filter(g=>buckets[g].length).sort((a,b)=>buckets[b].length-buckets[a].length);
+  const ptr={}; groupOrder.forEach(g=>ptr[g]=0);
+  const order=[];
+  let remaining=LC150.length, guard=0;
+  while(remaining>0 && guard++<2000){
+    for(const g of groupOrder){
+      if(ptr[g]<buckets[g].length){ order.push(buckets[g][ptr[g]++]); remaining--; }
+    }
+  }
+  return order; // array of problem objects, interleaved
+})();
+const LC_ORDER_POS = {}; LC_ORDER.forEach((p,i)=>LC_ORDER_POS[p.s]=i);
+
+let lcCfg = LS.get("dsac_lc_cfg", {start:"", perDay:3, username:""});
+let lcProgress = LS.get("dsac_lc_progress", {});   // slug -> {done,date,conf,note,stage,nextReview}
+let lcActivity = LS.get("dsac_lc_activity", {});   // "YYYY-MM-DD" -> action count
+let lcFilter = "todo";
+let lcSyncMsg = {cls:"", key:"lc_sync_idle", n:0, raw:""};
+
+function saveLC(){ LS.set("dsac_lc_cfg",lcCfg); LS.set("dsac_lc_progress",lcProgress); LS.set("dsac_lc_activity",lcActivity); }
+const DAY_MS = 86400000;
+function todayStr(){ const d=new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10); }
+function dateAdd(str,n){ const d=new Date(str+"T00:00:00"); d.setDate(d.getDate()+n); return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10); }
+function daysBetween(a,b){ return Math.round((new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/DAY_MS); }
+function fmtDate(str){ if(!str) return "—"; return new Date(str+"T00:00:00").toLocaleDateString(lang==="vi"?"vi-VN":"en-US",{day:"2-digit",month:"short",year:"numeric"}); }
+function bumpActivity(d){ lcActivity[d]=(lcActivity[d]||0)+1; }
+function isDone(slug){ const p=lcProgress[slug]; return !!(p&&p.done); }
+function solvedCount(){ return LC150.reduce((n,p)=>n+(isDone(p.s)?1:0),0); }
+
+function initLC(){
+  if(!lcCfg.start) lcCfg.start = todayStr();
+  if(!lcCfg.perDay || lcCfg.perDay<1) lcCfg.perDay = 3;
+  if(lcCfg.username==null) lcCfg.username = "";
+  saveLC();
+}
+
+function computeStreak(){
+  let cur=0, d=todayStr();
+  if(!lcActivity[d]) d=dateAdd(d,-1);          // streak stays alive if you solved yesterday
+  while(lcActivity[d]){ cur++; d=dateAdd(d,-1); }
+  const keys=Object.keys(lcActivity).filter(k=>lcActivity[k]>0).sort();
+  let longest=0, run=0, prev=null;
+  keys.forEach(k=>{ run = (prev && daysBetween(prev,k)===1) ? run+1 : 1; if(run>longest) longest=run; prev=k; });
+  return {cur, longest};
+}
+
+function markDone(slug, done){
+  const p = lcProgress[slug] || {};
+  if(done){
+    p.done=true; p.date = p.date || todayStr();
+    if(p.stage==null){ p.stage=0; p.nextReview = dateAdd(p.date, REV_INTERVALS[0]); }
+    bumpActivity(todayStr());
+  }else{
+    p.done=false; p.stage=null; p.nextReview=null;
+  }
+  lcProgress[slug]=p; saveLC(); renderRoadmap();
+}
+function setConf(slug, conf){
+  const p = lcProgress[slug]; if(!p||!p.done) return;
+  p.conf = (p.conf===conf) ? null : conf;
+  if(p.conf==="shaky" && p.nextReview){ const soon=dateAdd(todayStr(),1); if(p.nextReview>soon) p.nextReview=soon; } // shaky ⇒ review sooner
+  lcProgress[slug]=p; saveLC(); renderRoadmap();
+}
+function setNote(slug, note){
+  const p = lcProgress[slug] || {}; p.note = note; lcProgress[slug]=p; saveLC();
+}
+function reviewDone(slug){
+  const p = lcProgress[slug]; if(!p||!p.done) return;
+  const s = (p.stage||0)+1; p.stage=s;
+  p.nextReview = s < REV_INTERVALS.length ? dateAdd(todayStr(), REV_INTERVALS[s]) : null;
+  bumpActivity(todayStr()); lcProgress[slug]=p; saveLC(); renderRoadmap();
+}
+
+async function lcSync(){
+  const u=(lcCfg.username||"").trim();
+  if(!u){ lcSyncMsg={cls:"err",key:"lc_sync_need_user",raw:""}; renderCfgBar(); return; }
+  lcSyncMsg={cls:"wait",key:"lc_sync_running",raw:""}; renderCfgBar();
+  try{
+    const res = await fetch(`https://alfa-leetcode-api.onrender.com/${encodeURIComponent(u)}/acSubmission?limit=200`);
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const data = await res.json();
+    const subs = data.submission || data.acSubmission || [];
+    if(!Array.isArray(subs)) throw new Error("unexpected response");
+    const valid = new Set(LC150.map(p=>p.s));
+    let n=0;
+    subs.forEach(sub=>{
+      const slug=sub.titleSlug;
+      if(valid.has(slug) && !isDone(slug)){
+        const date = sub.timestamp ? dateAdd("1970-01-01", Math.floor(+sub.timestamp/86400)) : todayStr();
+        const p=lcProgress[slug]||{}; p.done=true; p.date=date;
+        if(p.stage==null){ p.stage=0; p.nextReview=dateAdd(date,REV_INTERVALS[0]); }
+        lcProgress[slug]=p; bumpActivity(date); n++;
+      }
+    });
+    saveLC();
+    lcSyncMsg={cls:"ok",key:"lc_sync_done",n};
+    renderRoadmap();
+  }catch(e){
+    lcSyncMsg={cls:"err",key:"lc_sync_fail",raw:e.message};
+    renderCfgBar();
+  }
+}
+
+/* ---- renderers ---- */
+function renderCfgBar(){
+  const s = lcSyncMsg.key==="lc_sync_done" ? t("lc_sync_done").replace("{n}",lcSyncMsg.n)
+          : lcSyncMsg.key==="lc_sync_fail" ? t("lc_sync_fail")+(lcSyncMsg.raw||"")
+          : t(lcSyncMsg.key);
+  $("#lcCfgBar").innerHTML = `
+    <div class="field"><label class="lbl">${esc(t("lc_cfg_start"))}</label><input class="inp" type="date" id="lcStart" value="${esc(lcCfg.start)}"></div>
+    <div class="field"><label class="lbl">${esc(t("lc_cfg_perday"))}</label><input class="inp" type="number" min="1" max="20" id="lcPerDay" value="${esc(lcCfg.perDay)}" style="width:90px"></div>
+    <div class="field lc-userwrap"><label class="lbl">${esc(t("lc_cfg_user"))}</label><input class="inp" id="lcUser" value="${esc(lcCfg.username||"")}" placeholder="leetcode_id"></div>
+    <div class="lc-actions">
+      <button class="btn btn-ghost" id="lcSave">${esc(t("lc_cfg_save"))}</button>
+      <button class="btn btn-primary" id="lcSyncBtn">${esc(t("lc_sync_btn"))}</button>
+    </div>
+    <span class="lc-syncstate ${lcSyncMsg.cls}">${esc(s)}</span>
+    <p class="lc-privacy">${esc(t("lc_privacy"))}</p>`;
+  const save=()=>{ lcCfg.start=$("#lcStart").value||todayStr(); lcCfg.perDay=Math.max(1,+$("#lcPerDay").value||3); lcCfg.username=$("#lcUser").value.trim(); saveLC(); renderRoadmap(); };
+  $("#lcSave").onclick=save;
+  $("#lcStart").onchange=save; $("#lcPerDay").onchange=save;
+  $("#lcUser").onchange=()=>{ lcCfg.username=$("#lcUser").value.trim(); saveLC(); };
+  $("#lcSyncBtn").onclick=lcSync;
+}
+
+function computePace(){
+  const done=solvedCount(), remaining=150-done;
+  const pct=Math.round(done/150*100);
+  const deadline=dateAdd(lcCfg.start,GOAL_DAYS);
+  const daysLeft=Math.max(0,daysBetween(todayStr(),deadline));
+  const need = remaining>0 ? (daysLeft>0?Math.ceil(remaining/daysLeft):remaining) : 0;
+  const elapsed=Math.max(1,daysBetween(lcCfg.start,todayStr())+1);
+  const pace=done/elapsed;
+  const projFinish = (done>0&&pace>0)? dateAdd(todayStr(),Math.max(0,Math.ceil(remaining/pace))) : null;
+  const todayIdx=Math.max(0,daysBetween(lcCfg.start,todayStr()));
+  const scheduled=Math.min(150, todayIdx*lcCfg.perDay); // due by END of yesterday
+  const behind=scheduled-done;
+  let cls, key, n=0;
+  if(remaining===0){ cls="good"; key="lc_pace_finished"; }
+  else if(behind<=0){ cls="good"; key=(done>=scheduled&&behind<0)?"lc_pace_ahead":"lc_pace_ontrack"; }
+  else { cls="bad"; key="lc_pace_behind"; n=behind; }
+  return {done,remaining,pct,deadline,need,projFinish,cls,key,n};
+}
+
+function renderMiniStat(){
+  const {done,pct,cls,key,n}=computePace();
+  const {cur}=computeStreak();
+  const status = key==="lc_pace_behind" ? t("lc_pace_behind").replace("{n}",n) : t(key);
+  $("#lcMiniStat").innerHTML = `
+    <div class="lc-ms"><b>${done}</b><span>/ 150 · ${pct}%</span></div>
+    <div class="lc-ms-bar"><i style="width:${pct}%"></i></div>
+    <div class="lc-ms"><b>${cur}</b><span>${esc(t("lc_stat_streak").toLowerCase())}</span></div>
+    <span class="lc-ms-pace ${cls}">${esc(status)}</span>`;
+}
+
+function renderStats(){
+  const {done,remaining,pct,deadline,need,projFinish}=computePace();
+  const {cur,longest}=computeStreak();
+  $("#lcStats").innerHTML = `
+    <div class="lc-stat"><div class="num">${done}<span style="font-size:15px;color:var(--muted)">/150</span></div><div class="lbl">${esc(t("lc_stat_solved"))} · ${pct}%</div></div>
+    <div class="lc-stat"><div class="num">${remaining}</div><div class="lbl">${esc(t("lc_stat_remaining"))}</div></div>
+    <div class="lc-stat"><div class="num">${cur}</div><div class="lbl">${esc(t("lc_stat_streak"))} (${esc(t("lc_unit_day"))})</div></div>
+    <div class="lc-stat"><div class="num">${longest}</div><div class="lbl">${esc(t("lc_stat_longest"))} (${esc(t("lc_unit_day"))})</div></div>`;
+  $("#lcPace").innerHTML = `
+    <span>${esc(t("lc_pace_deadline").replace("{d}",fmtDate(deadline)))}</span>
+    ${remaining>0?`<span>${esc(t("lc_pace_need").replace("{n}",need))}</span>`:``}
+    <span>${projFinish?esc(t("lc_pace_eta").replace("{d}",fmtDate(projFinish))):esc(t("lc_pace_nopace"))}</span>`;
+}
+
+function renderToday(){
+  const undone=LC_ORDER.filter(p=>!isDone(p.s));
+  const batch=undone.slice(0,lcCfg.perDay);
+  const todayIdx=Math.max(0,daysBetween(lcCfg.start,todayStr()));
+  const overdue=undone.filter(p=>Math.floor(LC_ORDER_POS[p.s]/lcCfg.perDay) < todayIdx).length;
+  let body;
+  if(batch.length===0){ body=`<p class="lc-empty">${esc(t("lc_pace_finished"))}</p>`; }
+  else{ body = batch.map(p=>lcRowHtml(p,{compact:true})).join(""); }
+  $("#lcToday").innerHTML = `
+    <h3>${esc(t("lc_today_head"))} ${overdue>0?`<span class="lc-badge">${esc(t("lc_today_overdue").replace("{n}",overdue))}</span>`:``}</h3>
+    <p class="lc-psub">${esc(lang==="vi"?`Mục tiêu ${lcCfg.perDay} câu/ngày.`:`Target ${lcCfg.perDay}/day.`)}</p>
+    ${body}`;
+  wireRows("#lcToday");
+}
+
+function renderReview(){
+  const today=todayStr();
+  const due=LC150.filter(p=>{ const x=lcProgress[p.s]; return x&&x.done&&x.nextReview&&x.nextReview<=today; })
+    .sort((a,b)=>{ const ca=lcProgress[a.s].conf==="shaky"?0:1, cb=lcProgress[b.s].conf==="shaky"?0:1; return ca-cb; });
+  const body = due.length? due.map(p=>lcRowHtml(p,{review:true})).join("") : `<p class="lc-empty">${esc(t("lc_review_none"))}</p>`;
+  $("#lcReview").innerHTML = `
+    <h3>${esc(t("lc_review_head"))} ${due.length?`<span class="lc-badge">${due.length}</span>`:``}</h3>
+    <p class="lc-psub">${esc(t("lc_review_sub"))}</p>
+    ${body}`;
+  wireRows("#lcReview");
+}
+
+function renderHeat(){
+  const WEEKS=18, N=WEEKS*7;
+  const today=todayStr();
+  const dow=new Date(today+"T00:00:00").getDay(); // 0 Sun
+  const end=dateAdd(today, 6-dow); // pad to end of current week
+  let cells="";
+  for(let i=N-1;i>=0;i--){
+    const d=dateAdd(end,-i);
+    const c=lcActivity[d]||0;
+    const lvl = c===0?0:c===1?1:c===2?2:c===3?3:4;
+    const future = d>today;
+    cells += `<div class="lc-cell ${lvl?'h'+lvl:''}" title="${d}: ${c}" style="${future?'opacity:.25':''}"></div>`;
+  }
+  $("#lcHeat").innerHTML = `
+    <h3>${esc(t("lc_heat_head"))}</h3>
+    <p class="lc-psub">${esc(t("lc_heat_sub"))}</p>
+    <div class="lc-heat">${cells}</div>
+    <div class="lc-heatleg">${esc(t("lc_heat_less"))}<div class="lc-cell"></div><div class="lc-cell h1"></div><div class="lc-cell h2"></div><div class="lc-cell h3"></div><div class="lc-cell h4"></div>${esc(t("lc_heat_more"))}</div>`;
+}
+
+function renderRadar(){
+  const stat={};
+  Object.keys(LC_GROUPS).forEach(g=>stat[g]={done:0,total:0});
+  LC150.forEach(p=>{ stat[p.g].total++; if(isDone(p.s)) stat[p.g].done++; });
+  const rows=Object.keys(LC_GROUPS).map(g=>({g,...stat[g],pct:stat[g].done/stat[g].total}))
+    .sort((a,b)=>a.pct-b.pct);
+  $("#lcRadar").innerHTML = `
+    <h3>${esc(t("lc_radar_head"))}</h3>
+    <p class="lc-psub">${esc(t("lc_radar_sub"))}</p>
+    ${rows.map(r=>{ const col=r.pct>=1?"var(--dependency)":r.pct>=.5?"var(--brass)":"var(--order)";
+      return `<div class="lc-radarrow"><span class="rn" title="${esc(tx(LC_GROUPS[r.g]))}">${esc(tx(LC_GROUPS[r.g]))}</span>
+        <span class="rbar"><i style="width:${Math.round(r.pct*100)}%;background:${col}"></i></span>
+        <span class="rc">${r.done}/${r.total}</span></div>`; }).join("")}`;
+}
+
+function lcRowHtml(p, opt={}){
+  const x=lcProgress[p.s]||{};
+  const done=!!x.done;
+  const url=`https://leetcode.com/problems/${p.s}/`;
+  const mastered = done && x.stage!=null && x.stage>=REV_INTERVALS.length;
+  const reviewDue = done && x.nextReview && x.nextReview<=todayStr();
+  let right="";
+  if(opt.review){ right=`<button class="btn btn-primary lc-rvbtn" data-rv="${p.s}" style="padding:7px 14px;font-size:13px">${esc(t("lc_review_btn"))}</button>`; }
+  else if(done){
+    right = `<div class="lc-confbtns">
+        <button class="lc-cbtn shaky ${x.conf==="shaky"?"on":""}" data-conf="shaky" data-slug="${p.s}">${esc(t("lc_conf_shaky"))}</button>
+        <button class="lc-cbtn solid ${x.conf==="solid"?"on":""}" data-conf="solid" data-slug="${p.s}">${esc(t("lc_conf_solid"))}</button>
+      </div>`;
+  }
+  const noteRow = done && !opt.review ? `<textarea class="lc-note" rows="1" data-note="${p.s}" placeholder="${esc(t("lc_note_ph"))}">${esc(x.note||"")}</textarea>` : "";
+  return `<div class="lc-row">
+      <button class="lc-check ${done?"on":""}" data-check="${p.s}" aria-label="done">✓</button>
+      <div class="lc-main">
+        <a class="lc-title" href="${url}" target="_blank" rel="noopener">${esc(p.t)}</a>
+        <div class="lc-meta">
+          <span class="lc-diff ${p.d}">${p.d==="E"?"Easy":p.d==="M"?"Med":"Hard"}</span>
+          <span class="lc-gtag">${esc(tx(LC_GROUPS[p.g]))}</span>
+          ${mastered?`<span class="lc-mastered">${esc(t("lc_mastered"))}</span>`:reviewDue&&!opt.review?`<span class="lc-badge">${esc(t("lc_reviewdue"))}</span>`:``}
+        </div>
+        ${noteRow}
+      </div>
+      <a class="lc-open" href="${url}" target="_blank" rel="noopener">${esc(t("lc_open"))}</a>
+      ${right}
+    </div>`;
+}
+
+function wireRows(scope){
+  $$(`${scope} [data-check]`).forEach(b=>b.onclick=()=>markDone(b.dataset.check, !isDone(b.dataset.check)));
+  $$(`${scope} [data-conf]`).forEach(b=>b.onclick=()=>setConf(b.dataset.slug, b.dataset.conf));
+  $$(`${scope} [data-rv]`).forEach(b=>b.onclick=()=>reviewDone(b.dataset.rv));
+  $$(`${scope} [data-note]`).forEach(a=>{ a.onchange=()=>setNote(a.dataset.note, a.value); a.oninput=()=>{a.style.height="auto";a.style.height=a.scrollHeight+"px";}; });
+}
+
+function renderList(){
+  const today=todayStr();
+  const pass=p=>{ const x=lcProgress[p.s]||{};
+    if(lcFilter==="todo") return !x.done;
+    if(lcFilter==="done") return !!x.done;
+    if(lcFilter==="review") return x.done && x.nextReview && x.nextReview<=today;
+    return true; };
+  let html="", curG=null;
+  LC150.forEach(p=>{
+    if(p.g!==curG){
+      curG=p.g;
+      const inG=LC150.filter(q=>q.g===p.g); const dn=inG.filter(q=>isDone(q.s)).length;
+      html+=`<div class="lc-grouphead"><span>${esc(tx(LC_GROUPS[p.g]))}</span><span class="gcount">${dn}/${inG.length}</span><span class="gbar"><i style="width:${Math.round(dn/inG.length*100)}%"></i></span></div>`;
+    }
+    if(pass(p)) html+=lcRowHtml(p,{});
+  });
+  // strip group headers that ended up with no visible rows under current filter
+  $("#lcList").innerHTML = html || `<p class="lc-empty">${esc(t("lc_list_empty"))}</p>`;
+  wireRows("#lcList");
+}
+
+function renderRoadmap(){
+  // pace line lives inside the Progress tab, right after the stats grid
+  if(!$("#lcPace")){
+    const pace=document.createElement("div"); pace.className="lc-pace"; pace.id="lcPace";
+    $("#lcStats").after(pace);
+  }
+  renderMiniStat(); renderCfgBar(); renderStats(); renderToday(); renderReview(); renderHeat(); renderRadar(); renderList();
+}
+
+$$("#lcFilter .chip").forEach(c=>c.onclick=()=>{
+  $$("#lcFilter .chip").forEach(x=>x.classList.remove("on"));
+  c.classList.add("on"); lcFilter=c.dataset.f; renderList();
+});
+
+/* --- tabs (Progress / Full list) --- */
+$$("#lcTabs .lc-tab").forEach(b=>b.onclick=()=>{
+  $$("#lcTabs .lc-tab").forEach(x=>x.classList.toggle("on", x===b));
+  const tab=b.dataset.tab;
+  $("#lcTabProgress").hidden = tab!=="progress";
+  $("#lcTabList").hidden = tab!=="list";
+});
+
+/* --- AI settings toggle (gear in the ask column) --- */
+$("#aiGear").onclick=()=>{ const s=$("#aiSettings"); s.hidden=!s.hidden; };
+
 /* ============================================================ LANGUAGE SWITCH */
 function applyLang(){
   chatHistory[0] = {role:"system", content:buildSystemPrompt()}; // chat replies follow the UI language
@@ -981,6 +1682,7 @@ function applyLang(){
   renderPractice(currentPractice);
   renderLog();
   renderNotes();
+  renderRoadmap();
 }
 $("#langBtn").onclick = ()=>{ lang = lang==="vi"?"en":"vi"; LS.set("dsac_lang",lang); applyLang(); };
 
@@ -993,6 +1695,8 @@ renderGuide(GUIDE.start);
 renderPractice();
 renderLog();
 renderNotes();
+initLC();
+renderRoadmap();
 </script>
 </body>
 </html>
