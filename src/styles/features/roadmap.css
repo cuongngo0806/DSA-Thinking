@@ -160,5 +160,3 @@
 .git-privacy{margin:10px 0 0;padding:9px 11px;border-radius:9px;font-size:12px;line-height:1.55;
   color:var(--order);background:color-mix(in srgb,var(--order) 12%,transparent);
   border:1px solid color-mix(in srgb,var(--order) 35%,transparent)}
-
-/* sync probe: does a web change ride along with the data push? */

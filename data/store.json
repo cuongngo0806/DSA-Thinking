@@ -1,14 +1,164 @@
 {
   "app": "dsa-compass",
   "schema": 2,
-  "updatedAt": "2026-09-11T17:15:20.220Z",
+  "updatedAt": "2026-09-11T17:13:30.331Z",
   "data": {
-    "plan": {},
-    "progress": {},
-    "activity": {},
-    "triggers": [],
-    "log": [],
-    "chats": [],
+    "plan": {
+      "start": "2026-09-11",
+      "end": "2026-10-30",
+      "perDay": 3,
+      "mode": "perDay",
+      "target": 150,
+      "username": ""
+    },
+    "progress": {
+      "merge-sorted-array": {
+        "done": true,
+        "date": "2026-09-11",
+        "stage": 0,
+        "nextReview": "2026-09-14"
+      },
+      "maximum-depth-of-binary-tree": {
+        "done": true,
+        "date": "2026-09-11",
+        "stage": 0,
+        "nextReview": "2026-09-14"
+      }
+    },
+    "activity": {
+      "2026-09-11": 2
+    },
+    "triggers": [
+      {
+        "signal": "test signal",
+        "tool": "test tool",
+        "why": "because",
+        "rel": "identity"
+      }
+    ],
+    "log": [
+      {
+        "problem": "local-only problem",
+        "trigger": "kept by merge",
+        "date": "12/09/2026"
+      }
+    ],
+    "chats": [
+      {
+        "id": "cmtx7t8ga",
+        "title": "",
+        "at": 1789146802954,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7t4d1",
+        "title": "",
+        "at": 1789146797653,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7s548",
+        "title": "",
+        "at": 1789146751976,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7rcjs",
+        "title": "",
+        "at": 1789146714952,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7r8xt",
+        "title": "",
+        "at": 1789146710273,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7r5pw",
+        "title": "",
+        "at": 1789146706100,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7qy99",
+        "title": "",
+        "at": 1789146696429,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7qk1p",
+        "title": "",
+        "at": 1789146678013,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7pwdy",
+        "title": "",
+        "at": 1789146647350,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7pg6j",
+        "title": "",
+        "at": 1789146626347,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7p00p",
+        "title": "",
+        "at": 1789146605401,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7lo3c",
+        "title": "",
+        "at": 1789146449976,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7ipoz",
+        "title": "",
+        "at": 1789146312083,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7ho2v",
+        "title": "",
+        "at": 1789146263335,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7ag69",
+        "title": "",
+        "at": 1789145926497,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7acw6",
+        "title": "",
+        "at": 1789145922246,
+        "msgs": []
+      },
+      {
+        "id": "cmtx79owp",
+        "title": "",
+        "at": 1789145891161,
+        "msgs": []
+      },
+      {
+        "id": "cmtx79cp3",
+        "title": "",
+        "at": 1789145875335,
+        "msgs": []
+      },
+      {
+        "id": "cmtx799cw",
+        "title": "",
+        "at": 1789145871008,
+        "msgs": []
+      }
+    ],
     "visualizations": []
   }
 }
