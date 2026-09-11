@@ -61,12 +61,22 @@ header.nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
 .nav-inner{max-width:var(--maxw);margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:16px}
 .brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-size:19px;color:var(--text);white-space:nowrap}
 .brand .dot{width:26px;height:26px;flex:0 0 auto}
-.nav-links{display:flex;gap:2px;overflow-x:auto;flex:1;scrollbar-width:none}
-.nav-links::-webkit-scrollbar{display:none}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;padding:7px 11px;border-radius:9px;
-  white-space:nowrap;transition:color .18s,background .18s}
-.nav-links a:hover{color:var(--text);background:var(--surface)}
-.nav-links a.active{color:var(--brass);background:var(--brass-glow)}
+[hidden]{display:none !important}
+.top-tabs{display:flex;gap:4px;flex:1;padding:3px;background:var(--surface);border:1px solid var(--line);border-radius:12px;max-width:340px}
+.top-tab{flex:1;background:none;border:none;color:var(--muted);font-family:var(--sans);font-size:14px;font-weight:600;
+  padding:8px 16px;border-radius:9px;cursor:pointer;white-space:nowrap;transition:color .18s,background .18s}
+.top-tab:hover{color:var(--text)}
+.top-tab.on{color:var(--ink-0);background:var(--brass)}
+:root[data-theme=light] .top-tab.on{color:#fff}
+.subtabs-wrap{border-bottom:1px solid var(--line-soft);position:sticky;top:59px;z-index:30;
+  background:color-mix(in srgb, var(--bg) 90%, transparent);backdrop-filter:blur(10px)}
+.sub-tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:7px 0}
+.sub-tabs::-webkit-scrollbar{display:none}
+.sub-tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--sans);
+  font-size:14px;font-weight:500;padding:8px 13px;border-radius:8px 8px 0 0;cursor:pointer;white-space:nowrap;transition:color .18s}
+.sub-tab:hover{color:var(--text)}
+.sub-tab.on{color:var(--brass);border-bottom-color:var(--brass);font-weight:600}
+section.block[data-pane]{border-top:none;padding-top:34px}
 .icon-btn{flex:0 0 auto;background:var(--surface);border:1px solid var(--line);color:var(--text-dim);height:38px;
   border-radius:10px;cursor:pointer;font-size:15px;display:grid;place-items:center;transition:border-color .18s,color .18s;font-family:var(--sans)}
 .theme-btn{width:38px}
@@ -484,7 +494,46 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
 .viz-howblk ul{margin:0;padding-left:18px;font-size:14px;color:var(--text-dim);line-height:1.6}
 .viz-howblk ol{margin:0;padding-left:20px;font-size:14px;color:var(--text-dim);line-height:1.65}
 .viz-howblk li{margin-bottom:3px}
-@media (max-width:860px){.viz-main{grid-template-columns:1fr}.viz-howgrid{grid-template-columns:1fr}}
+/* create / import / saved */
+textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.8px;line-height:1.6}
+.viz-create{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
+.viz-createside .settings{margin:0}
+.viz-genbtns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.viz-status{margin-top:14px;padding:12px 15px;border-radius:11px;font-size:13.5px;line-height:1.6;border:1px solid var(--line);background:var(--surface);color:var(--text-dim)}
+.viz-status.err{border-color:#c0554b;background:rgba(192,85,75,.1);color:#e0897c}
+.viz-status.ok{border-color:var(--dependency);background:rgba(78,201,176,.1);color:var(--dependency)}
+.viz-status.busy{border-color:var(--order);color:var(--order)}
+.viz-status code{white-space:pre-wrap;word-break:break-word}
+.viz-savedbar{display:flex;gap:11px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.viz-sgroup{margin-bottom:18px}
+.viz-sgrouphead{display:flex;align-items:baseline;gap:9px;margin-bottom:8px}
+.viz-sgrouphead b{font-family:var(--serif);font-size:17px;font-weight:600}
+.viz-sgrouphead span{font-size:12px;color:var(--muted-2)}
+.viz-sitem{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;background:var(--surface);
+  border:1px solid var(--line);border-radius:11px;padding:12px 15px;margin-bottom:8px}
+.viz-sitem .si-main{min-width:0}
+.viz-sitem .si-algo{font-size:14px;color:var(--text);font-weight:500}
+.viz-sitem .si-meta{font-size:11.5px;color:var(--muted-2);margin-top:3px}
+.viz-sitem .si-btns{display:flex;gap:7px}
+.viz-sbtn{background:var(--bg);border:1px solid var(--line);color:var(--text-dim);border-radius:8px;cursor:pointer;
+  font-size:12.5px;padding:5px 11px;font-family:var(--sans)}
+.viz-sbtn:hover{border-color:var(--brass);color:var(--brass)}
+.viz-sbtn.danger:hover{border-color:#c0554b;color:#e0776c}
+.viz-savebtn{background:var(--bg);border:1px solid var(--dependency);color:var(--dependency);border-radius:9px;cursor:pointer;
+  font-size:13px;font-weight:600;padding:8px 14px;font-family:var(--sans)}
+.viz-savebtn:hover{background:rgba(78,201,176,.12)}
+.viz-custom-tag{font-size:11px;font-weight:700;color:var(--brass);background:var(--brass-glow);padding:3px 10px;border-radius:20px}
+/* chat history */
+.chat-actions{display:flex;gap:6px}
+.chat-hist{border-bottom:1px solid var(--line);max-height:210px;overflow-y:auto;background:var(--bg)}
+.chat-hitem{display:flex;align-items:center;gap:9px;padding:9px 15px;border-bottom:1px solid var(--line-soft);cursor:pointer}
+.chat-hitem:hover{background:var(--surface)}
+.chat-hitem.on{background:var(--brass-glow)}
+.chat-hitem .ht{flex:1;min-width:0;font-size:13px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chat-hitem.on .ht{color:var(--brass);font-weight:600}
+.chat-hitem .hd{font-size:11px;color:var(--muted-2);white-space:nowrap}
+.chat-hempty{padding:14px 15px;font-size:12.5px;color:var(--muted-2);font-style:italic}
+@media (max-width:860px){.viz-main{grid-template-columns:1fr}.viz-howgrid{grid-template-columns:1fr}.viz-create{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -495,22 +544,16 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
       <svg class="dot" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="var(--brass)" stroke-width="4"/><path d="M50 12 L60 50 L50 88 L40 50 Z" fill="var(--brass)"/><circle cx="50" cy="50" r="6" fill="var(--ink-0)" stroke="var(--brass)" stroke-width="3"/></svg>
       <span data-i18n="brand">La Bàn DSA</span>
     </div>
-    <nav class="nav-links" id="navLinks">
-      <a href="#ban-do" data-i18n="nav_map">Bản đồ tư duy</a>
-      <a href="#tu-dien" data-i18n="nav_dict">Từ điển tín hiệu</a>
-      <a href="#dan-loi" data-i18n="nav_guide">Dẫn lối</a>
-      <a href="#truc-quan" data-i18n="nav_viz">Trực quan</a>
-      <a href="#lo-trinh" data-i18n="nav_roadmap">Lộ trình 150</a>
-      <a href="#luyen-tap" data-i18n="nav_drill">Luyện nén</a>
-      <a href="#nhat-ky" data-i18n="nav_log">Nhật ký</a>
-      <a href="#ghi-chu" data-i18n="nav_notes">Ghi chú</a>
+    <nav class="top-tabs" id="topTabs">
+      <button class="top-tab on" data-top="practice" data-i18n="top_practice">Luyện tập</button>
+      <button class="top-tab" data-top="theory" data-i18n="top_theory">Lý thuyết</button>
     </nav>
     <button class="icon-btn lang-btn" id="langBtn" data-i18n-attr="title:lang_title">EN</button>
     <button class="icon-btn theme-btn" id="themeBtn" data-i18n-attr="title:theme_title" aria-label="theme">☾</button>
   </div>
 </header>
 
-<section class="hero">
+<section class="hero" id="heroSec" data-pane="theory">
   <div class="wrap hero-grid">
     <div>
       <p class="eyebrow" data-i18n="hero_eyebrow">Không phải chìa khóa — mà là la bàn</p>
@@ -539,7 +582,21 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
   </div>
 </section>
 
-<section class="block" id="ban-do">
+<div class="subtabs-wrap" id="pSubTabs"><div class="wrap"><nav class="sub-tabs">
+  <button class="sub-tab on" data-sub="roadmap" data-i18n="sub_roadmap">Lộ trình 150</button>
+  <button class="sub-tab" data-sub="viz" data-i18n="sub_viz">Trực quan thuật toán</button>
+</nav></div></div>
+
+<div class="subtabs-wrap" id="tSubTabs" hidden><div class="wrap"><nav class="sub-tabs">
+  <button class="sub-tab on" data-sub="map" data-i18n="nav_map">Bản đồ tư duy</button>
+  <button class="sub-tab" data-sub="dict" data-i18n="nav_dict">Từ điển tín hiệu</button>
+  <button class="sub-tab" data-sub="guide" data-i18n="nav_guide">Dẫn lối</button>
+  <button class="sub-tab" data-sub="drill" data-i18n="nav_drill">Luyện nén</button>
+  <button class="sub-tab" data-sub="log" data-i18n="nav_log">Nhật ký</button>
+  <button class="sub-tab" data-sub="notes" data-i18n="nav_notes">Ghi chú</button>
+</nav></div></div>
+
+<section class="block" id="ban-do" data-pane="theory" data-sub="map">
   <div class="wrap">
     <h2 class="sec-head" data-i18n="map_head">Bản đồ tư duy</h2>
     <p class="sec-sub" data-i18n="map_sub">Bốn câu hỏi la bàn định tuyến suy nghĩ của bạn. Câu <b style="color:var(--brass)">thượng nguồn</b> phải hỏi trước — hầu hết bế tắc đến từ việc trả lời sai chính nó.</p>
@@ -553,7 +610,7 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
   </div>
 </section>
 
-<section class="block" id="tu-dien">
+<section class="block" id="tu-dien" data-pane="theory" data-sub="dict">
   <div class="wrap">
     <h2 class="sec-head" data-i18n="dict_head">Từ điển tín hiệu</h2>
     <p class="sec-sub" data-i18n="dict_sub">14 mục cô đọng — phần "20%" quan trọng nhất. Mỗi mục: tín hiệu trong đề → công cụ, kèm cái "vì sao" nói rõ <i>thông tin phân biệt</i> để bạn không học vẹt. Hãy <b style="color:var(--brass)">tự thêm mục của riêng mình</b> — đó là lúc bạn tập tự đi.</p>
@@ -585,7 +642,7 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
   </div>
 </section>
 
-<section class="block" id="dan-loi">
+<section class="block" id="dan-loi" data-pane="theory" data-sub="guide">
   <div class="wrap">
     <h2 class="sec-head" data-i18n="guide_head">Chế độ dẫn lối <span class="sub-label">— chạy offline, không cần AI</span></h2>
     <p class="sec-sub" data-i18n="guide_sub">Bắt đầu từ câu thượng nguồn: <b>đầu ra của bài toán thật sự đòi kiểu thông tin gì?</b> Rồi men theo các câu hỏi kích hoạt để tới một <b style="color:var(--brass)">GIẢ THUYẾT</b> — không phải đáp án, mà là một hướng để bạn tự bước tiếp.</p>
@@ -596,15 +653,75 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
   </div>
 </section>
 
-<section class="block" id="truc-quan">
+<section class="block" id="truc-quan" data-pane="practice" data-sub="viz">
   <div class="wrap">
     <h2 class="sec-head" data-i18n="viz_head">Trực quan thuật toán <span class="sub-label">— chạy từng bước như debugger</span></h2>
     <p class="sec-sub" data-i18n="viz_sub">Xem một thuật toán kinh điển chạy từng bước: mảng, ngăn xếp, con trỏ, biến, phép tính và kết quả — kèm dòng mã đang chạy được tô sáng. Hãy để ý <b>không gian nào đang bị duyệt</b> ở mỗi bước.</p>
-    <div class="viz-app" id="vizApp" tabindex="0"></div>
+    <div class="lc-tabs" id="vizTabs">
+      <button class="lc-tab on" data-vt="view" data-i18n="viz_tab_view">Xem</button>
+      <button class="lc-tab" data-vt="create" data-i18n="viz_tab_create">Tạo bằng AI</button>
+      <button class="lc-tab" data-vt="import" data-i18n="viz_tab_import">Nhập JSON</button>
+      <button class="lc-tab" data-vt="saved" data-i18n="viz_tab_saved">Đã lưu</button>
+    </div>
+
+    <div id="vizPaneView"><div class="viz-app" id="vizApp" tabindex="0"></div></div>
+
+    <div id="vizPaneCreate" hidden>
+      <div class="viz-create">
+        <div>
+          <div class="field"><label class="lbl" data-i18n="gen_problem">Đề bài</label><textarea class="inp" id="genProblem" rows="3" data-i18n-attr="placeholder:gen_problem_ph"></textarea></div>
+          <div class="row2">
+            <div class="field"><label class="lbl" data-i18n="gen_algo">Thuật toán</label><input class="inp" id="genAlgo" data-i18n-attr="placeholder:gen_algo_ph"></div>
+            <div class="field"><label class="lbl" data-i18n="gen_lang">Ngôn ngữ</label><input class="inp" id="genLang" value="cpp"></div>
+          </div>
+          <div class="field"><label class="lbl" data-i18n="gen_input">Đầu vào cụ thể</label><input class="inp" id="genInput" data-i18n-attr="placeholder:gen_input_ph"></div>
+          <div class="field"><label class="lbl" data-i18n="gen_code">Mã nguồn</label><textarea class="inp mono" id="genCode" rows="12" data-i18n-attr="placeholder:gen_code_ph"></textarea></div>
+          <div class="viz-genbtns">
+            <button class="btn btn-primary" id="genRun" data-i18n="gen_run">✨ Sinh bằng AI</button>
+            <button class="btn btn-ghost" id="genCopy" data-i18n="gen_copy">Sao chép prompt</button>
+          </div>
+          <div class="viz-status" id="genStatus" hidden></div>
+        </div>
+        <div class="viz-createside">
+          <div class="settings">
+            <h3 data-i18n="vai_head">AI trực quan</h3>
+            <div class="status" id="vaiStatus" data-i18n="status_untested">Chưa kiểm tra</div>
+            <div class="field"><label class="lbl" data-i18n="set_url_lbl">Base URL</label><input class="inp" id="vaiUrl" placeholder="http://localhost:11434/v1"></div>
+            <div class="field"><label class="lbl" data-i18n="set_model_lbl">Tên model</label><input class="inp" id="vaiModel" placeholder="qwen2.5-coder ..."></div>
+            <div class="field"><label class="lbl" data-i18n="set_key_lbl">API key (tùy chọn)</label><input class="inp" id="vaiKey" type="password" data-i18n-attr="placeholder:set_key_ph"></div>
+            <div class="field"><label class="lbl" data-i18n="vai_maxtok">Max tokens</label><input class="inp" id="vaiMaxTok" placeholder="16000"></div>
+            <button class="btn btn-primary" id="vaiTest" style="width:100%" data-i18n="set_test_btn">Lưu & kiểm tra kết nối</button>
+            <p class="hint-note" data-i18n="vai_hint">Đây là AI <b>riêng</b> cho việc sinh dữ liệu trực quan — tách khỏi AI gia sư. Nên dùng model mạnh về code, cửa sổ ngữ cảnh lớn.</p>
+          </div>
+          <div class="viz-panel" style="margin-top:13px">
+            <div class="pt" data-i18n="gen_nokey_head">Không có API key?</div>
+            <p style="margin:0;font-size:13.5px;color:var(--text-dim);line-height:1.6" data-i18n="gen_nokey_body">Bấm <b>Sao chép prompt</b>, dán vào Claude (claude.ai / Claude Code), rồi dán JSON nhận được vào tab <b>Nhập JSON</b>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="vizPaneImport" hidden>
+      <div class="field"><label class="lbl" data-i18n="imp_lbl">Dán JSON visualization</label><textarea class="inp mono" id="impJson" rows="14" placeholder='{ "title": "...", "components": [...], "steps": [...] }'></textarea></div>
+      <div class="viz-genbtns">
+        <button class="btn btn-primary" id="impRun" data-i18n="imp_run">Nhập & xem</button>
+        <button class="btn btn-ghost" id="impFileBtn" data-i18n="imp_file">Chọn file .json</button>
+        <input type="file" id="impFile" accept="application/json,.json" hidden>
+      </div>
+      <div class="viz-status" id="impStatus" hidden></div>
+    </div>
+
+    <div id="vizPaneSaved" hidden>
+      <div class="viz-savedbar">
+        <input class="inp" id="savedSearch" data-i18n-attr="placeholder:saved_search" style="max-width:320px">
+        <button class="btn btn-ghost" id="savedExportAll" data-i18n="saved_export_all">Xuất tất cả</button>
+      </div>
+      <div id="savedList"></div>
+    </div>
   </div>
 </section>
 
-<section class="block" id="lo-trinh">
+<section class="block" id="lo-trinh" data-pane="practice" data-sub="roadmap">
   <div class="wrap">
     <h2 class="sec-head" data-i18n="lc_head">Lộ trình 150 <span class="sub-label">— Top Interview 150</span></h2>
     <p class="sec-sub" data-i18n="lc_sub">Một kế hoạch hằng ngày để đi hết 150 câu trong 2 tháng — nhưng vẫn theo tinh thần la bàn: mỗi câu bạn giải xong, hãy nén nó thành <b>một dòng tín hiệu</b>. Dữ liệu ở lại trong trình duyệt này.</p>
@@ -620,8 +737,13 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
         <div class="chat" id="tutorChat">
           <div class="chat-head">
             <h3 data-i18n="wb_ask_head">Hỏi la bàn sống</h3>
-            <button class="lc-gear" id="aiGear" data-i18n-attr="title:wb_ai_settings" aria-label="AI settings">⚙</button>
+            <div class="chat-actions">
+              <button class="lc-gear" id="chatNew" data-i18n-attr="title:chat_new" aria-label="New chat">＋</button>
+              <button class="lc-gear" id="chatHistBtn" data-i18n-attr="title:chat_history" aria-label="Chat history">🕘</button>
+              <button class="lc-gear" id="aiGear" data-i18n-attr="title:wb_ai_settings" aria-label="AI settings">⚙</button>
+            </div>
           </div>
+          <div class="chat-hist" id="chatHistPanel" hidden></div>
           <div class="settings" id="aiSettings" hidden>
             <div class="status" id="aiStatus" data-i18n="status_untested">Chưa kiểm tra</div>
             <div class="field"><label class="lbl" data-i18n="set_url_lbl">Base URL</label><input class="inp" id="aiUrl" placeholder="http://localhost:11434/v1"></div>
@@ -674,7 +796,7 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
   </div>
 </section>
 
-<section class="block" id="luyen-tap">
+<section class="block" id="luyen-tap" data-pane="theory" data-sub="drill">
   <div class="wrap">
     <h2 class="sec-head" data-i18n="drill_head">Luyện nén</h2>
     <p class="sec-sub" data-i18n="drill_sub">Rút ngẫu nhiên một tín hiệu (gồm cả mục của bạn). Tự trả lời <b>công cụ</b> VÀ <b>vì sao</b> trước khi lật đáp án. Học bằng nén, không phải bằng số lượng.</p>
@@ -682,7 +804,7 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
   </div>
 </section>
 
-<section class="block" id="nhat-ky">
+<section class="block" id="nhat-ky" data-pane="theory" data-sub="log">
   <div class="wrap">
     <h2 class="sec-head" data-i18n="log_head">Nhật ký va chạm</h2>
     <p class="sec-sub" data-i18n="log_sub">Ghi lại "bài toán tôi đã va phải" và tín hiệu bạn rút ra được. Theo dõi từ điển của chính bạn dần hội tụ.</p>
@@ -697,7 +819,7 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
   </div>
 </section>
 
-<section class="block" id="ghi-chu">
+<section class="block" id="ghi-chu" data-pane="theory" data-sub="notes">
   <div class="wrap">
     <h2 class="sec-head" data-i18n="notes_head">Ghi chú phương pháp</h2>
     <p class="sec-sub" data-i18n="notes_sub">Những điều thành thật về cách công cụ này hoạt động.</p>
@@ -996,11 +1118,24 @@ function applyStatic(){
   });
 }
 
-/* ============================================================ NAV active */
-const navLinks = [...$$("#navLinks a")];
-const io = new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ const id=e.target.id;
-  navLinks.forEach(a=>a.classList.toggle("active", a.getAttribute("href")==="#"+id)); }}); },{rootMargin:"-45% 0px -50% 0px"});
-$$("section.block").forEach(s=>io.observe(s));
+/* ============================================================ TABS (Practice / Theory) */
+let topTab = LS.get("dsac_top","practice"); if(topTab!=="theory") topTab="practice";
+const subTab = {practice:LS.get("dsac_sub_p","roadmap"), theory:LS.get("dsac_sub_t","map")};
+function applyTabs(scroll){
+  $$("#topTabs .top-tab").forEach(b=>b.classList.toggle("on", b.dataset.top===topTab));
+  $("#heroSec").hidden = topTab!=="theory";
+  $("#pSubTabs").hidden = topTab!=="practice";
+  $("#tSubTabs").hidden = topTab!=="theory";
+  $$("#pSubTabs .sub-tab").forEach(b=>b.classList.toggle("on", b.dataset.sub===subTab.practice));
+  $$("#tSubTabs .sub-tab").forEach(b=>b.classList.toggle("on", b.dataset.sub===subTab.theory));
+  $$("section.block[data-pane]").forEach(s=>{
+    s.hidden = !(s.dataset.pane===topTab && s.dataset.sub===subTab[topTab]);
+  });
+  if(scroll) window.scrollTo({top:0,behavior:"smooth"});
+}
+$$("#topTabs .top-tab").forEach(b=>b.onclick=()=>{ topTab=b.dataset.top; LS.set("dsac_top",topTab); applyTabs(true); });
+$$("#pSubTabs .sub-tab").forEach(b=>b.onclick=()=>{ subTab.practice=b.dataset.sub; LS.set("dsac_sub_p",subTab.practice); applyTabs(true); });
+$$("#tSubTabs .sub-tab").forEach(b=>b.onclick=()=>{ subTab.theory=b.dataset.sub; LS.set("dsac_sub_t",subTab.theory); applyTabs(true); });
 
 /* ============================================================ RENDERERS */
 function renderQuestions(){
@@ -1191,7 +1326,6 @@ const LANG_RULE = {
 };
 function buildSystemPrompt(){ return SYSTEM_PROMPT.replace("__LANG_RULE__", LANG_RULE[lang]||LANG_RULE.en); }
 
-let chatHistory = [{role:"system", content:buildSystemPrompt()}];
 $("#aiUrl").value = aiCfg.url||""; $("#aiModel").value = aiCfg.model||""; $("#aiKey").value = aiCfg.key||"";
 
 function setStatus(cls,text){ const s=$("#aiStatus"); s.className="status "+cls; s.removeAttribute("data-i18n"); s.textContent=text; }
@@ -1232,12 +1366,17 @@ function addMsg(role,text){
 async function sendChat(text){
   text=text.trim(); if(!text) return;
   if(!$("#aiModel").value.trim()){ addMsg("system",t("need_config")); return; }
-  addMsg("user",text); chatHistory.push({role:"user",content:text});
+  const c=curChat();
+  if(!c.msgs.length) chatLog.innerHTML="";        // drop the intro placeholder
+  addMsg("user",text);
+  c.msgs.push({role:"user",content:text});
+  if(!c.title) c.title=text.slice(0,48);
+  c.at=Date.now(); saveChats(); renderChatHist();
   chatInput.value=""; chatInput.style.height="auto"; chatSend.disabled=true;
   const wait = addMsg("assistant",t("chat_thinking"));
   try{
-    const reply = await aiCall(chatHistory);
-    chatHistory.push({role:"assistant",content:reply});
+    const reply = await aiCall([{role:"system",content:buildSystemPrompt()}, ...c.msgs]);
+    c.msgs.push({role:"assistant",content:reply}); c.at=Date.now(); saveChats(); renderChatHist();
     wait.innerHTML = mdBold(reply);
   }catch(e){
     wait.className="msg sys"; wait.textContent=t("chat_err_prefix")+e.message+t("chat_err_suffix");
@@ -1801,6 +1940,8 @@ $("#aiGear").onclick=()=>{ const s=$("#aiSettings"); s.hidden=!s.hidden; };
 
 /* ============================================================ VISUALIZER (ported from dsa-visualization) */
 Object.assign(T.vi, {
+  top_practice:"Luyện tập", top_theory:"Lý thuyết",
+  sub_roadmap:"Lộ trình 150", sub_viz:"Trực quan thuật toán",
   nav_viz:"Trực quan",
   viz_head:'Trực quan thuật toán <span class="sub-label">— chạy từng bước như debugger</span>',
   viz_sub:'Xem một thuật toán kinh điển chạy từng bước: mảng, ngăn xếp, con trỏ, biến, phép tính và kết quả — kèm dòng mã đang chạy được tô sáng. Hãy để ý <b>không gian nào đang bị duyệt</b> ở mỗi bước.',
@@ -1810,9 +1951,33 @@ Object.assign(T.vi, {
   viz_speed:"Tốc độ", viz_top:"top", viz_front:"đầu", viz_back:"cuối", viz_empty:"rỗng",
   viz_how:"Cách nó hoạt động", viz_intuition:"Trực giác", viz_approach:"Cách làm", viz_why:"Vì sao đúng", viz_pitfalls:"Bẫy thường gặp",
   viz_legend:"Chú giải", viz_narr:"Lời tường thuật từng bước hiển thị bằng tiếng Anh (theo nguồn thuật toán).",
-  viz_r_active:"đang xử lý", viz_r_compare:"so sánh", viz_r_boundary:"biên/tường", viz_r_visited:"đã thăm", viz_r_push:"thêm vào", viz_r_pop:"lấy ra", viz_r_result:"kết quả"
+  viz_r_active:"đang xử lý", viz_r_compare:"so sánh", viz_r_boundary:"biên/tường", viz_r_visited:"đã thăm", viz_r_push:"thêm vào", viz_r_pop:"lấy ra", viz_r_result:"kết quả",
+  viz_tab_view:"Xem", viz_tab_create:"Tạo bằng AI", viz_tab_import:"Nhập JSON", viz_tab_saved:"Đã lưu",
+  viz_custom:"TỰ SINH", viz_save:"Lưu lại", viz_saved_ok:"Đã lưu ✓",
+  gen_problem:"Đề bài", gen_problem_ph:"Mô tả bài toán — ví dụ: cho mảng số nguyên và target, tìm hai chỉ số có tổng bằng target...",
+  gen_algo:"Thuật toán", gen_algo_ph:"Hash map / Two pointer / DP ...",
+  gen_lang:"Ngôn ngữ", gen_input:"Đầu vào cụ thể", gen_input_ph:"nums = [2,7,11,15], target = 9",
+  gen_code:"Mã nguồn", gen_code_ph:"Dán mã nguồn lời giải của bạn vào đây...",
+  gen_run:"✨ Sinh bằng AI", gen_copy:"Sao chép prompt", gen_copied:"Đã sao chép prompt vào clipboard. Dán vào Claude, rồi đưa JSON trả về sang tab <b>Nhập JSON</b>.",
+  gen_copyfail:"Không sao chép được — hãy chọn và copy thủ công.",
+  gen_need_fields:"Cần ít nhất <b>Đề bài</b> và <b>Mã nguồn</b>.",
+  gen_need_model:"Hãy cấu hình <b>AI trực quan</b> ở cột bên phải trước.",
+  gen_running:"Đang sinh trace… việc này có thể mất một lúc vì mô hình phải mô phỏng từng bước.",
+  gen_ok:"Thành công — trace gồm {n} bước. Đã lưu vào <b>Đã lưu</b> và mở ở tab <b>Xem</b>.",
+  gen_badjson:"Mô hình không trả về JSON hợp lệ:", gen_invalid:"JSON sai cấu trúc:", gen_failed:"Gọi mô hình lỗi: ",
+  vai_head:"AI trực quan", vai_maxtok:"Max tokens",
+  vai_hint:'Đây là AI <b>riêng</b> cho việc sinh dữ liệu trực quan — tách khỏi AI gia sư. Nên dùng model mạnh về code, cửa sổ ngữ cảnh lớn.',
+  gen_nokey_head:"Không có API key?", gen_nokey_body:'Bấm <b>Sao chép prompt</b>, dán vào Claude (claude.ai / Claude Code), rồi dán JSON nhận được vào tab <b>Nhập JSON</b>.',
+  imp_lbl:"Dán JSON visualization", imp_run:"Nhập & xem", imp_file:"Chọn file .json",
+  saved_search:"Tìm theo tên bài / thuật toán...", saved_export_all:"Xuất tất cả",
+  saved_empty:"Chưa lưu visualization nào. Hãy sinh bằng AI hoặc nhập JSON.", saved_nomatch:"Không có mục nào khớp.",
+  saved_count:"bản", saved_steps:"bước", saved_open:"Mở", saved_export:"Xuất", saved_delete:"Xóa",
+  chat_new:"Cuộc trò chuyện mới", chat_history:"Lịch sử trò chuyện",
+  chat_hist_empty:"Chưa có cuộc trò chuyện nào được lưu.", chat_untitled:"(chưa đặt tên)"
 });
 Object.assign(T.en, {
+  top_practice:"Practice", top_theory:"Theory",
+  sub_roadmap:"Roadmap 150", sub_viz:"Algorithm visualizer",
   nav_viz:"Visualizer",
   viz_head:'Algorithm visualizer <span class="sub-label">— step through it like a debugger</span>',
   viz_sub:'Watch a classic algorithm run step by step: arrays, stacks, pointers, variables, calculations and results — with the running code line highlighted. Notice <b>which space is being traversed</b> at each step.',
@@ -1822,7 +1987,29 @@ Object.assign(T.en, {
   viz_speed:"Speed", viz_top:"top", viz_front:"front", viz_back:"back", viz_empty:"empty",
   viz_how:"How it works", viz_intuition:"Intuition", viz_approach:"Approach", viz_why:"Why it works", viz_pitfalls:"Common pitfalls",
   viz_legend:"Color key", viz_narr:"",
-  viz_r_active:"active", viz_r_compare:"compare", viz_r_boundary:"boundary/wall", viz_r_visited:"visited", viz_r_push:"push", viz_r_pop:"pop", viz_r_result:"result"
+  viz_r_active:"active", viz_r_compare:"compare", viz_r_boundary:"boundary/wall", viz_r_visited:"visited", viz_r_push:"push", viz_r_pop:"pop", viz_r_result:"result",
+  viz_tab_view:"View", viz_tab_create:"Create with AI", viz_tab_import:"Import JSON", viz_tab_saved:"Saved",
+  viz_custom:"GENERATED", viz_save:"Save", viz_saved_ok:"Saved ✓",
+  gen_problem:"Problem", gen_problem_ph:"Describe the problem — e.g. given an integer array and a target, find two indices summing to the target...",
+  gen_algo:"Algorithm", gen_algo_ph:"Hash map / Two pointer / DP ...",
+  gen_lang:"Language", gen_input:"Concrete input", gen_input_ph:"nums = [2,7,11,15], target = 9",
+  gen_code:"Source code", gen_code_ph:"Paste your solution's source code here...",
+  gen_run:"✨ Generate with AI", gen_copy:"Copy prompt", gen_copied:"Prompt copied. Paste it into Claude, then bring the returned JSON to the <b>Import JSON</b> tab.",
+  gen_copyfail:"Could not copy — please select and copy manually.",
+  gen_need_fields:"Need at least a <b>Problem</b> and <b>Source code</b>.",
+  gen_need_model:"Configure the <b>visualizer AI</b> in the right column first.",
+  gen_running:"Generating the trace… this can take a while — the model has to simulate every step.",
+  gen_ok:"Success — {n}-step trace. Saved to <b>Saved</b> and opened in the <b>View</b> tab.",
+  gen_badjson:"The model did not return valid JSON:", gen_invalid:"JSON failed validation:", gen_failed:"Model call failed: ",
+  vai_head:"Visualizer AI", vai_maxtok:"Max tokens",
+  vai_hint:'This is a <b>separate</b> AI from the tutor, used only to generate visualization data. Prefer a strong coding model with a large context window.',
+  gen_nokey_head:"No API key?", gen_nokey_body:'Click <b>Copy prompt</b>, paste it into Claude (claude.ai / Claude Code), then paste the returned JSON into the <b>Import JSON</b> tab.',
+  imp_lbl:"Paste visualization JSON", imp_run:"Import & view", imp_file:"Choose .json file",
+  saved_search:"Search by problem / algorithm...", saved_export_all:"Export all",
+  saved_empty:"No visualizations saved yet. Generate one with AI or import JSON.", saved_nomatch:"Nothing matches.",
+  saved_count:"saved", saved_steps:"steps", saved_open:"Open", saved_export:"Export", saved_delete:"Delete",
+  chat_new:"New conversation", chat_history:"Chat history",
+  chat_hist_empty:"No saved conversations yet.", chat_untitled:"(untitled)"
 });
 
 /* ---- example traces (ported verbatim from the visualization repo) ---- */
@@ -1984,7 +2171,15 @@ const VIZ_EXAMPLES = [
 /* ---- visualizer state + renderers ---- */
 const vizState = {key:VIZ_EXAMPLES[0].key, step:0, playing:false, speed:1, timer:null, focused:false};
 let vizCur=null, vizHi={};
-const vizEx = k => VIZ_EXAMPLES.find(e=>e.key===k) || VIZ_EXAMPLES[0];
+let customViz = null;   // a generated / imported visualization, shown as "__custom__"
+const vizEx = k => (k==="__custom__" && customViz) ? customViz : (VIZ_EXAMPLES.find(e=>e.key===k) || VIZ_EXAMPLES[0]);
+/** Explanation for either a built-in (bilingual `expl`) or a generated one (root `explanation`). */
+function getExpl(ex){
+  if(ex.expl) return ex.expl[lang]||ex.expl.en;
+  const e=ex.viz.explanation;
+  if(!e||typeof e!=="object") return null;
+  return {intuition:e.intuition||"", approach:Array.isArray(e.approach)?e.approach:[], why:e.whyItWorks||"", pitfalls:Array.isArray(e.pitfalls)?e.pitfalls:[]};
+}
 const PLAYBACK_SPEEDS=[0.5,1,2];
 const stepIntervalMs = sp => Math.round(900/(sp>0?sp:1));
 const fmtVal = v => v===null?'null':(typeof v==='object'?JSON.stringify(v):String(v));
@@ -2057,8 +2252,27 @@ function renderMatrixState(st){
   const inner=`<div>`+st.values.map((row,r)=>`<div class="viz-row">`+row.map((v,c)=>{const isCur=cur===`${r},${c}`;return `<div class="viz-cell" ${isCur?'data-role="active"':''}>${v===null?'·':esc(fmtVal(v))}</div>`;}).join('')+`</div>`).join('')+`</div>`;
   return vizStructWrap(def, inner);
 }
+function renderTreeState(st){
+  const def=vizCur.viz.components.find(c=>c.id===st.id)||{};
+  const byId=Object.fromEntries((st.nodes||[]).map(n=>[n.id,n]));
+  const pos={}; let idx=0, maxD=0;
+  (function walk(id,d){ const n=id!=null&&byId[id]; if(!n) return; maxD=Math.max(maxD,d);
+    walk(n.left,d+1); pos[n.id]={x:idx++,y:d}; walk(n.right,d+1); })(st.root,0);
+  const keys=Object.keys(pos);
+  if(!keys.length) return vizStructWrap(def,`<div class="viz-stackempty">— ${esc(t('viz_empty'))} —</div>`);
+  const maxX=Math.max(...keys.map(k=>pos[k].x));
+  const W=Math.max(260,(maxX+1)*58), H=(maxD+1)*64+16, pad=26;
+  const px=p=>maxX?pad+(p.x/maxX)*(W-2*pad):W/2, py=p=>26+p.y*64;
+  let edges='';
+  keys.forEach(id=>{ const n=byId[id]; ['left','right'].forEach(side=>{ const c=n[side]; if(c!=null&&pos[c])
+    edges+=`<line class="viz-gedge" x1="${px(pos[id]).toFixed(1)}" y1="${py(pos[id]).toFixed(1)}" x2="${px(pos[c]).toFixed(1)}" y2="${py(pos[c]).toFixed(1)}"/>`; }); });
+  const nodes=keys.map(id=>{ const role=(st.nodeRoles||{})[id]||'';
+    return `<g class="viz-gnode ${role}"><circle cx="${px(pos[id]).toFixed(1)}" cy="${py(pos[id]).toFixed(1)}" r="16"/><text x="${px(pos[id]).toFixed(1)}" y="${py(pos[id]).toFixed(1)}" dy=".34em" text-anchor="middle">${esc(fmtVal(byId[id].value))}</text></g>`; }).join('');
+  return vizStructWrap(def,`<svg class="viz-graph" style="max-width:${W}px" viewBox="0 0 ${W} ${H}">${edges}${nodes}</svg>`);
+}
 function renderState(st){
   switch(st.type){
+    case 'tree': return renderTreeState(st);
     case 'array': return renderArrayState(st);
     case 'stack': return renderStackState(st);
     case 'queue': return renderQueueState(st);
@@ -2074,7 +2288,8 @@ function renderState(st){
 /* ---- shell + step painting ---- */
 function mountViz(){
   vizCur=vizEx(vizState.key); const viz=vizCur.viz;
-  const opts=VIZ_EXAMPLES.map(e=>`<option value="${e.key}" ${e.key===vizState.key?'selected':''}>${esc(tx(e.name))}</option>`).join('');
+  const opts=(customViz?`<option value="__custom__" ${vizState.key==="__custom__"?'selected':''}>★ ${esc(customViz.viz.title)}</option>`:'')
+    +VIZ_EXAMPLES.map(e=>`<option value="${e.key}" ${e.key===vizState.key?'selected':''}>${esc(tx(e.name))}</option>`).join('');
   const roles=['active','compare','boundary','visited','push','pop','result'];
   const legend=roles.map(r=>`<span class="viz-lg" data-role="${r}">${esc(t('viz_r_'+r))}</span>`).join('');
   const codeLines=(viz.sourceCode?viz.sourceCode.code.split('\n'):[]).map((ln,i)=>`<div class="viz-cl" data-ln="${i+1}"><span class="lnno">${i+1}</span><span class="lntx">${esc(ln)||' '}</span></div>`).join('');
@@ -2086,6 +2301,7 @@ function mountViz(){
       <div class="viz-meta">
         <span class="viz-badge"><b>${esc(t('viz_algorithm'))}:</b> ${esc(viz.algorithm)}</span>
         ${viz.complexity?`<span class="viz-badge"><b>${esc(t('viz_time'))}:</b> ${esc(viz.complexity.time)}</span><span class="viz-badge"><b>${esc(t('viz_space'))}:</b> ${esc(viz.complexity.space)}</span>`:''}
+        ${vizCur.custom?`<span class="viz-custom-tag">${esc(t('viz_custom'))}</span><button class="viz-savebtn" id="vizSaveBtn">${esc(t('viz_save'))}</button>`:''}
       </div>
     </div>
     <div class="viz-main">
@@ -2120,12 +2336,16 @@ function mountViz(){
   $("#vizPlay").onclick=vizToggle;
   $("#vizScrub").oninput=e=>{vizStop();vizGo(+e.target.value);};
   $$("#vizApp .viz-sp").forEach(b=>b.onclick=()=>vizSetSpeed(+b.dataset.sp));
+  if($("#vizSaveBtn")) $("#vizSaveBtn").onclick=saveCurrentViz;
   renderHow();
   paintStep();
 }
 function renderHow(){
-  const ex=vizCur, ex2=ex.expl[lang]||ex.expl.en;
-  $("#vizHow").innerHTML=`<h3>${esc(t('viz_how'))} — ${esc(ex.viz.title)}</h3>
+  const ex=vizCur, ex2=getExpl(ex);
+  const how=$("#vizHow");
+  if(!ex2){ how.hidden=true; how.innerHTML=''; return; }
+  how.hidden=false;
+  how.innerHTML=`<h3>${esc(t('viz_how'))} — ${esc(ex.viz.title)}</h3>
     <div class="viz-howgrid">
       <div class="viz-howblk"><div class="pt">${esc(t('viz_intuition'))}</div><p>${esc(ex2.intuition)}</p></div>
       <div class="viz-howblk"><div class="pt">${esc(t('viz_approach'))}</div><ol>${ex2.approach.map(a=>`<li>${esc(a)}</li>`).join('')}</ol></div>
@@ -2181,9 +2401,402 @@ function initViz(){
   });
 }
 
+/* ============================================================ VIZ: AI GENERATION · IMPORT · SAVED */
+const VIZ_SYSTEM_PROMPT = `You are a DSA visualization compiler. You convert an algorithm and a concrete
+input into a DETERMINISTIC, step-by-step visualization specification as JSON.
+
+Your output is consumed by a learner who has NOT understood the algorithm yet.
+A trace that only lists what changed is useless to them. Every step must teach.
+
+You DO NOT write HTML, CSS, or any frontend code. You ONLY output a single JSON
+object matching the schema described below. Output JSON and nothing else — no
+markdown fences, no commentary.
+
+=====================================================================
+NON-NEGOTIABLE RULES
+=====================================================================
+
+R1. TRACE EVERY ITERATION.
+    Simulate the code literally. Every pass of every loop, every comparison,
+    every push/pop, every pointer move gets its OWN step.
+    NEVER write a step like "the loop continues and processes the remaining
+    elements" or "repeat for indices 3..7". Collapsing iterations is the single
+    worst failure mode — it destroys the entire point of the visualization.
+
+R2. STEP COUNT MUST MATCH THE WORK DONE.
+    Count the real operations for the given input and emit that many steps.
+    - Single pass over n elements    -> at least n steps
+    - Two pointers converging        -> one step per pointer move
+    - Binary search                  -> one step per mid evaluation
+    - Nested loops / backtracking    -> one step per inner-loop body execution
+    A 3-step or 5-step trace is almost always WRONG. Typical good traces are
+    15-80 steps. Aim for 25+ whenever the input allows it.
+    If a faithful trace would exceed 150 steps, shrink the INPUT to a smaller
+    representative case and trace that fully — never abbreviate the trace.
+
+R3. EVERY STEP MUST CARRY FULL STATE.
+    On EVERY step include:
+      - "components": the COMPLETE state of every declared component as of this
+        step (not a diff, not only the changed one). The renderer draws exactly
+        what you send.
+      - "variables": every live scalar (indices, accumulators, best-so-far).
+      - "codeLine": the 1-based line of the provided source being executed.
+      - "phase": a 1-3 word stage label, e.g. "Initialize", "Expand window",
+        "Shrink window", "Pop smaller", "Finalize".
+      - "highlights": what the reader should look at right now.
+      - "result": the running answer so far (not only on the last step).
+
+R4. DESCRIPTIONS MUST EXPLAIN, IN 2-3 SENTENCES.
+    Structure each description as:
+      (a) what is being examined right now, with concrete values;
+      (b) the decision taken and the REASON behind it;
+      (c) what this means for the final answer.
+    Write concrete values, not variable names alone.
+    BAD:  "Move left pointer."
+    BAD:  "i = 3, compare nums[3] with target."
+    GOOD: "nums[3] = 7 is smaller than the target 11, so every element to its
+           left is smaller too and cannot pair with anything ahead. We advance
+           left to 4 to look for a larger value; the answer is still unknown."
+    Descriptions under ~100 characters are almost always too shallow.
+
+R5. SHOW THE ARITHMETIC.
+    Whenever a step compares, computes, or decides, set "calculation" to the
+    concrete expression with real numbers and the conclusion, e.g.
+      "mid = (2 + 9) / 2 = 5\\nnums[5] = 14 > target 11  ->  search left half"
+      "water += min(6, 8) - 2 = 4    total = 9"
+    Do not restate the description here; show the math.
+
+R6. OPEN AND CLOSE PROPERLY.
+    Step 1 is the initial state before any work, explaining the setup and what
+    each component/variable is for. The final step states the answer and why it
+    is correct.
+
+R7. FILL "explanation" AT THE ROOT.
+    This is what the learner reads first. Make it genuinely useful:
+      - intuition:  the key idea in plain language, no jargon, no code.
+                    Explain the observation that makes the trick work.
+      - approach:   4-8 ordered stages in human terms.
+      - whyItWorks: the invariant or argument for correctness.
+      - pitfalls:   real edge cases and common bugs (empty input, duplicates,
+                    overflow, off-by-one, when the loop condition must be <=).
+
+R8. DETERMINISM.
+    Identical input always yields identical steps. Ids are unique and
+    sequential. All ids referenced by steps/highlights must exist in the root
+    "components" array. "codeLine" must be within the provided source.
+
+=====================================================================
+SCHEMA
+=====================================================================
+{
+  "title": string,
+  "algorithm": string,
+  "input": { "name": string, "value": any, "description"?: string },
+  "output"?: { "name": string, "value": any },
+  "complexity"?: { "time": string, "space": string },
+  "explanation"?: {
+    "intuition": string,
+    "approach": string[],
+    "whyItWorks"?: string,
+    "pitfalls"?: string[]
+  },
+  "components": [ { "type": "array|stack|queue|variables|hashmap|linkedlist|tree|graph|matrix", "id": string, "label"?: string, ... } ],
+  "sourceCode"?: { "language": string, "code": string },
+  "steps": [ {
+    "id": number,
+    "description": string,
+    "phase"?: string,
+    "action"?: { "type": string, "target"?: string },
+    "variables"?: { [name: string]: JSONValue },
+    "components"?: [ ComponentState ],   // ids must match "components" above
+    "highlights"?: [ { "component": string, "indices"?: number[], "role"?: string } ],
+    "calculation"?: string,
+    "result"?: JSONValue,
+    "codeLine"?: number
+  } ]
+}
+
+Component state shapes:
+- array:    { "type":"array", "id", "values": (number|string|null)[], "pointers"?: [{name,index,role}] }
+- stack:    { "type":"stack", "id", "values": (bottom..top) }
+- queue:    { "type":"queue", "id", "values": (front..back) }
+- variables:{ "type":"variables", "id", "values": { name: value } }
+- hashmap:  { "type":"hashmap", "id", "entries": [{key,value,role?}] }
+- linkedlist:{ "type":"linkedlist","id","nodes":[{id,value}], "pointers"?:[{name,nodeId,role}] }
+- tree:     { "type":"tree", "id", "root", "nodes":[{id,value,left?,right?}], "nodeRoles"?:{id:role} }
+- graph:    { "type":"graph","id","nodes":[{id,x?,y?}],"edges":[{from,to,weight?}],"nodeRoles"?:{id:role},"activeEdges"?:["a->b"] }
+- matrix:   { "type":"matrix","id","values": number[][], "current"?:[r,c], "dependencies"?:[[r,c]], "updated"?:[[r,c]] }
+
+Valid roles: default, active, compare, visited, pop, push, boundary, result.
+
+Always declare a "variables" component so scalars are visible, plus one
+component per data structure the code actually manipulates.
+
+=====================================================================
+SELF-CHECK BEFORE OUTPUT
+=====================================================================
+1. Does any step describe more than one iteration? -> split it.
+2. Is the step count consistent with the input size? -> if not, you skipped work.
+3. Does every step have components, variables, codeLine, phase, description?
+4. Does every comparison/computation step have a "calculation"?
+5. Is "explanation" filled and actually informative?
+6. Is the output valid JSON with no trailing commas and no prose around it?`;
+
+function buildVizUserPrompt(i){
+  return [
+    `Problem:\n${i.problem}`,
+    `Algorithm:\n${i.algorithm}`,
+    `Input:\n${i.input}`,
+    `Language: ${i.language||'cpp'}`,
+    `Source Code:\n${i.sourceCode}`,
+    ['','Trace this exact source code on this exact input, line by line, one step',
+     'per executed operation. Do not summarise or skip iterations. Fill the',
+     '"explanation" block so a reader who has never seen this problem can',
+     'follow it. Return ONLY the visualization JSON.'].join('\n')
+  ].join('\n\n');
+}
+
+/* ---- validator: precise, field-level errors instead of a crash ---- */
+const VIZ_TYPES=['array','stack','queue','variables','hashmap','linkedlist','tree','graph','matrix'];
+function validateViz(o){
+  const E=m=>({ok:false,message:m});
+  if(!o||typeof o!=='object'||Array.isArray(o)) return E('Root must be a JSON object.');
+  if(typeof o.title!=='string'||!o.title.trim()) return E('"title" must be a non-empty string.');
+  if(typeof o.algorithm!=='string'||!o.algorithm.trim()) o.algorithm='—';
+  if(!Array.isArray(o.components)||!o.components.length) return E('"components" must be a non-empty array.');
+  const ids=new Set();
+  for(let i=0;i<o.components.length;i++){
+    const c=o.components[i];
+    if(!c||typeof c!=='object') return E(`components[${i}] must be an object.`);
+    if(!VIZ_TYPES.includes(c.type)) return E(`components[${i}].type "${c.type}" is not one of: ${VIZ_TYPES.join(', ')}.`);
+    if(typeof c.id!=='string'||!c.id) return E(`components[${i}].id must be a non-empty string.`);
+    if(ids.has(c.id)) return E(`components[${i}].id "${c.id}" is duplicated.`);
+    ids.add(c.id);
+  }
+  if(!Array.isArray(o.steps)||!o.steps.length) return E('"steps" must be a non-empty array.');
+  const maxLine=(o.sourceCode&&typeof o.sourceCode.code==='string')?o.sourceCode.code.split('\n').length:0;
+  for(let i=0;i<o.steps.length;i++){
+    const s=o.steps[i];
+    if(!s||typeof s!=='object') return E(`steps[${i}] must be an object.`);
+    if(typeof s.description!=='string') return E(`steps[${i}].description must be a string.`);
+    if(typeof s.id!=='number') s.id=i;
+    if(s.components!==undefined){
+      if(!Array.isArray(s.components)) return E(`steps[${i}].components must be an array.`);
+      for(let j=0;j<s.components.length;j++){
+        const st=s.components[j], at=`steps[${i}].components[${j}]`;
+        if(!st||typeof st!=='object') return E(`${at} must be an object.`);
+        if(!VIZ_TYPES.includes(st.type)) return E(`${at}.type "${st.type}" is invalid.`);
+        if(!ids.has(st.id)) return E(`${at}.id "${st.id}" is not declared in the root "components" array.`);
+        if((st.type==='array'||st.type==='stack'||st.type==='queue'||st.type==='matrix')&&!Array.isArray(st.values)) return E(`${at}.values must be an array.`);
+        if(st.type==='variables'&&(!st.values||typeof st.values!=='object')) return E(`${at}.values must be an object.`);
+        if(st.type==='hashmap'&&!Array.isArray(st.entries)) return E(`${at}.entries must be an array.`);
+        if(st.type==='linkedlist'&&!Array.isArray(st.nodes)) return E(`${at}.nodes must be an array.`);
+        if(st.type==='tree'&&!Array.isArray(st.nodes)) return E(`${at}.nodes must be an array.`);
+        if(st.type==='graph'&&(!Array.isArray(st.nodes)||!Array.isArray(st.edges))) return E(`${at} (graph) needs both "nodes" and "edges" arrays.`);
+      }
+    }
+    if(s.highlights!==undefined){
+      if(!Array.isArray(s.highlights)) return E(`steps[${i}].highlights must be an array.`);
+      for(let j=0;j<s.highlights.length;j++){ const h=s.highlights[j];
+        if(!h||typeof h!=='object') return E(`steps[${i}].highlights[${j}] must be an object.`);
+        if(!ids.has(h.component)) return E(`steps[${i}].highlights[${j}].component "${h.component}" is not declared in the root "components" array.`); }
+    }
+    if(s.codeLine!==undefined&&maxLine&&(typeof s.codeLine!=='number'||s.codeLine<1||s.codeLine>maxLine))
+      return E(`steps[${i}].codeLine is ${s.codeLine}, outside the source range 1..${maxLine}.`);
+  }
+  return {ok:true,viz:o};
+}
+/** Pull a JSON object out of a model reply that may wrap it in prose or fences. */
+function extractJson(text){
+  let s=String(text||'').trim();
+  const fence=s.match(/```(?:json)?\s*([\s\S]*?)```/i); if(fence) s=fence[1].trim();
+  const a=s.indexOf('{'), b=s.lastIndexOf('}');
+  if(a>=0&&b>a) s=s.slice(a,b+1);
+  return s;
+}
+
+/* ---- separate AI endpoint for visualization generation ---- */
+let vizAiCfg = LS.get("dsac_viz_ai", {url:"http://localhost:11434/v1", model:"", key:"", maxTok:"16000"});
+function loadVizAiCfg(){ $("#vaiUrl").value=vizAiCfg.url||""; $("#vaiModel").value=vizAiCfg.model||""; $("#vaiKey").value=vizAiCfg.key||""; $("#vaiMaxTok").value=vizAiCfg.maxTok||""; }
+function setVStatus(cls,text){ const s=$("#vaiStatus"); s.className="status "+cls; s.removeAttribute("data-i18n"); s.textContent=text; }
+async function vizAiCall(messages,{test=false}={}){
+  const base=normUrl($("#vaiUrl").value), model=$("#vaiModel").value.trim(), key=$("#vaiKey").value.trim(), mt=$("#vaiMaxTok").value.trim();
+  vizAiCfg={url:$("#vaiUrl").value.trim(),model,key,maxTok:mt}; LS.set("dsac_viz_ai",vizAiCfg);
+  if(!base) throw new Error(t("err_no_url"));
+  if(!model&&!test) throw new Error(t("err_no_model"));
+  const headers={"Content-Type":"application/json"}; if(key) headers["Authorization"]="Bearer "+key;
+  const body={model:model||"test",messages,temperature:0.2,stream:false};
+  if(mt&&+mt>0) body.max_tokens=+mt;
+  const res=await fetch(base+"/chat/completions",{method:"POST",headers,body:JSON.stringify(body)});
+  if(!res.ok){ const tx2=await res.text().catch(()=>""); throw new Error(`HTTP ${res.status} ${tx2.slice(0,160)}`); }
+  const data=await res.json();
+  return data.choices?.[0]?.message?.content ?? "";
+}
+function setGenStatus(el,cls,html){ const e=$(el); e.hidden=false; e.className="viz-status "+cls; e.innerHTML=html; }
+
+/* ---- load a generated / imported visualization into the viewer ---- */
+function loadCustomViz(viz){
+  customViz={key:"__custom__", custom:true, name:{vi:viz.title,en:viz.title}, viz, expl:null};
+  vizStop(); vizState.key="__custom__"; vizState.step=0; mountViz();
+  setVizTab("view");
+  $("#truc-quan").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+/* ---- saved visualizations ---- */
+let savedViz = LS.get("dsac_viz_saved", []);
+let savedQuery = "";
+function saveViz(viz){
+  const item={id:"v"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+    title:viz.title, algorithm:viz.algorithm, savedAt:Date.now(), visualization:viz};
+  savedViz.unshift(item);
+  if(savedViz.length>200) savedViz=savedViz.slice(0,200);
+  LS.set("dsac_viz_saved",savedViz); renderSaved(); return item;
+}
+function saveCurrentViz(){
+  if(!vizCur||!vizCur.custom) return;
+  saveViz(vizCur.viz);
+  const b=$("#vizSaveBtn"); if(b){ b.textContent=t("viz_saved_ok"); b.disabled=true; }
+}
+function downloadJson(obj,name){
+  const blob=new Blob([JSON.stringify(obj,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url; a.download=name; document.body.appendChild(a); a.click();
+  document.body.removeChild(a); setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function renderSaved(){
+  const q=savedQuery.trim().toLowerCase();
+  const list=savedViz.filter(it=>!q||it.title.toLowerCase().includes(q)||(it.algorithm||"").toLowerCase().includes(q));
+  if(!list.length){ $("#savedList").innerHTML=`<p class="empty">${esc(t(savedViz.length?"saved_nomatch":"saved_empty"))}</p>`; return; }
+  const groups={};
+  list.forEach(it=>{ (groups[it.title]=groups[it.title]||[]).push(it); });
+  $("#savedList").innerHTML=Object.keys(groups).map(title=>{
+    const items=groups[title];
+    return `<div class="viz-sgroup">
+      <div class="viz-sgrouphead"><b>${esc(title)}</b><span>${items.length} ${esc(t("saved_count"))}</span></div>
+      ${items.map(it=>`<div class="viz-sitem">
+        <div class="si-main"><div class="si-algo">${esc(it.algorithm||"—")}</div>
+          <div class="si-meta">${esc(new Date(it.savedAt).toLocaleString(lang==="vi"?"vi-VN":"en-US"))} · ${it.visualization.steps.length} ${esc(t("saved_steps"))}</div></div>
+        <div class="si-btns">
+          <button class="viz-sbtn" data-open="${it.id}">${esc(t("saved_open"))}</button>
+          <button class="viz-sbtn" data-exp="${it.id}">${esc(t("saved_export"))}</button>
+          <button class="viz-sbtn danger" data-del="${it.id}">${esc(t("saved_delete"))}</button>
+        </div></div>`).join("")}
+    </div>`;
+  }).join("");
+  $$("#savedList [data-open]").forEach(b=>b.onclick=()=>{ const it=savedViz.find(x=>x.id===b.dataset.open); if(it) loadCustomViz(it.visualization); });
+  $$("#savedList [data-exp]").forEach(b=>b.onclick=()=>{ const it=savedViz.find(x=>x.id===b.dataset.exp); if(it) downloadJson(it.visualization, (it.title||"visualization").replace(/[^\w\-]+/g,"-").toLowerCase()+".json"); });
+  $$("#savedList [data-del]").forEach(b=>b.onclick=()=>{ savedViz=savedViz.filter(x=>x.id!==b.dataset.del); LS.set("dsac_viz_saved",savedViz); renderSaved(); });
+}
+
+/* ---- visualizer sub-tabs ---- */
+function setVizTab(v){
+  $$("#vizTabs .lc-tab").forEach(b=>b.classList.toggle("on", b.dataset.vt===v));
+  $("#vizPaneView").hidden=v!=="view";
+  $("#vizPaneCreate").hidden=v!=="create";
+  $("#vizPaneImport").hidden=v!=="import";
+  $("#vizPaneSaved").hidden=v!=="saved";
+  if(v==="saved") renderSaved();
+}
+function initVizTabs(){
+  $$("#vizTabs .lc-tab").forEach(b=>b.onclick=()=>setVizTab(b.dataset.vt));
+  loadVizAiCfg();
+  $("#vaiTest").onclick=async()=>{
+    setVStatus("wait",t("status_testing"));
+    try{ if(!$("#vaiModel").value.trim()){ setVStatus("err",t("status_need_model")); return; }
+      await vizAiCall([{role:"user",content:"Reply with exactly one word: OK"}],{test:true});
+      setVStatus("ok",t("status_ok"));
+    }catch(e){ setVStatus("err",t("status_err")+e.message); }
+  };
+  $("#genCopy").onclick=async()=>{
+    const p=VIZ_SYSTEM_PROMPT+"\n\n"+buildVizUserPrompt({problem:$("#genProblem").value,algorithm:$("#genAlgo").value,input:$("#genInput").value,sourceCode:$("#genCode").value,language:$("#genLang").value});
+    try{ await navigator.clipboard.writeText(p); setGenStatus("#genStatus","ok",t("gen_copied")); }
+    catch(e){ const ta=document.createElement("textarea"); ta.value=p; document.body.appendChild(ta); ta.select();
+      try{document.execCommand("copy"); setGenStatus("#genStatus","ok",t("gen_copied"));}catch(_){ setGenStatus("#genStatus","err",t("gen_copyfail")); }
+      document.body.removeChild(ta); }
+  };
+  $("#genRun").onclick=async()=>{
+    const problem=$("#genProblem").value.trim(), code=$("#genCode").value.trim();
+    if(!problem||!code){ setGenStatus("#genStatus","err",t("gen_need_fields")); return; }
+    if(!$("#vaiModel").value.trim()){ setGenStatus("#genStatus","err",t("gen_need_model")); return; }
+    $("#genRun").disabled=true; setGenStatus("#genStatus","busy",t("gen_running"));
+    try{
+      const reply=await vizAiCall([{role:"system",content:VIZ_SYSTEM_PROMPT},
+        {role:"user",content:buildVizUserPrompt({problem,algorithm:$("#genAlgo").value.trim()||"—",input:$("#genInput").value.trim(),sourceCode:code,language:$("#genLang").value.trim()||"cpp"})}]);
+      let parsed; try{ parsed=JSON.parse(extractJson(reply)); }
+      catch(e){ setGenStatus("#genStatus","err",`${t("gen_badjson")}<br><code>${esc(String(e.message).slice(0,200))}</code>`); return; }
+      const v=validateViz(parsed);
+      if(!v.ok){ setGenStatus("#genStatus","err",`${t("gen_invalid")}<br><code>${esc(v.message)}</code>`); return; }
+      if(!v.viz.sourceCode) v.viz.sourceCode={language:$("#genLang").value.trim()||"cpp",code};
+      setGenStatus("#genStatus","ok",t("gen_ok").replace("{n}",v.viz.steps.length));
+      saveViz(v.viz); loadCustomViz(v.viz);
+    }catch(e){ setGenStatus("#genStatus","err",esc(t("gen_failed"))+esc(e.message)); }
+    finally{ $("#genRun").disabled=false; }
+  };
+  const doImport=txt=>{
+    let parsed; try{ parsed=JSON.parse(extractJson(txt)); }
+    catch(e){ setGenStatus("#impStatus","err",`${t("gen_badjson")}<br><code>${esc(String(e.message).slice(0,200))}</code>`); return; }
+    const v=validateViz(parsed);
+    if(!v.ok){ setGenStatus("#impStatus","err",`${t("gen_invalid")}<br><code>${esc(v.message)}</code>`); return; }
+    setGenStatus("#impStatus","ok",t("gen_ok").replace("{n}",v.viz.steps.length));
+    saveViz(v.viz); loadCustomViz(v.viz);
+  };
+  $("#impRun").onclick=()=>doImport($("#impJson").value);
+  $("#impFileBtn").onclick=()=>$("#impFile").click();
+  $("#impFile").onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(!f) return;
+    const r=new FileReader(); r.onload=()=>{ $("#impJson").value=String(r.result||""); doImport($("#impJson").value); }; r.readAsText(f); e.target.value=""; };
+  $("#savedSearch").oninput=e=>{ savedQuery=e.target.value; renderSaved(); };
+  $("#savedExportAll").onclick=()=>{ if(!savedViz.length) return; downloadJson(savedViz.map(s=>s.visualization),"dsa-visualizations.json"); };
+}
+
+/* ============================================================ CHAT HISTORY (tutor AI) */
+let chatSessions = LS.get("dsac_chats", []);
+let curChatId = LS.get("dsac_chat_cur", null);
+function saveChats(){ LS.set("dsac_chats",chatSessions); LS.set("dsac_chat_cur",curChatId); }
+function curChat(){
+  let c=chatSessions.find(s=>s.id===curChatId);
+  if(!c){ c={id:"c"+Date.now().toString(36),title:"",at:Date.now(),msgs:[]}; chatSessions.unshift(c); curChatId=c.id; saveChats(); }
+  return c;
+}
+function newChat(){
+  const c={id:"c"+Date.now().toString(36),title:"",at:Date.now(),msgs:[]};
+  chatSessions.unshift(c); curChatId=c.id;
+  if(chatSessions.length>60) chatSessions=chatSessions.slice(0,60);
+  saveChats(); renderChatLog(); renderChatHist();
+}
+function deleteChat(id){
+  chatSessions=chatSessions.filter(s=>s.id!==id);
+  if(curChatId===id){ curChatId=chatSessions.length?chatSessions[0].id:null; renderChatLog(); }
+  saveChats(); renderChatHist();
+}
+function switchChat(id){ curChatId=id; saveChats(); renderChatLog(); renderChatHist(); $("#chatHistPanel").hidden=true; }
+/** Rebuild the visible transcript from the stored session. */
+function renderChatLog(){
+  const c=curChat(); const log=$("#chatLog"); log.innerHTML="";
+  if(!c.msgs.length){ const d=document.createElement("div"); d.className="msg sys"; d.setAttribute("data-i18n","chat_init"); d.innerHTML=t("chat_init"); log.appendChild(d); return; }
+  c.msgs.forEach(m=>{ const d=document.createElement("div");
+    d.className="msg "+(m.role==="user"?"user":"bot");
+    d.innerHTML=m.role==="assistant"?mdBold(m.content):esc(m.content); log.appendChild(d); });
+  log.scrollTop=log.scrollHeight;
+}
+function renderChatHist(){
+  const p=$("#chatHistPanel");
+  const real=chatSessions.filter(s=>s.msgs.length);
+  if(!real.length){ p.innerHTML=`<div class="chat-hempty">${esc(t("chat_hist_empty"))}</div>`; return; }
+  p.innerHTML=real.map(s=>`<div class="chat-hitem ${s.id===curChatId?'on':''}" data-cid="${s.id}">
+      <span class="ht">${esc(s.title||t("chat_untitled"))}</span>
+      <span class="hd">${esc(new Date(s.at).toLocaleDateString(lang==="vi"?"vi-VN":"en-US"))}</span>
+      <button class="del" data-cdel="${s.id}">${esc(t("dict_del"))}</button></div>`).join("");
+  $$("#chatHistPanel .chat-hitem").forEach(el=>el.onclick=e=>{ if(e.target.hasAttribute("data-cdel")) return; switchChat(el.dataset.cid); });
+  $$("#chatHistPanel [data-cdel]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); deleteChat(b.dataset.cdel); });
+}
+function initChatHistory(){
+  $("#chatNew").onclick=()=>{ newChat(); $("#chatHistPanel").hidden=true; };
+  $("#chatHistBtn").onclick=()=>{ const p=$("#chatHistPanel"); p.hidden=!p.hidden; if(!p.hidden) renderChatHist(); };
+  renderChatLog(); renderChatHist();
+}
+
 /* ============================================================ LANGUAGE SWITCH */
 function applyLang(){
-  chatHistory[0] = {role:"system", content:buildSystemPrompt()}; // chat replies follow the UI language
   applyStatic();
   renderQuestions();
   renderLadder(currentRung);
@@ -2194,6 +2807,9 @@ function applyLang(){
   renderNotes();
   renderRoadmap();
   refreshViz();
+  renderSaved();
+  renderChatLog();
+  renderChatHist();
 }
 $("#langBtn").onclick = ()=>{ lang = lang==="vi"?"en":"vi"; LS.set("dsac_lang",lang); applyLang(); };
 
@@ -2210,6 +2826,9 @@ initLC();
 renderRoadmap();
 initViz();
 mountViz();
+initVizTabs();
+initChatHistory();
+applyTabs(false);
 </script>
 </body>
 </html>

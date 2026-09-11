@@ -38,16 +38,24 @@ npx serve .
 
 ---
 
-## 📚 Các phần & cách dùng · Sections & usage
+## 🧭 Cấu trúc app · App structure
+
+Ứng dụng chia làm **hai tab lớn**:
+
+| Tab | Dành cho | Bên trong |
+|---|---|---|
+| **Luyện tập · Practice** | Làm việc hằng ngày | *Lộ trình 150* (kế hoạch + theo dõi + **AI gia sư** có lịch sử chat) · *Trực quan thuật toán* (xem / **tạo bằng AI** / nhập JSON / đã lưu) |
+| **Lý thuyết · Theory** | Nền tảng tư duy | Bản đồ tư duy · Từ điển tín hiệu · Dẫn lối · Luyện nén · Nhật ký · Ghi chú |
+
+> ⚠️ **Hai AI tách biệt · Two separate AIs.** *AI gia sư* (trong Lộ trình 150) chỉ **hỏi**, không bao giờ đưa lời giải. *AI trực quan* (trong tab Tạo bằng AI) chỉ **sinh dữ liệu JSON** cho trình trực quan. Hai endpoint/model cấu hình **độc lập** với nhau.
+
+### Tab Lý thuyết · Theory tab
 
 | Phần | Section | Dùng để làm gì |
 |---|---|---|
 | **Bản đồ tư duy** | Thinking Map | 4 câu hỏi la bàn (câu *thượng nguồn* hỏi trước) + thang chi phí tư duy 5 bậc. Bấm từng bậc để xem câu hỏi kích hoạt, "vì sao công cụ này", và "duyệt không gian nào". |
 | **Từ điển tín hiệu** | Trigger Dictionary | 14 mục cô đọng: tín hiệu trong đề → công cụ + vì sao. Lọc theo loại quan hệ. **Tự thêm mục của riêng bạn** (lưu cục bộ) — đây là phần cốt lõi để bạn tập tự đi. |
 | **Dẫn lối** | Guided | Cây quyết định **offline, không cần AI**. Bắt đầu từ "đầu ra đòi kiểu thông tin gì?", đi tới một **GIẢ THUYẾT** (không phải đáp án) kèm câu tự kiểm chứng. |
-| **Trực quan** | Visualizer | Chạy một thuật toán kinh điển **từng bước như debugger**: mảng/cột, ngăn xếp, hàng đợi, hashmap, danh sách liên kết, đồ thị + biến, phép tính, dòng mã đang chạy. Điều khiển play/step/tua + tốc độ. Xem mục riêng bên dưới. |
-| **Lộ trình 150** | Roadmap 150 | Kế hoạch ôn **Top Interview 150** trong 2 tháng: check-off hằng ngày, streak + lịch nhiệt, spaced-repetition, radar chủ đề yếu, và ETA thích ứng. Đồng bộ tùy chọn với LeetCode. Xem mục riêng bên dưới. |
-| **La bàn sống** | Living Compass | Gia sư AI Socratic nối mô hình local (xem dưới). |
 | **Luyện nén** | Compression Drill | Rút ngẫu nhiên một tín hiệu; tự nói *công cụ* và *vì sao* trước khi lật. |
 | **Nhật ký** | Log | Ghi "bài toán tôi va phải" + tín hiệu rút ra. Lưu cục bộ. |
 | **Ghi chú** | Notes | Các lưu ý thành thật về phương pháp. |
@@ -86,6 +94,19 @@ Watch an algorithm run **step by step like a debugger** — same compass spirit:
 ### Có sẵn · Built-in
 Trapping Rain Water (monotonic stack) · Binary Search · Two Sum (hashmap) · Valid Parentheses (stack) · Reverse Linked List · BFS · DFS — mỗi bài kèm panel **Cách nó hoạt động** (trực giác / cách làm / vì sao đúng / bẫy) gắn với loại quan hệ trong Từ điển tín hiệu.
 
+### 4 tab con · Four sub-tabs
+
+- **Xem · View** — trình phát: chọn thuật toán, chạy từng bước, xem mã nguồn tô sáng dòng đang chạy.
+- **Tạo bằng AI · Create with AI** — dán *đề bài + thuật toán + đầu vào cụ thể + mã nguồn*, bấm **Sinh bằng AI**. Mô hình mô phỏng code từng bước và trả về JSON; app **kiểm tra tính hợp lệ theo từng trường** rồi mở luôn trong trình phát và tự lưu.
+- **Nhập JSON · Import JSON** — dán JSON hoặc chọn file `.json`. Dùng khi bạn không có API key: bấm **Sao chép prompt** ở tab Tạo, dán vào Claude, rồi mang JSON về đây.
+- **Đã lưu · Saved** — danh sách gom nhóm theo tên bài, có tìm kiếm, **Mở / Xuất / Xóa**, và **Xuất tất cả**.
+
+### Cấu hình AI trực quan · Visualizer AI
+
+Trong tab **Tạo bằng AI**, cột phải: Base URL · Model · API key · **Max tokens** (mặc định 16000 — trace dài cần nhiều token). Nên chọn model mạnh về code, ngữ cảnh lớn.
+
+> Nếu JSON sai, app báo **đúng trường bị lỗi** (ví dụ `steps[12].components[0].id "stack2" is not declared in the root "components" array.`) thay vì crash — cứ đưa thông báo đó lại cho AI để nó sửa.
+
 ### Điều khiển · Controls
 
 | Hành động · Action | Phím · Key |
@@ -111,6 +132,13 @@ Mặc định: **tiếng Anh + nền tối**. Mọi lựa chọn được nhớ 
 ---
 
 ## 🤖 Cấu hình gia sư AI · Configure the AI tutor
+
+> Đây là AI **thứ nhất** (gia sư Socratic). AI **thứ hai** (sinh dữ liệu trực quan) cấu hình riêng ở tab *Trực quan → Tạo bằng AI* — xem mục trên.
+
+### Lịch sử trò chuyện · Chat history
+Ở đầu khung chat có 3 nút: **＋** tạo cuộc trò chuyện mới · **🕘** mở danh sách lịch sử (bấm để quay lại, có nút xóa từng cuộc) · **⚙** thiết lập endpoint. Mỗi cuộc được **tự đặt tên theo câu hỏi đầu tiên** và lưu trong trình duyệt.
+
+At the top of the chat: **＋** new conversation · **🕘** history list (click to reopen, delete per item) · **⚙** endpoint settings. Each conversation is auto-titled from its first message and stored locally.
 
 Gia sư gọi một endpoint **OpenAI-compatible** chạy trên máy bạn. Trong bàn làm việc **Lộ trình 150**, bấm nút **⚙** ở cột *La bàn sống* để mở **Thiết lập**, điền:
 
@@ -141,9 +169,9 @@ Gia sư **không bao giờ đưa lời giải, mã nguồn, hay gọi tên patte
 
 ## 🔐 Quyền riêng tư · Privacy
 
-Toàn bộ dữ liệu (từ điển của bạn, nhật ký, thiết lập AI, ngôn ngữ, theme) lưu trong `localStorage` của **chính trình duyệt này** — không gửi đi đâu cả. Chat chỉ đi thẳng tới endpoint AI **bạn tự cấu hình**.
+Toàn bộ dữ liệu (từ điển của bạn, nhật ký, tiến độ 150 câu, **lịch sử chat**, **visualization đã lưu**, thiết lập của cả hai AI, ngôn ngữ, theme) lưu trong `localStorage` của **chính trình duyệt này** — không gửi đi đâu cả. Chat và việc sinh trace chỉ đi thẳng tới endpoint AI **bạn tự cấu hình**.
 
-All your data (custom dictionary, log, AI settings, language, theme) lives in this browser's `localStorage` — nothing is sent anywhere. Chat goes only to the **AI endpoint you configure**.
+All your data (custom dictionary, log, 150-problem progress, **chat history**, **saved visualizations**, both AI configs, language, theme) lives in this browser's `localStorage` — nothing is sent anywhere. Chat and trace generation go only to the **AI endpoints you configure**.
 
 ---
 
