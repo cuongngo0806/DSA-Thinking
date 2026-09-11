@@ -70,7 +70,10 @@ function gitMessage(e) {
 
 export async function getStatus() {
   const cfg = syncConfig();
-  const base = { configured: true, repoDir: cfg.repoDir, file: cfg.file, branch: cfg.branch };
+  const base = {
+    configured: true, repoDir: cfg.repoDir, file: cfg.file,
+    branch: cfg.branch, appPaths: cfg.appPaths,
+  };
   try {
     await git(cfg, ['rev-parse', '--is-inside-work-tree'], 15_000);
   } catch {

@@ -15,6 +15,7 @@ export const KEYS = {
   ai: 'dsac_ai',
   store: 'dsac_store',
   lastSaved: 'dsac_last_saved',
+  pushedHash: 'dsac_pushed_hash',
 } as const;
 
 export function read<T>(key: string, fallback: T): T {

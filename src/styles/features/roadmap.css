@@ -160,3 +160,28 @@
 .git-privacy{margin:10px 0 0;padding:9px 11px;border-radius:9px;font-size:12px;line-height:1.55;
   color:var(--order);background:color-mix(in srgb,var(--order) 12%,transparent);
   border:1px solid color-mix(in srgb,var(--order) 35%,transparent)}
+
+/* Sync bar: sits above the work, because "pull first" and "push before you
+   leave" are decisions about the session, not settings. */
+.sync-bar{border:1px solid var(--line);border-radius:12px;background:var(--surface);
+  padding:10px 14px;margin-bottom:14px}
+.sync-bar[data-tone=act]{border-color:color-mix(in srgb,var(--order) 45%,var(--line));
+  background:color-mix(in srgb,var(--order) 7%,var(--surface))}
+.sync-bar[data-tone=err]{border-color:#c0554b;background:rgba(192,85,75,.07)}
+.sync-line{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sync-dot{width:9px;height:9px;border-radius:50%;background:var(--muted-2);flex:0 0 auto}
+.sync-dot.ok{background:var(--dependency)}
+.sync-dot.act,.sync-dot.warn{background:var(--order)}
+.sync-dot.err{background:#e0776c}
+.sync-dot.busy{background:var(--brass);animation:pulse 1s infinite}
+.sync-msg{flex:1;min-width:180px;font-size:13px;color:var(--text-dim);line-height:1.5}
+.sync-bar[data-tone=act] .sync-msg{color:var(--text);font-weight:500}
+.sync-actions{display:flex;gap:7px;align-items:center}
+.sync-btn{padding:7px 13px;font-size:13px}
+.sync-bar[data-tone=act] #gitPull{border-color:var(--order);color:var(--order)}
+.sync-more{margin-top:10px}
+.sync-more > summary{cursor:pointer;font-size:11.5px;color:var(--muted-2);list-style:none;padding:2px 0}
+.sync-more > summary::-webkit-details-marker{display:none}
+.sync-more > summary::before{content:"\25b8 ";color:var(--brass)}
+.sync-more[open] > summary::before{content:"\25be "}
+.sync-more > summary:hover{color:var(--text-dim)}

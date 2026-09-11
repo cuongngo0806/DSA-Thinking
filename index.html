@@ -198,6 +198,23 @@
     <h2 class="sec-head" data-i18n="lc_head">Lộ trình 150 <span class="sub-label">— Top Interview 150</span></h2>
     <p class="sec-sub" data-i18n="lc_sub">Một kế hoạch hằng ngày để đi hết 150 câu trong 2 tháng — nhưng vẫn theo tinh thần la bàn: mỗi câu bạn giải xong, hãy nén nó thành <b>một dòng tín hiệu</b>. Dữ liệu ở lại trong trình duyệt này.</p>
 
+    <div class="sync-bar" id="syncBar" hidden>
+      <div class="sync-line">
+        <span class="sync-dot" id="syncDot"></span>
+        <span class="sync-msg" id="syncMsg"></span>
+        <div class="sync-actions">
+          <button class="btn btn-ghost sync-btn" id="gitPull" data-i18n="git_pull">⬇ Kéo về</button>
+          <button class="btn btn-ghost sync-btn" id="gitPush" data-i18n="git_push">⬆ Đẩy lên</button>
+          <button class="lc-gear" id="gitRefresh" data-i18n-attr="title:git_refresh">⟳</button>
+        </div>
+      </div>
+      <details class="sync-more">
+        <summary data-i18n="git_details">Chi tiết kho git</summary>
+        <div class="git-detail" id="gitDetail"></div>
+        <p class="hint-note" id="gitStatus" data-i18n="git_hint">Đẩy lên ghi <code>data/store.json</code> rồi commit kèm mọi thay đổi trong <code>src/</code>.</p>
+      </details>
+    </div>
+
     <div class="lc-ministat" id="lcMiniStat"></div>
     <div class="lc-strip" id="lcStrip"></div>
     <details class="lc-cfgwrap" id="lcPlanWrap">
@@ -296,10 +313,6 @@
       <h3 id="setTitle" data-i18n="settings_head">Thiết lập</h3>
       <button class="lc-gear" id="setClose" aria-label="Close">✕</button>
     </div>
-    <div class="lc-tabs set-tabs" id="setTabs">
-      <button class="lc-tab on" data-st="ai" data-i18n="set_tab_ai">AI</button>
-      <button class="lc-tab" data-st="git" data-i18n="set_tab_git">Dữ liệu</button>
-    </div>
     <div class="modal-body" id="setPaneAi">
       <p class="modal-lead" data-i18n="settings_lead">Cả <b>gia sư Socratic</b> và <b>trình sinh trực quan</b> dùng chung nguồn AI này. Chúng chỉ khác nhau ở prompt hệ thống.</p>
       <div class="status" id="setStatus" data-i18n="status_untested">Chưa kiểm tra</div>
@@ -308,17 +321,6 @@
       <div class="field"><label class="lbl" data-i18n="set_key_lbl">API key (tùy chọn)</label><input class="inp" id="setKey" type="password" data-i18n-attr="placeholder:set_key_ph"></div>
       <button class="btn btn-primary" id="setTest" style="width:100%" data-i18n="set_test_btn">Lưu & kiểm tra kết nối</button>
       <p class="hint-note" data-i18n="set_hint">Nếu mở file bằng <code>file://</code>, trình duyệt có thể chặn CORS. Hãy bật CORS ở endpoint (ví dụ <code>OLLAMA_ORIGINS=*</code>) hoặc chạy một máy chủ tĩnh cho trang này.</p>
-    </div>
-    <div class="modal-body" id="setPaneGit" hidden>
-      <p class="modal-lead" data-i18n="git_lead">Đẩy tiến độ <b>và</b> bản thân ứng dụng lên git trong một lịch sử. Trình duyệt không chạy được <code>git</code>, nên máy chủ cục bộ làm việc đó.</p>
-      <div class="status" id="gitStatus" data-i18n="git_idle">Chưa kiểm tra</div>
-      <div class="git-detail" id="gitDetail"></div>
-      <div class="viz-genbtns">
-        <button class="btn btn-primary" id="gitPush" data-i18n="git_push">⬆ Đẩy lên</button>
-        <button class="btn btn-ghost" id="gitPull" data-i18n="git_pull">⬇ Kéo về</button>
-        <button class="btn btn-ghost" id="gitRefresh" data-i18n="git_refresh">⟳ Kiểm tra</button>
-      </div>
-      <p class="hint-note" data-i18n="git_hint">Đẩy lên ghi <code>data/store.json</code> rồi commit kèm mọi thay đổi trong <code>src/</code>. Kéo về là <b>gộp</b>, không ghi đè — việc làm ở máy kia vẫn còn. Cấu hình qua <code>.env</code> (xem <code>.env.example</code>); mặc định dùng luôn repo hiện tại.</p>
     </div>
     </div>
   </div>

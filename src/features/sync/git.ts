@@ -1,22 +1,25 @@
 /**
- * Git sync, driven from the Settings panel.
+ * Git sync, sitting in the Practice tab where the work happens.
  *
  * The browser cannot run git, so it asks the local server, which does. That is
- * the whole trick - and the reason this needs `npm run dev` or `npm start`
- * rather than a static build. When the API is absent the panel says so plainly
- * instead of offering a button that cannot work.
+ * also why syncing needs `npm run dev` or `npm start` rather than a static
+ * build - when the API is absent the bar says so instead of offering a button
+ * that cannot work.
  *
- * Pushing carries both halves: the database and the app source, one history.
+ * The bar exists to answer two questions at the moments they matter:
+ * "is someone else's work waiting for me?" when you sit down, and "would I lose
+ * anything by closing this?" when you get up.
  */
 
-import { must, esc } from '@/core/dom';
+import { $, must, esc } from '@/core/dom';
 import { locale, t, tf } from '@/core/i18n';
-import { db, merge, personalCounts, toFile } from '@/core/db';
+import { hasUnpushedChanges, markPushed, merge, personalCounts, toFile } from '@/core/db';
 
 export interface SyncStatus {
   configured: boolean;
   repoDir?: string;
   file?: string;
+  appPaths?: string[];
   branch?: string;
   dirty?: string[];
   ahead?: number;
@@ -30,17 +33,14 @@ export interface SyncStatus {
 
 interface PushResult {
   ok: boolean;
-  error?: string;
   nothingToCommit?: boolean;
   commit?: string;
-  files?: string[];
   appPushed?: boolean;
   appFileCount?: number;
 }
 
 interface PullResult {
   ok: boolean;
-  error?: string;
   state?: { data?: unknown } | null;
   updatedAt?: string | null;
   appUpdated?: boolean;
@@ -49,6 +49,7 @@ interface PullResult {
 
 /** Set when the server is not there - a static build has no git. */
 let unavailable = false;
+let latest: SyncStatus | null = null;
 
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`/api/sync/${path}`, {
@@ -64,118 +65,122 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
   return body;
 }
 
-function setStatus(cls: string, text: string): void {
-  const el = must('#gitStatus');
-  el.className = `status ${cls}`;
-  el.removeAttribute('data-i18n');
-  el.textContent = text;
-}
-
-function busy(on: boolean): void {
-  ['#gitPush', '#gitPull', '#gitRefresh'].forEach((sel) => {
-    (must(sel) as HTMLButtonElement).disabled = on;
-  });
-}
-
 function fmtTime(iso?: string | null): string {
   if (!iso) return '—';
   const d = new Date(iso);
   return Number.isNaN(d.getTime()) ? '—' : d.toLocaleString(locale());
 }
 
-/** What would become public if this repo is. */
-function renderPrivacyNote(): string {
-  const { messages, logs, notes } = personalCounts();
-  if (messages + logs + notes === 0) return '';
-  return `<p class="git-privacy">${esc(
-    tf('git_privacy_note', { m: messages, l: logs, n: notes }),
-  )}</p>`;
+function busy(on: boolean): void {
+  ['#gitPull', '#gitPush', '#gitRefresh'].forEach((sel) => {
+    const el = $(sel) as HTMLButtonElement | null;
+    if (el) el.disabled = on;
+  });
 }
 
-export function renderSyncPanel(status: SyncStatus | null): void {
-  const box = must('#gitDetail');
+/* ---- the headline line ---- */
+
+type Tone = 'ok' | 'warn' | 'act' | 'busy' | 'err';
+
+function say(tone: Tone, message: string): void {
+  must('#syncDot').className = `sync-dot ${tone}`;
+  must('#syncMsg').textContent = message;
+  must('#syncBar').dataset.tone = tone;
+}
+
+/**
+ * One sentence about what to do next, in priority order: new work waiting to be
+ * pulled beats work of yours waiting to be pushed.
+ */
+function describe(status: SyncStatus | null): void {
+  if (unavailable) return say('warn', t('git_no_server'));
+  if (!status) return say('busy', t('git_checking'));
+  if (!status.configured) return say('err', status.error ?? t('git_not_repo'));
+  if (status.offline) return say('warn', t('git_offline'));
+
+  const behind = status.behind ?? 0;
+  const mine = hasUnpushedChanges();
+  const ahead = status.ahead ?? 0;
+
+  if (behind > 0) return say('act', tf('git_behind_warn', { n: behind }));
+  if (mine) return say('act', t('git_unpushed_warn'));
+  if (ahead > 0) return say('act', tf('git_ahead_warn', { n: ahead }));
+  return say('ok', t('git_in_sync'));
+}
+
+function renderDetail(status: SyncStatus | null): void {
+  const box = $('#gitDetail');
+  if (!box) return;
   if (unavailable) {
     box.innerHTML = `<p class="git-hint">${t('git_no_server_help')}</p>`;
     return;
   }
-  if (!status) {
-    box.innerHTML = `<p class="git-hint">${esc(t('git_checking'))}</p>`;
-    return;
-  }
-  if (!status.configured) {
-    box.innerHTML = `<p class="git-hint err">${esc(status.error ?? t('git_not_repo'))}</p>`;
+  if (!status?.configured) {
+    box.innerHTML = `<p class="git-hint err">${esc(status?.error ?? t('git_not_repo'))}</p>`;
     return;
   }
 
-  const rows: string[] = [
-    `<div class="git-row"><span>${esc(t('git_branch_lbl'))}</span><b>${esc(status.branch ?? '')}</b></div>`,
-    `<div class="git-row"><span>${esc(t('git_file_lbl'))}</span><b>${esc(status.file ?? '')}</b></div>`,
+  const row = (label: string, value: string, cls = '') =>
+    `<div class="git-row ${cls}"><span>${esc(label)}</span><b>${esc(value)}</b></div>`;
+
+  const rows = [
+    row(t('git_branch_lbl'), status.branch ?? ''),
+    row(t('git_file_lbl'), status.file ?? ''),
+    // Spelling out what "the app" means answers the obvious question the
+    // single data-file row provokes.
+    row(t('git_app_lbl'), (status.appPaths ?? []).join('  ')),
+    row(t('git_remote_data'), status.remoteExists ? fmtTime(status.remoteUpdatedAt) : t('git_remote_none')),
   ];
-  if (status.offline) {
-    rows.push(`<div class="git-row warn"><span>${esc(t('git_offline'))}</span><b>${esc(status.error ?? '')}</b></div>`);
-  } else {
-    rows.push(
-      `<div class="git-row"><span>${esc(t('git_remote_data'))}</span><b>${
-        status.remoteExists ? esc(fmtTime(status.remoteUpdatedAt)) : esc(t('git_remote_none'))
-      }</b></div>`,
-    );
-    if (status.behind) {
-      rows.push(`<div class="git-row warn"><span>${esc(t('git_behind'))}</span><b>${status.behind}</b></div>`);
-    }
-    if (status.ahead) {
-      rows.push(`<div class="git-row"><span>${esc(t('git_ahead'))}</span><b>${status.ahead}</b></div>`);
-    }
-  }
-  const dirty = status.dirty ?? [];
-  if (dirty.length) {
-    rows.push(
-      `<div class="git-row"><span>${esc(t('git_uncommitted'))}</span><b>${dirty.length}</b></div>`,
-    );
-  }
-  if (status.lastCommit) {
-    rows.push(`<div class="git-row"><span>${esc(t('git_last_commit'))}</span><b>${esc(status.lastCommit)}</b></div>`);
-  }
+  if (status.behind) rows.push(row(t('git_behind'), String(status.behind), 'warn'));
+  if (status.ahead) rows.push(row(t('git_ahead'), String(status.ahead)));
+  if (status.dirty?.length) rows.push(row(t('git_uncommitted'), String(status.dirty.length)));
+  if (status.lastCommit) rows.push(row(t('git_last_commit'), status.lastCommit));
 
-  box.innerHTML = rows.join('') + renderPrivacyNote();
+  const { messages, logs, notes } = personalCounts();
+  const privacy =
+    messages + logs + notes > 0
+      ? `<p class="git-privacy">${esc(tf('git_privacy_note', { m: messages, l: logs, n: notes }))}</p>`
+      : '';
+
+  box.innerHTML = rows.join('') + privacy;
 }
 
-/**
- * Reload the repository shape.
- *
- * `announce` stays false after a push or pull, so the result of what you just
- * did is not immediately overwritten by "Ready".
- */
+function paint(status: SyncStatus | null): void {
+  describe(status);
+  renderDetail(status);
+}
+
 export async function refreshStatus(announce = true): Promise<void> {
-  if (announce) renderSyncPanel(null);
+  if (announce) paint(null);
   try {
-    const status = await api<SyncStatus>('status');
-    renderSyncPanel(status);
-    if (announce) {
-      setStatus(status.configured ? 'ok' : 'err', status.configured ? t('git_ready') : t('git_not_repo'));
-    }
+    latest = await api<SyncStatus>('status');
+    paint(latest);
   } catch (e) {
-    renderSyncPanel(null);
-    setStatus('err', (e as Error).message);
+    paint(null);
+    if (!unavailable) say('err', (e as Error).message);
+    else describe(null);
   }
 }
 
 export async function doPush(): Promise<void> {
   busy(true);
-  setStatus('wait', t('git_pushing'));
+  say('busy', t('git_pushing'));
   try {
     const result = await api<PushResult>('push', {
       method: 'POST',
       body: JSON.stringify({ state: toFile() }),
     });
+    markPushed(); // whatever is here now is on git
     if (result.nothingToCommit) {
-      setStatus('ok', t('git_nothing'));
+      say('ok', t('git_nothing'));
     } else {
       const app = result.appPushed ? tf('git_with_app', { n: result.appFileCount ?? 0 }) : '';
-      setStatus('ok', `${t('git_pushed')} ${result.commit ?? ''} ${app}`.trim());
+      say('ok', `${t('git_pushed')} ${result.commit ?? ''} ${app}`.trim());
     }
-    await refreshStatus(false);
+    latest = await api<SyncStatus>('status');
+    renderDetail(latest);
   } catch (e) {
-    setStatus('err', (e as Error).message);
+    say('err', (e as Error).message);
   } finally {
     busy(false);
   }
@@ -183,36 +188,46 @@ export async function doPush(): Promise<void> {
 
 export async function doPull(): Promise<void> {
   busy(true);
-  setStatus('wait', t('git_pulling'));
+  say('busy', t('git_pulling'));
   try {
     const result = await api<PullResult>('pull', { method: 'POST' });
     if (result.note) {
-      setStatus('ok', result.note);
+      say('ok', result.note);
     } else if (result.state) {
       // Union merge, never overwrite: work done on this machine survives.
       merge((result.state.data ?? result.state) as Parameters<typeof merge>[0]);
       const app = result.appUpdated ? ` ${t('git_app_updated')}` : '';
-      setStatus('ok', `${t('git_pulled')} ${fmtTime(result.updatedAt)}.${app}`);
+      say('ok', `${t('git_pulled')} ${fmtTime(result.updatedAt)}.${app}`);
     }
-    await refreshStatus(false);
+    latest = await api<SyncStatus>('status');
+    renderDetail(latest);
   } catch (e) {
-    setStatus('err', (e as Error).message);
+    say('err', (e as Error).message);
   } finally {
     busy(false);
   }
 }
 
-export function initGitSync(): void {
-  must('#gitPush').addEventListener('click', () => void doPush());
-  must('#gitPull').addEventListener('click', () => void doPull());
-  must('#gitRefresh').addEventListener('click', () => void refreshStatus(true));
-  // Only look the server up when the panel is actually opened.
-  must('#setTabs').addEventListener('click', (ev) => {
-    const el = ev.target as HTMLElement;
-    if (el.dataset.st === 'git' && !unavailable) void refreshStatus(true);
-  });
+/** Re-evaluate the headline without hitting the network (e.g. after solving). */
+export function refreshSyncLine(): void {
+  if (must('#syncBar').hidden) return;
+  describe(latest);
 }
 
-/** Exposed for the "unsaved work" hint on the settings button. */
-export const hasUnpushedWork = (): boolean =>
-  db().log.length > 0 || Object.keys(db().progress).length > 0;
+export function initGitSync(): void {
+  must('#syncBar').hidden = false;
+  must('#gitPull').addEventListener('click', () => void doPull());
+  must('#gitPush').addEventListener('click', () => void doPush());
+  must('#gitRefresh').addEventListener('click', () => void refreshStatus(true));
+
+  // On open: is anyone else's work waiting? Ask once, quietly.
+  void refreshStatus(true);
+
+  // On close: never let a session of study vanish because a tab was shut.
+  window.addEventListener('beforeunload', (ev) => {
+    if (!hasUnpushedChanges()) return;
+    ev.preventDefault();
+    // Browsers show their own wording; returnValue is what triggers the prompt.
+    ev.returnValue = t('git_leave_warn');
+  });
+}

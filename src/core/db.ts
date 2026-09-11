@@ -186,6 +186,46 @@ export function personalCounts(d: StoreData = store) {
   return { messages, logs: d.log.length, notes };
 }
 
+/* ------------------------------------------------------------------ *
+ * Unpushed-work tracking
+ *
+ * git cannot see localStorage, so "have I pushed this?" has to be answered on
+ * the browser side. Fingerprint the store at push time and compare.
+ * ------------------------------------------------------------------ */
+
+/** FNV-1a over the serialised store - cheap, stable, and good enough here. */
+function fingerprint(d: StoreData = store): string {
+  const text = JSON.stringify(d);
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i += 1) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return (h >>> 0).toString(16);
+}
+
+/** Record that the current contents are now on git. */
+export function markPushed(): void {
+  write(KEYS.pushedHash, fingerprint());
+}
+
+/** True when there is study progress that has not reached git. */
+export function hasUnpushedChanges(): boolean {
+  const pushed = read<string | null>(KEYS.pushedHash, null);
+  if (pushed === null) {
+    // Never pushed from this browser: only nag once there is something to lose.
+    const d = store;
+    return (
+      Object.keys(d.progress).length > 0 ||
+      d.log.length > 0 ||
+      d.triggers.length > 0 ||
+      d.visualizations.length > 0 ||
+      d.chats.some((c) => c.msgs.length > 0)
+    );
+  }
+  return pushed !== fingerprint();
+}
+
 /** Union-merge a remote document into the working copy, then persist. */
 export function merge(remote: Partial<StoreData> | null | undefined): void {
   if (!remote) return;
