@@ -175,57 +175,27 @@ Gia sư **không bao giờ đưa lời giải, mã nguồn, hay gọi tên patte
 
 ---
 
-## 🔄 Đồng bộ Git · Git sync
+## 💾 Đưa dữ liệu vào git · Getting your data into git
 
-Mở **⚙ Thiết lập → Đồng bộ Git**.
+Tiến độ học nằm trong `localStorage` của trình duyệt — **git không nhìn thấy chỗ đó**. App chỉ cần làm đúng một việc: đổ nó ra thành file. Còn lại là git như mọi khi.
 
-> **Vì sao cần token trong khi file nằm sẵn trong repo?** Trang chạy trong **sandbox của trình duyệt**: nó không gọi được lệnh `git`, không ghi được vào thư mục repo, và không biết mình đang nằm trong một repo. Nó chỉ gửi được HTTP — nên **ghi** lên GitHub bắt buộc phải qua API có xác thực. Đọc thì không.
->
-> **Why a token when the file already sits in the repo?** The page runs in the browser sandbox: it cannot invoke `git`, cannot write into the repo folder, and has no idea it lives in one. Only HTTP — so *writing* to GitHub needs auth. Reading does not.
+Your progress lives in the browser's `localStorage`, which **git cannot see**. The app's only job is to dump it to a file; the rest is ordinary git.
 
-### Hai đường · Two routes
+**Mở ⚙ Thiết lập → Dữ liệu:**
 
-**Nếu máy bạn đã có git và repo thì không cần token gì cả** — cứ `git push` như bình thường. Push từ terminal còn an toàn hơn push từ app (có diff, có merge, không ghi đè mù). Token chỉ dành cho máy **không cài git**.
+1. Bấm **💾 Lưu ra file** → được `dsa-compass-data.json`
+2. Đặt nó vào thư mục repo
+3. ```bash
+   git add -A && git commit -m "update" && git push
+   ```
 
-| Cách | Cần token? | Dùng khi |
-|---|---|---|
-| **⬇ Kéo về** | **Không** (repo public) | Lấy dữ liệu về máy mới. Đọc thẳng `raw.githubusercontent.com`. Repo private thì mới cần token. |
-| **💾 Tải file / 📂 Nạp từ file** | **Không** | Hoàn toàn offline. Tải `dsa-compass-data.json` về, đặt vào thư mục repo rồi `git commit` như bình thường — **đây là cách thay cho “đẩy lên” nếu bạn không muốn token.** |
-| **⬆ Đẩy lên** | **Có** | Muốn app tự commit lên GitHub, không đụng tới terminal. |
+Trên máy khác: `git pull` rồi bấm **📂 Nạp từ file** (nạp là **gộp**, không ghi đè — việc bạn làm ở hai máy đều còn).
 
-Open **⚙ Settings → Git sync**. The app pushes/pulls one JSON file through the **GitHub Contents API** — no local `git`, no server.
+> 💡 **Mẹo bỏ hẳn bước 2:** trỏ thư mục tải về của trình duyệt vào chính thư mục repo, file sẽ rơi thẳng vào đúng chỗ — chỉ còn commit.
 
-| Ô | Ý nghĩa |
-|---|---|
-| **Repo** | `owner/name` (dán cả URL GitHub cũng được, app tự cắt) |
-| **File dữ liệu · Data file** | mặc định `dsa-compass-data.json` — tiến độ học của bạn |
-| **File source code** | mặc định `dsa-compass.html` — chính phần mềm |
-| **Nhánh · Branch** | mặc định `main` |
-| **Token** | fine-grained PAT |
+**Source code** thì không cần gì cả: `dsa-compass.html` đã nằm trong repo, sửa xong `git push` là xong.
 
-- **⬆ Đẩy lên** (cần token) — ghi dữ liệu thành một commit qua **GitHub Contents API** (tự lấy `sha` nếu file đã tồn tại nên ghi đè an toàn). Tích **Đẩy cả source code** thì đẩy luôn `dsa-compass.html` — app tự đọc source của chính nó. Nếu nội dung không đổi thì **bỏ qua**, không tạo commit rỗng.
-- **⬇ Tải code từ repo** — lấy bản `dsa-compass.html` đang nằm trên repo về máy (trình duyệt không ghi đè được file của bạn, nên nó tải xuống để bạn tự thay). Giống hệt bản đang chạy thì báo "code đã trùng".
-- **⬇ Kéo về** (không cần token với repo public) — tải về rồi **gộp (union merge)**, không ghi đè mù quáng: tiến độ giữ bản đã *done*, hoạt động mỗi ngày lấy `max`, từ điển / nhật ký / visualization gộp theo định danh, chat giữ phiên dài hơn. Làm việc trên hai máy rồi sync — không mất bên nào.
-
-### Đồng bộ code · Syncing the app itself
-
-App là **một file HTML duy nhất**, nên nó tự đẩy chính mình lên repo được:
-
-- **Mở qua `http://`** (ví dụ `python -m http.server`): app `fetch` chính URL của nó → lấy đúng source gốc, đẩy thẳng, không hỏi gì.
-- **Mở qua `file://`**: trình duyệt chặn không cho trang đọc file của chính nó, nên app sẽ **mở hộp chọn file** để bạn trỏ tới `dsa-compass.html`, rồi đẩy file đó.
-
-App **từ chối** đẩy nếu file bạn chọn không phải source của nó (kiểm tra dấu hiệu nhận dạng), để không ghi đè nhầm file khác trong repo.
-
-> ⚠️ **Không phải git thực sự.** Mỗi lần đẩy là một commit ghi đè thẳng lên nhánh, không có branch/merge/diff. Nếu bạn vừa sửa code bằng git ở nơi khác, hãy `git pull` trước — push từ app sẽ ghi đè bằng bản đang chạy trong trình duyệt.
-
----
-
-### Được đồng bộ · What syncs
-Tiến độ 150 câu + cấu hình kế hoạch · lịch hoạt động · từ điển tín hiệu riêng · nhật ký va chạm · lịch sử chat · visualization đã lưu.
-
-> 🔑 **Token và API key KHÔNG bao giờ được đồng bộ.** Chúng nằm riêng trong trình duyệt của bạn và không có mặt trong file JSON đẩy lên repo. Hãy dùng **fine-grained token** chỉ cấp **Contents: Read and write** cho đúng repo này; nếu repo là public thì file dữ liệu của bạn cũng public — cân nhắc dùng repo **private**.
->
-> 🔑 **Tokens and API keys are never synced.** Prefer a **private** repo, and a fine-grained token limited to *Contents: Read and write* on it.
+> 🔑 Thiết lập AI (kể cả API key) **không** nằm trong file dữ liệu. · AI settings, API key included, are never written into the data file.
 
 ---
 

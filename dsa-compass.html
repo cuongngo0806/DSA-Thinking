@@ -872,7 +872,7 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
     </div>
     <div class="lc-tabs set-tabs" id="setTabs">
       <button class="lc-tab on" data-st="ai" data-i18n="set_tab_ai">AI</button>
-      <button class="lc-tab" data-st="git" data-i18n="set_tab_git">Đồng bộ Git</button>
+      <button class="lc-tab" data-st="git" data-i18n="set_tab_git">Dữ liệu</button>
     </div>
     <div class="modal-body" id="setPaneAi">
       <p class="modal-lead" data-i18n="settings_lead">Cả <b>gia sư Socratic</b> và <b>trình sinh trực quan</b> dùng chung nguồn AI này. Chúng chỉ khác nhau ở prompt hệ thống.</p>
@@ -884,41 +884,17 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
       <p class="hint-note" data-i18n="set_hint">Nếu mở file bằng <code>file://</code>, trình duyệt có thể chặn CORS. Hãy bật CORS ở endpoint (ví dụ <code>OLLAMA_ORIGINS=*</code>) hoặc chạy một máy chủ tĩnh cho trang này.</p>
     </div>
     <div class="modal-body" id="setPaneGit" hidden>
-      <p class="modal-lead" data-i18n="git_lead">Một trang web không chạy được <code>git</code>.</p>
-      <div class="status" id="gitStatus" data-i18n="git_idle">Chưa đồng bộ</div>
-
-      <div class="git-route">
-        <div class="pt" data-i18n="git_r1_head">Cách 1 — dùng git như bình thường (khuyên dùng)</div>
-        <p data-i18n="git_r1_body">Máy bạn đã có repo và git rồi: chỉ cần lưu file dữ liệu vào thư mục repo rồi commit như mọi khi. <b>Không cần token.</b> Source code thì git đã quản lý sẵn.</p>
-        <div class="viz-genbtns">
-          <button class="btn btn-primary" id="dataExport" data-i18n="git_file_save">💾 Tải file dữ liệu</button>
-          <button class="btn btn-ghost" id="dataImportBtn" data-i18n="git_file_load">📂 Nạp từ file</button>
-          <input type="file" id="dataImport" accept="application/json,.json" hidden>
-        </div>
-        <pre class="git-cmd">git add -A
+      <p class="modal-lead" data-i18n="git_lead">Tiến độ của bạn nằm trong bộ nhớ của trình duyệt, <b>git không nhìn thấy</b>. Bấm <b>Lưu ra file</b> để đổ nó thành một file trong repo — rồi commit như mọi khi.</p>
+      <div class="status" id="gitStatus" data-i18n="git_idle">Chưa lưu lần nào</div>
+      <div class="viz-genbtns">
+        <button class="btn btn-primary" id="dataExport" data-i18n="git_file_save">💾 Lưu ra file</button>
+        <button class="btn btn-ghost" id="dataImportBtn" data-i18n="git_file_load">📂 Nạp từ file</button>
+        <input type="file" id="dataImport" accept="application/json,.json" hidden>
+      </div>
+      <pre class="git-cmd">git add -A
 git commit -m "update"
 git push</pre>
-      </div>
-
-      <details class="git-route2" id="gitApiWrap">
-        <summary data-i18n="git_r2_head">Cách 2 — đồng bộ thẳng từ app (cho máy không cài git)</summary>
-        <p class="git-r2-note" data-i18n="git_r2_body"><b>Kéo về</b> và <b>Tải code</b> từ repo public thì không cần gì. Chỉ <b>Đẩy lên</b> (ghi vào GitHub) mới cần token.</p>
-        <div class="field"><label class="lbl" data-i18n="git_repo">Repo (owner/name)</label><input class="inp" id="gitRepo" placeholder="cuongngo0806/DSA-Thinking"></div>
-        <div class="row2">
-          <div class="field"><label class="lbl" data-i18n="git_branch">Nhánh</label><input class="inp" id="gitBranch" placeholder="main"></div>
-          <div class="field"><label class="lbl" data-i18n="git_path">File dữ liệu</label><input class="inp" id="gitPath" placeholder="dsa-compass-data.json"></div>
-        </div>
-        <div class="field"><label class="lbl" data-i18n="git_codepath">File source code</label><input class="inp" id="gitCodePath" placeholder="dsa-compass.html"></div>
-        <label class="git-check"><input type="checkbox" id="gitPushCode"> <span data-i18n="git_push_code_lbl">Đẩy cả source code khi bấm Đẩy lên</span></label>
-        <div class="field"><label class="lbl" data-i18n="git_token">GitHub token</label><input class="inp" id="gitToken" type="password" data-i18n-attr="placeholder:git_token_ph"></div>
-        <div class="viz-genbtns" style="margin-top:4px">
-          <button class="btn btn-ghost" id="gitPushBtn" data-i18n="git_push">⬆ Đẩy lên</button>
-          <button class="btn btn-ghost" id="gitPullBtn" data-i18n="git_pull">⬇ Kéo về</button>
-          <button class="btn btn-ghost" id="gitGetCodeBtn" data-i18n="git_get_code">⬇ Tải code từ repo</button>
-          <input type="file" id="codePick" accept=".html,text/html" hidden>
-        </div>
-        <p class="hint-note" data-i18n="git_hint">Dùng <b>fine-grained token</b> chỉ cấp quyền <b>Contents: Read and write</b> cho đúng repo này. Token lưu trong trình duyệt của bạn và chỉ được gửi tới <code>api.github.com</code> — không bao giờ nằm trong file dữ liệu đồng bộ. Thiết lập AI (kể cả API key) cũng <b>không</b> được đồng bộ.</p>
-      </details>
+      <p class="hint-note" data-i18n="git_hint">Mẹo: trỏ thư mục tải về của trình duyệt vào chính thư mục repo, thì <b>Lưu ra file</b> là file rơi thẳng vào đó — chỉ còn việc commit. Trên máy mới: <code>git pull</code> rồi bấm <b>Nạp từ file</b>. Thiết lập AI (kể cả API key) <b>không</b> nằm trong file này.</p>
     </div>
   </div>
 </div>
@@ -1460,8 +1436,8 @@ async function aiCall(messages, {test=false}={}){
   return data.choices?.[0]?.message?.content ?? t("err_no_content");
 }
 
-function openSettings(){ loadAiCfg(); loadGitCfg(); $("#settingsModal").hidden=false; setTimeout(()=>$("#setUrl").focus(),30); }
-function closeSettings(){ saveAiCfg(); saveGitCfg(); $("#settingsModal").hidden=true; }
+function openSettings(){ loadAiCfg(); $("#settingsModal").hidden=false; setTimeout(()=>$("#setUrl").focus(),30); }
+function closeSettings(){ saveAiCfg(); $("#settingsModal").hidden=true; }
 function setSettingsTab(v){
   $$("#setTabs .lc-tab").forEach(b=>b.classList.toggle("on", b.dataset.st===v));
   $("#setPaneAi").hidden = v!=="ai"; $("#setPaneGit").hidden = v!=="git";
@@ -2154,32 +2130,12 @@ Object.assign(T.vi, {
   vai_head:"Nguồn AI",
   vai_hint:'Dùng <b>chung</b> một nguồn AI với gia sư. Việc sinh trace cần model mạnh về code và cửa sổ ngữ cảnh lớn.',
   settings_title:"Thiết lập", settings_head:"Thiết lập",
-  set_tab_ai:"AI", set_tab_git:"Đồng bộ Git",
-  git_lead:'Một trang web <b>không chạy được <code>git</code></b> — nó không gọi được lệnh và không ghi được vào thư mục repo. Nên có hai đường:',
-  git_file_head:"Không muốn dùng token?",
-  git_file_body:'Tải file dữ liệu về, đặt vào thư mục repo rồi <code>git commit</code> như bình thường. Không cần token, không cần mạng.',
-  git_file_save:"💾 Tải file dữ liệu", git_file_load:"📂 Nạp từ file",
-  git_saved_file:"Đã tải về:", git_loaded_file:"Đã nạp và gộp dữ liệu từ file.",
-  git_maybe_private:"(repo private thì cần token)",
-  git_codepath:"File source code", git_push_code_lbl:"Đẩy cả source code khi bấm Đẩy lên",
-  git_get_code:"⬇ Tải code từ repo",
-  git_code_pushed:"đã đẩy code", git_code_same:"code đã trùng, bỏ qua", git_data_same:"Dữ liệu đã trùng lúc",
-  git_code_downloaded:"Đã tải bản code từ repo về — thay thế file cũ của bạn rồi mở lại.",
-  git_pick_code:"Chọn file dsa-compass.html để đẩy lên…",
-  git_code_cancel:"Đã hủy chọn file code (dữ liệu vẫn được đẩy).",
-  git_not_app:"File này không phải source của La Bàn DSA — từ chối để không ghi đè nhầm.",
-  git_r1_head:"Cách 1 — dùng git như bình thường (khuyên dùng)",
-  git_r1_body:'Máy bạn đã có repo và git rồi: chỉ cần lưu file dữ liệu vào thư mục repo rồi commit như mọi khi. <b>Không cần token.</b> Source code thì git đã quản lý sẵn — push từ terminal còn an toàn hơn (có diff, có merge).',
-  git_r2_head:"Cách 2 — đồng bộ thẳng từ app (cho máy không cài git)",
-  git_r2_body:'<b>Kéo về</b> và <b>Tải code</b> từ repo public thì không cần gì. Chỉ <b>Đẩy lên</b> (ghi vào GitHub qua HTTP) mới cần token.',
-  git_idle:"Chưa đồng bộ", git_repo:"Repo (owner/name)", git_branch:"Nhánh", git_path:"File dữ liệu",
-  git_token:'GitHub token <span class="lc-derived">(chỉ cần khi Đẩy lên)</span>', git_token_ph:"ghp_... hoặc github_pat_...",
-  git_push:"⬆ Đẩy lên", git_pull:"⬇ Kéo về",
-  git_pushing:"Đang đẩy lên…", git_pulling:"Đang kéo về…",
-  git_pushed:"Đã đẩy lên lúc", git_pulled:"Đã kéo về và gộp lúc",
-  git_failed:"Lỗi: ", git_nofile:"Chưa có file trên repo — hãy Đẩy lên trước.",
-  git_need_repo:"Nhập repo dạng owner/name", git_need_token:"Đẩy từ app cần token — hoặc dùng Cách 1: Tải file dữ liệu rồi git push.",
-  git_hint:'Dùng <b>fine-grained token</b> chỉ cấp quyền <b>Contents: Read and write</b> cho đúng repo này. Token lưu trong trình duyệt của bạn và chỉ được gửi tới <code>api.github.com</code> — không bao giờ nằm trong file dữ liệu đồng bộ. Thiết lập AI (kể cả API key) cũng <b>không</b> được đồng bộ.',
+  set_tab_ai:"AI", set_tab_git:"Dữ liệu",
+  git_lead:'Tiến độ của bạn nằm trong bộ nhớ của trình duyệt, <b>git không nhìn thấy</b>. Bấm <b>Lưu ra file</b> để đổ nó thành một file trong repo — rồi commit như mọi khi.',
+  git_idle:"Chưa lưu lần nào",
+  git_file_save:"💾 Lưu ra file", git_file_load:"📂 Nạp từ file",
+  git_saved_file:"Đã lưu:", git_loaded_file:"Đã nạp và gộp dữ liệu từ file.", git_failed:"Lỗi: ",
+  git_hint:'Mẹo: trỏ thư mục tải về của trình duyệt vào chính thư mục repo, thì <b>Lưu ra file</b> là file rơi thẳng vào đó — chỉ còn việc commit. Trên máy mới: <code>git pull</code> rồi bấm <b>Nạp từ file</b>. Thiết lập AI (kể cả API key) <b>không</b> nằm trong file này.',
   settings_lead:'Cả <b>gia sư Socratic</b> và <b>trình sinh trực quan</b> dùng chung nguồn AI này. Chúng chỉ khác nhau ở prompt hệ thống.',
   open_settings:"⚙ Mở thiết lập AI", ai_not_set:"Chưa cấu hình AI",
   gen_nokey_head:"Không có API key?", gen_nokey_body:'Bấm <b>Sao chép prompt</b>, dán vào Claude (claude.ai / Claude Code), rồi dán JSON nhận được vào tab <b>Nhập JSON</b>.',
@@ -2219,32 +2175,12 @@ Object.assign(T.en, {
   vai_head:"AI source",
   vai_hint:'Uses the <b>same</b> AI source as the tutor. Trace generation wants a strong coding model with a large context window.',
   settings_title:"Settings", settings_head:"Settings",
-  set_tab_ai:"AI", set_tab_git:"Git sync",
-  git_lead:'A web page <b>cannot run <code>git</code></b> — it can neither invoke the command nor write into the repo folder. So there are two routes:',
-  git_file_head:"Rather not use a token?",
-  git_file_body:'Save the data file, drop it in your repo folder and <code>git commit</code> it as usual. No token, no network.',
-  git_file_save:"💾 Save data file", git_file_load:"📂 Load from file",
-  git_saved_file:"Saved:", git_loaded_file:"Loaded and merged from file.",
-  git_maybe_private:"(a private repo needs a token)",
-  git_codepath:"Source code file", git_push_code_lbl:"Also push the source code on Push",
-  git_get_code:"⬇ Get code from repo",
-  git_code_pushed:"code pushed", git_code_same:"code unchanged, skipped", git_data_same:"Data already up to date at",
-  git_code_downloaded:"Downloaded the repo's copy — replace your old file and reopen it.",
-  git_pick_code:"Pick dsa-compass.html to push…",
-  git_code_cancel:"Code file pick cancelled (data was still pushed).",
-  git_not_app:"That file is not the DSA Compass source — refusing, to avoid overwriting the wrong thing.",
-  git_r1_head:"Route 1 — just use git (recommended)",
-  git_r1_body:'You already have the repo and git on this machine: save the data file into the repo folder and commit it as usual. <b>No token needed.</b> The source is already under git — pushing from the terminal is safer anyway (real diffs and merges).',
-  git_r2_head:"Route 2 — sync straight from the app (for machines without git)",
-  git_r2_body:'<b>Pull</b> and <b>Get code</b> from a public repo need nothing. Only <b>Push</b> (writing to GitHub over HTTP) needs a token.',
-  git_idle:"Not synced", git_repo:"Repo (owner/name)", git_branch:"Branch", git_path:"Data file",
-  git_token:'GitHub token <span class="lc-derived">(only needed to Push)</span>', git_token_ph:"ghp_... or github_pat_...",
-  git_push:"⬆ Push", git_pull:"⬇ Pull",
-  git_pushing:"Pushing…", git_pulling:"Pulling…",
-  git_pushed:"Pushed at", git_pulled:"Pulled & merged at",
-  git_failed:"Error: ", git_nofile:"No file in the repo yet — Push first.",
-  git_need_repo:"Enter a repo as owner/name", git_need_token:"Pushing from the app needs a token — or use Route 1: save the data file and git push.",
-  git_hint:'Use a <b>fine-grained token</b> scoped to <b>Contents: Read and write</b> on this one repo. The token is stored in your browser and only ever sent to <code>api.github.com</code> — it is never written into the synced data file. AI settings (including the API key) are <b>not</b> synced either.',
+  set_tab_ai:"AI", set_tab_git:"Data",
+  git_lead:'Your progress lives in browser storage, which <b>git cannot see</b>. Hit <b>Save to file</b> to dump it into a file in your repo — then commit as usual.',
+  git_idle:"Not saved yet",
+  git_file_save:"💾 Save to file", git_file_load:"📂 Load from file",
+  git_saved_file:"Saved:", git_loaded_file:"Loaded and merged from file.", git_failed:"Error: ",
+  git_hint:'Tip: point your browser download folder at the repo folder and <b>Save to file</b> drops it straight in — all that is left is the commit. On a new machine: <code>git pull</code>, then <b>Load from file</b>. AI settings (including the API key) are <b>not</b> in this file.',
   settings_lead:'Both the <b>Socratic tutor</b> and the <b>visualization generator</b> use this one AI source. They differ only in system prompt.',
   open_settings:"⚙ Open AI settings", ai_not_set:"AI not configured",
   gen_nokey_head:"No API key?", gen_nokey_body:'Click <b>Copy prompt</b>, paste it into Claude (claude.ai / Claude Code), then paste the returned JSON into the <b>Import JSON</b> tab.',
@@ -2974,27 +2910,9 @@ function initVizTabs(){
 }
 
 /* ============================================================ GIT SYNC (GitHub Contents API) */
-let gitCfg = LS.get("dsac_git", {repo:"", branch:"main", path:"dsa-compass-data.json", token:"", lastSync:0});
+let gitCfg = LS.get("dsac_git", {lastSync:0});
 
-function b64enc(str){
-  const bytes=new TextEncoder().encode(str); let bin=""; const CH=0x8000;
-  for(let i=0;i<bytes.length;i+=CH) bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+CH));
-  return btoa(bin);
-}
-function b64dec(b64){
-  const bin=atob(String(b64).replace(/\s/g,"")); const bytes=new Uint8Array(bin.length);
-  for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
-  return new TextDecoder().decode(bytes);
-}
-function loadGitCfg(){ $("#gitRepo").value=gitCfg.repo||""; $("#gitBranch").value=gitCfg.branch||"main"; $("#gitPath").value=gitCfg.path||"dsa-compass-data.json"; $("#gitToken").value=gitCfg.token||"";
-  $("#gitCodePath").value=gitCfg.codePath||"dsa-compass.html"; $("#gitPushCode").checked=!!gitCfg.pushCode; }
-function saveGitCfg(){
-  gitCfg={...gitCfg, repo:$("#gitRepo").value.trim().replace(/^https?:\/\/github\.com\//,"").replace(/\.git$/,"").replace(/\/+$/,""),
-    branch:$("#gitBranch").value.trim()||"main", path:$("#gitPath").value.trim()||"dsa-compass-data.json", token:$("#gitToken").value.trim(),
-    codePath:$("#gitCodePath").value.trim()||"dsa-compass.html", pushCode:$("#gitPushCode").checked};
-  LS.set("dsac_git",gitCfg); return gitCfg;
-}
-function setGitStatus(cls,text){ const e=$("#gitStatus"); e.className="status "+cls; e.removeAttribute("data-i18n"); e.textContent=text; }
+function setGitStatus(cls,text){ const e=$("#gitStatus"); if(!e) return; e.className="status "+cls; e.removeAttribute("data-i18n"); e.textContent=text; }
 
 /** Everything worth carrying between machines. Secrets are deliberately excluded. */
 function collectSyncData(){
@@ -3029,140 +2947,10 @@ function mergeSyncData(d){
   renderRoadmap(); renderDict(); renderLog(); renderChatLog(); renderChatHist(); renderSaved();
 }
 
-async function ghFetch(url,opts={}){
-  return fetch("https://api.github.com/"+url,{...opts,headers:{
-    "Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28",
-    "Authorization":"Bearer "+gitCfg.token, ...(opts.headers||{})}});
-}
-function ghCheck(){
-  const c=saveGitCfg();
-  if(!c.repo||!/^[^/]+\/[^/]+$/.test(c.repo)) throw new Error(t("git_need_repo"));
-  if(!c.token) throw new Error(t("git_need_token"));
-  return c;
-}
-async function ghGetFile(c){
-  const r=await ghFetch(`repos/${c.repo}/contents/${c.path}?ref=${encodeURIComponent(c.branch)}`);
-  if(r.status===404) return null;
-  if(!r.ok) throw new Error(`HTTP ${r.status} ${(await r.text()).slice(0,120)}`);
-  return r.json();
-}
-/** Write one file to the repo. Returns "written", or "same" when it is unchanged. */
-async function ghPutFile(c, path, text, message){
-  let sha=null, current=null;
-  const g=await ghFetch(`repos/${c.repo}/contents/${path}?ref=${encodeURIComponent(c.branch)}`);
-  if(g.ok){ const j=await g.json(); sha=j.sha; try{ current=b64dec(j.content); }catch(_){} }
-  else if(g.status!==404){ throw new Error(`HTTP ${g.status} ${(await g.text()).slice(0,120)}`); }
-  if(current!==null && current===text) return "same";
-  const body={message, content:b64enc(text), branch:c.branch};
-  if(sha) body.sha=sha;
-  const r=await ghFetch(`repos/${c.repo}/contents/${path}`,{method:"PUT",body:JSON.stringify(body)});
-  if(!r.ok) throw new Error(`HTTP ${r.status} ${(await r.text()).slice(0,140)}`);
-  return "written";
-}
-
-const looksLikeApp = txt => /id="vizApp"/.test(txt) && /<\/html>/i.test(txt);
-
-/** The page's own source. Over http(s) it can fetch itself; file:// cannot. */
-async function readOwnSource(){
-  if(location.protocol==="http:"||location.protocol==="https:"){
-    try{
-      const r=await fetch(location.href.split("#")[0],{cache:"no-store"});
-      if(r.ok){ const txt=await r.text(); if(looksLikeApp(txt)) return txt; }
-    }catch(_){}
-  }
-  return null;
-}
-
-async function pushCodeText(c, text){
-  if(!looksLikeApp(text)) throw new Error(t("git_not_app"));
-  return ghPutFile(c, c.codePath||"dsa-compass.html", text,
-    `chore(dsa-compass): sync app source ${new Date().toISOString()}`);
-}
-
-async function gitPush(){
-  let c; try{ c=ghCheck(); }catch(e){ setGitStatus("err",e.message); return; }
-  const withCode=$("#gitPushCode").checked;
-  setGitStatus("wait",t("git_pushing"));
-  try{
-    const dataRes=await ghPutFile(c, c.path, JSON.stringify(collectSyncData(),null,2),
-      `chore(dsa-compass): sync data ${new Date().toISOString()}`);
-    const stamp=new Date().toLocaleTimeString(lang==="vi"?"vi-VN":"en-US");
-    if(withCode){
-      const src=await readOwnSource();
-      if(src===null){                    // file:// — the browser cannot read its own source
-        window.__pendingDataStamp=stamp;
-        setGitStatus("wait",t("git_pick_code"));
-        $("#codePick").click();
-        return;                          // the picker handler finishes the push
-      }
-      const r=await pushCodeText(c, src);
-      gitCfg.lastSync=Date.now(); LS.set("dsac_git",gitCfg);
-      setGitStatus("ok",t(dataRes==="same"?"git_data_same":"git_pushed")+" "+stamp+" \u00b7 "+t(r==="same"?"git_code_same":"git_code_pushed"));
-      return;
-    }
-    gitCfg.lastSync=Date.now(); LS.set("dsac_git",gitCfg);
-    setGitStatus("ok",t(dataRes==="same"?"git_data_same":"git_pushed")+" "+stamp);
-  }catch(e){ setGitStatus("err",t("git_failed")+e.message); }
-}
-
-/** Fetch the app source that is in the repo. Browsers cannot overwrite the local file, so offer a download. */
-async function gitGetCode(){
-  const c=saveGitCfg();
-  if(!c.repo||!/^[^/]+\/[^/]+$/.test(c.repo)){ setGitStatus("err",t("git_need_repo")); return; }
-  const path=c.codePath||"dsa-compass.html";
-  setGitStatus("wait",t("git_pulling"));
-  try{
-    let text;
-    if(c.token){
-      const g=await ghFetch(`repos/${c.repo}/contents/${path}?ref=${encodeURIComponent(c.branch)}`);
-      if(g.status===404){ setGitStatus("err",t("git_nofile")); return; }
-      if(!g.ok) throw new Error(`HTTP ${g.status}`);
-      text=b64dec((await g.json()).content);
-    }else{
-      const r=await fetch(`https://raw.githubusercontent.com/${c.repo}/${encodeURIComponent(c.branch)}/${path}`,{cache:"no-store"});
-      if(r.status===404){ setGitStatus("err",t("git_nofile")); return; }
-      if(!r.ok) throw new Error(`HTTP ${r.status} `+t("git_maybe_private"));
-      text=await r.text();
-    }
-    const own=await readOwnSource();
-    if(own!==null && own===text){ setGitStatus("ok",t("git_code_same")); return; }
-    downloadText(text, path.split("/").pop()||"dsa-compass.html", "text/html");
-    setGitStatus("ok",t("git_code_downloaded"));
-  }catch(e){ setGitStatus("err",t("git_failed")+e.message); }
-}
-function downloadText(text,name,type){
-  const blob=new Blob([text],{type:type||"text/plain"});
-  const url=URL.createObjectURL(blob), a=document.createElement("a");
-  a.href=url; a.download=name; document.body.appendChild(a); a.click();
-  document.body.removeChild(a); setTimeout(()=>URL.revokeObjectURL(url),1000);
-}
-async function gitPull(){
-  const c=saveGitCfg();
-  if(!c.repo||!/^[^/]+\/[^/]+$/.test(c.repo)){ setGitStatus("err",t("git_need_repo")); return; }
-  setGitStatus("wait",t("git_pulling"));
-  try{
-    let text;
-    if(c.token){                      // authenticated: works for private repos too
-      const f=await ghGetFile(c);
-      if(!f){ setGitStatus("err",t("git_nofile")); return; }
-      text=b64dec(f.content);
-    }else{                            // public repo: the raw file needs no auth at all
-      const r=await fetch(`https://raw.githubusercontent.com/${c.repo}/${encodeURIComponent(c.branch)}/${c.path}`,{cache:"no-store"});
-      if(r.status===404){ setGitStatus("err",t("git_nofile")); return; }
-      if(!r.ok) throw new Error(`HTTP ${r.status} `+t("git_maybe_private"));
-      text=await r.text();
-    }
-    const bundle=JSON.parse(text);
-    mergeSyncData(bundle.data||bundle);
-    gitCfg.lastSync=Date.now(); LS.set("dsac_git",gitCfg);
-    setGitStatus("ok",t("git_pulled")+" "+new Date().toLocaleTimeString(lang==="vi"?"vi-VN":"en-US"));
-  }catch(e){ setGitStatus("err",t("git_failed")+e.message); }
-}
-/* Fully offline route: save the bundle as a file and commit it with real git. */
+const DATA_FILE = "dsa-compass-data.json";
 function exportDataFile(){
-  const name=(gitCfg.path||"dsa-compass-data.json").split("/").pop()||"dsa-compass-data.json";
-  downloadJson(collectSyncData(), name);
-  setGitStatus("ok",t("git_saved_file")+" "+name);
+  downloadJson(collectSyncData(), DATA_FILE);
+  setGitStatus("ok",t("git_saved_file")+" "+DATA_FILE);
 }
 function importDataFile(file){
   const r=new FileReader();
@@ -3170,33 +2958,16 @@ function importDataFile(file){
     try{
       const bundle=JSON.parse(String(r.result||""));
       mergeSyncData(bundle.data||bundle);
+      gitCfg.lastSync=Date.now(); LS.set("dsac_git",gitCfg);
       setGitStatus("ok",t("git_loaded_file"));
     }catch(e){ setGitStatus("err",t("git_failed")+e.message); }
   };
   r.readAsText(file);
 }
 function initGitSync(){
-  loadGitCfg();
-  $("#gitPushBtn").onclick=gitPush;
-  $("#gitPullBtn").onclick=gitPull;
-  $("#gitGetCodeBtn").onclick=gitGetCode;
-  $("#gitPushCode").onchange=saveGitCfg;
-  $("#gitCodePath").onchange=saveGitCfg;
-  $("#codePick").onchange=async e=>{                 // file:// fallback: the user hands us the source
-    const f=e.target.files&&e.target.files[0]; e.target.value="";
-    if(!f){ setGitStatus("err",t("git_code_cancel")); return; }
-    try{
-      const c=ghCheck();
-      const text=await f.text();
-      const r=await pushCodeText(c,text);
-      gitCfg.lastSync=Date.now(); LS.set("dsac_git",gitCfg);
-      setGitStatus("ok",t("git_pushed")+" "+(window.__pendingDataStamp||"")+" · "+t(r==="same"?"git_code_same":"git_code_pushed"));
-    }catch(err){ setGitStatus("err",t("git_failed")+err.message); }
-  };
   $("#dataExport").onclick=exportDataFile;
   $("#dataImportBtn").onclick=()=>$("#dataImport").click();
   $("#dataImport").onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(f) importDataFile(f); e.target.value=""; };
-  [$("#gitRepo"),$("#gitBranch"),$("#gitPath"),$("#gitToken")].forEach(el=>el.onchange=saveGitCfg);
 }
 
 /* ============================================================ CHAT HISTORY (tutor AI) */
