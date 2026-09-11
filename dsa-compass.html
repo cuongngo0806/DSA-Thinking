@@ -523,6 +523,21 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
   font-size:13px;font-weight:600;padding:8px 14px;font-family:var(--sans)}
 .viz-savebtn:hover{background:rgba(78,201,176,.12)}
 .viz-custom-tag{font-size:11px;font-weight:700;color:var(--brass);background:var(--brass-glow);padding:3px 10px;border-radius:20px}
+/* settings modal */
+.modal-back{position:fixed;inset:0;z-index:60;background:rgba(6,12,20,.6);backdrop-filter:blur(3px);
+  display:flex;align-items:flex-start;justify-content:center;padding:80px 18px 40px;overflow-y:auto}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+  width:100%;max-width:520px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.modal-head h3{margin:0;font-size:20px;font-weight:600}
+.modal-body{padding:18px 20px 22px}
+.modal-lead{margin:0 0 14px;font-size:13.5px;color:var(--muted);line-height:1.6}
+.modal-lead b{color:var(--text-dim)}
+.ai-chip{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;margin:8px 0 12px;padding:6px 11px;
+  border-radius:9px;background:var(--bg);border:1px solid var(--line);color:var(--muted)}
+.ai-chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--muted-2);flex:0 0 auto}
+.ai-chip.ready{color:var(--dependency)} .ai-chip.ready::before{background:var(--dependency)}
+.ai-chip.none{color:var(--order)} .ai-chip.none::before{background:var(--order)}
 /* chat history */
 .chat-actions{display:flex;gap:6px}
 .chat-hist{border-bottom:1px solid var(--line);max-height:210px;overflow-y:auto;background:var(--bg)}
@@ -548,6 +563,7 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
       <button class="top-tab on" data-top="practice" data-i18n="top_practice">Luyện tập</button>
       <button class="top-tab" data-top="theory" data-i18n="top_theory">Lý thuyết</button>
     </nav>
+    <button class="icon-btn theme-btn" id="setBtn" data-i18n-attr="title:settings_title" aria-label="Settings">⚙</button>
     <button class="icon-btn lang-btn" id="langBtn" data-i18n-attr="title:lang_title">EN</button>
     <button class="icon-btn theme-btn" id="themeBtn" data-i18n-attr="title:theme_title" aria-label="theme">☾</button>
   </div>
@@ -684,14 +700,10 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
         </div>
         <div class="viz-createside">
           <div class="settings">
-            <h3 data-i18n="vai_head">AI trực quan</h3>
-            <div class="status" id="vaiStatus" data-i18n="status_untested">Chưa kiểm tra</div>
-            <div class="field"><label class="lbl" data-i18n="set_url_lbl">Base URL</label><input class="inp" id="vaiUrl" placeholder="http://localhost:11434/v1"></div>
-            <div class="field"><label class="lbl" data-i18n="set_model_lbl">Tên model</label><input class="inp" id="vaiModel" placeholder="qwen2.5-coder ..."></div>
-            <div class="field"><label class="lbl" data-i18n="set_key_lbl">API key (tùy chọn)</label><input class="inp" id="vaiKey" type="password" data-i18n-attr="placeholder:set_key_ph"></div>
-            <div class="field"><label class="lbl" data-i18n="vai_maxtok">Max tokens</label><input class="inp" id="vaiMaxTok" placeholder="16000"></div>
-            <button class="btn btn-primary" id="vaiTest" style="width:100%" data-i18n="set_test_btn">Lưu & kiểm tra kết nối</button>
-            <p class="hint-note" data-i18n="vai_hint">Đây là AI <b>riêng</b> cho việc sinh dữ liệu trực quan — tách khỏi AI gia sư. Nên dùng model mạnh về code, cửa sổ ngữ cảnh lớn.</p>
+            <h3 data-i18n="vai_head">Nguồn AI</h3>
+            <div class="ai-chip" id="genAiChip"></div>
+            <button class="btn btn-ghost" id="genOpenSet" style="width:100%" data-i18n="open_settings">⚙ Mở thiết lập AI</button>
+            <p class="hint-note" data-i18n="vai_hint">Dùng <b>chung</b> một nguồn AI với gia sư. Việc sinh trace cần model mạnh về code và <b>Max tokens</b> lớn.</p>
           </div>
           <div class="viz-panel" style="margin-top:13px">
             <div class="pt" data-i18n="gen_nokey_head">Không có API key?</div>
@@ -744,14 +756,6 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
             </div>
           </div>
           <div class="chat-hist" id="chatHistPanel" hidden></div>
-          <div class="settings" id="aiSettings" hidden>
-            <div class="status" id="aiStatus" data-i18n="status_untested">Chưa kiểm tra</div>
-            <div class="field"><label class="lbl" data-i18n="set_url_lbl">Base URL</label><input class="inp" id="aiUrl" placeholder="http://localhost:11434/v1"></div>
-            <div class="field"><label class="lbl" data-i18n="set_model_lbl">Tên model</label><input class="inp" id="aiModel" placeholder="llama3.1 / qwen2.5 ..."></div>
-            <div class="field"><label class="lbl" data-i18n="set_key_lbl">API key (tùy chọn)</label><input class="inp" id="aiKey" type="password" data-i18n-attr="placeholder:set_key_ph"></div>
-            <button class="btn btn-primary" id="aiTest" style="width:100%" data-i18n="set_test_btn">Lưu & kiểm tra kết nối</button>
-            <p class="hint-note" data-i18n="set_hint">Nếu mở file bằng <code>file://</code>, trình duyệt có thể chặn CORS. Hãy bật CORS ở endpoint (ví dụ <code>OLLAMA_ORIGINS=*</code>) hoặc chạy một máy chủ tĩnh cho trang này.</p>
-          </div>
           <div class="chat-log" id="chatLog">
             <div class="msg sys" data-i18n="chat_init">Cấu hình endpoint bên trái, rồi kể cho tôi bài toán bạn đang mắc. Tôi sẽ chỉ hỏi — không giải thay.</div>
           </div>
@@ -827,6 +831,27 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
   </div>
 </section>
 
+<div class="modal-back" id="settingsModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+    <div class="modal-head">
+      <h3 id="setTitle" data-i18n="settings_head">Thiết lập AI</h3>
+      <button class="lc-gear" id="setClose" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-lead" data-i18n="settings_lead">Cả <b>gia sư Socratic</b> và <b>trình sinh trực quan</b> dùng chung nguồn AI này. Chúng chỉ khác nhau ở prompt hệ thống.</p>
+      <div class="status" id="setStatus" data-i18n="status_untested">Chưa kiểm tra</div>
+      <div class="field"><label class="lbl" data-i18n="set_url_lbl">Base URL</label><input class="inp" id="setUrl" placeholder="http://localhost:11434/v1"></div>
+      <div class="field"><label class="lbl" data-i18n="set_model_lbl">Tên model</label><input class="inp" id="setModel" placeholder="qwen2.5-coder / llama3.1 ..."></div>
+      <div class="row2">
+        <div class="field"><label class="lbl" data-i18n="set_key_lbl">API key (tùy chọn)</label><input class="inp" id="setKey" type="password" data-i18n-attr="placeholder:set_key_ph"></div>
+        <div class="field"><label class="lbl" data-i18n="vai_maxtok">Max tokens</label><input class="inp" id="setMaxTok" placeholder="16000"></div>
+      </div>
+      <button class="btn btn-primary" id="setTest" style="width:100%" data-i18n="set_test_btn">Lưu & kiểm tra kết nối</button>
+      <p class="hint-note" data-i18n="set_hint">Nếu mở file bằng <code>file://</code>, trình duyệt có thể chặn CORS. Hãy bật CORS ở endpoint (ví dụ <code>OLLAMA_ORIGINS=*</code>) hoặc chạy một máy chủ tĩnh cho trang này.</p>
+    </div>
+  </div>
+</div>
+
 <footer><div class="wrap" data-i18n="footer">La Bàn DSA — một chiếc la bàn, không phải chìa khóa. Dữ liệu của bạn (từ điển, nhật ký, thiết lập) lưu cục bộ trong trình duyệt này.</div></footer>
 
 <script>
@@ -870,7 +895,7 @@ vi:{
   chat_init:"Nhấn ⚙ để cấu hình endpoint, rồi kể cho tôi bài toán bạn đang mắc. Tôi sẽ chỉ hỏi — không giải thay.",
   sug1:"Tôi không biết bắt đầu từ đâu", sug2:"Tôi có brute force nhưng quá chậm", sug3:"Cho tôi một gợi ý lớn hơn",
   chat_ph:"Mô tả bài toán bạn đang mắc...", chat_thinking:"…đang nghĩ một câu hỏi cho bạn…",
-  need_config:"Hãy cấu hình endpoint và tên model ở bên trái trước đã.",
+  need_config:"Hãy mở ⚙ Thiết lập ở góc trên bên phải và cấu hình nguồn AI trước đã.",
   status_testing:"Đang kiểm tra...", status_ok:"Kết nối tốt", status_need_model:"Nhập tên model đã",
   err_no_url:"Chưa nhập Base URL", err_no_model:"Chưa nhập tên model", err_no_content:"(không có nội dung trả về)",
   chat_err_prefix:"Lỗi gọi mô hình: ", chat_err_suffix:" — kiểm tra endpoint/CORS.", status_err:"Lỗi: ",
@@ -925,7 +950,7 @@ en:{
   chat_init:"Tap ⚙ to configure the endpoint, then tell me the problem you're stuck on. I'll only ask — never solve it for you.",
   sug1:"I don't know where to start", sug2:"I have brute force but it's too slow", sug3:"Give me a bigger hint",
   chat_ph:"Describe the problem you're stuck on...", chat_thinking:"…thinking of a question for you…",
-  need_config:"Configure the endpoint and model name on the left first.",
+  need_config:"Open ⚙ Settings in the top right and configure the AI source first.",
   status_testing:"Testing...", status_ok:"Connection OK", status_need_model:"Enter a model name first",
   err_no_url:"No Base URL entered", err_no_model:"No model name entered", err_no_content:"(no content returned)",
   chat_err_prefix:"Model call failed: ", chat_err_suffix:" — check the endpoint / CORS.", status_err:"Error: ",
@@ -1326,35 +1351,61 @@ const LANG_RULE = {
 };
 function buildSystemPrompt(){ return SYSTEM_PROMPT.replace("__LANG_RULE__", LANG_RULE[lang]||LANG_RULE.en); }
 
-$("#aiUrl").value = aiCfg.url||""; $("#aiModel").value = aiCfg.model||""; $("#aiKey").value = aiCfg.key||"";
-
-function setStatus(cls,text){ const s=$("#aiStatus"); s.className="status "+cls; s.removeAttribute("data-i18n"); s.textContent=text; }
+/* ---- ONE shared AI source for both the tutor and the visualizer generator.
+       They differ only in system prompt, so the connection lives in Settings. ---- */
+(function migrateAiCfg(){
+  const old = LS.get("dsac_viz_ai", null);          // pre-merge visualizer config
+  if(aiCfg.maxTok===undefined) aiCfg.maxTok = (old&&old.maxTok) || "16000";
+  if(!aiCfg.model && old && old.model) aiCfg.model = old.model;   // keep whichever was configured
+  if(!aiCfg.url && old && old.url) aiCfg.url = old.url;
+  LS.set("dsac_ai", aiCfg);
+})();
+function loadAiCfg(){ $("#setUrl").value=aiCfg.url||""; $("#setModel").value=aiCfg.model||""; $("#setKey").value=aiCfg.key||""; $("#setMaxTok").value=aiCfg.maxTok||""; }
+function saveAiCfg(){
+  aiCfg={url:$("#setUrl").value.trim(), model:$("#setModel").value.trim(), key:$("#setKey").value.trim(), maxTok:$("#setMaxTok").value.trim()};
+  LS.set("dsac_ai",aiCfg); renderAiChip(); return aiCfg;
+}
+const aiReady = ()=>!!(aiCfg.url&&aiCfg.model);
+function renderAiChip(){
+  const c=$("#genAiChip"); if(!c) return;
+  c.className="ai-chip "+(aiReady()?"ready":"none");
+  c.textContent = aiReady() ? `${aiCfg.model}` : t("ai_not_set");
+}
+function setStatus(cls,text){ const s=$("#setStatus"); s.className="status "+cls; s.removeAttribute("data-i18n"); s.textContent=text; }
 function normUrl(u){ u=(u||"").trim().replace(/\/+$/,""); if(!/\/v1$/.test(u)&&!/\/chat\/completions$/.test(u)) u+= u.match(/\/v\d+$/)?"":"/v1"; return u; }
 
-async function aiCall(messages, {test=false}={}){
-  const base = normUrl($("#aiUrl").value);
-  const model = $("#aiModel").value.trim();
-  const key = $("#aiKey").value.trim();
-  aiCfg = {url:$("#aiUrl").value.trim(), model, key}; LS.set("dsac_ai",aiCfg);
+async function aiCall(messages, {test=false, temperature=0.6, useMaxTok=false}={}){
+  const cfg = saveAiCfg();
+  const base = normUrl(cfg.url);
   if(!base){ throw new Error(t("err_no_url")); }
-  if(!model && !test){ throw new Error(t("err_no_model")); }
+  if(!cfg.model && !test){ throw new Error(t("err_no_model")); }
   const headers = {"Content-Type":"application/json"};
-  if(key) headers["Authorization"]="Bearer "+key;
-  const res = await fetch(base+"/chat/completions",{ method:"POST", headers,
-    body:JSON.stringify({model:model||"test", messages, temperature:0.6, stream:false}) });
-  if(!res.ok){ const tx2=await res.text().catch(()=>""); throw new Error(`HTTP ${res.status} ${tx2.slice(0,120)}`); }
+  if(cfg.key) headers["Authorization"]="Bearer "+cfg.key;
+  const body = {model:cfg.model||"test", messages, temperature, stream:false};
+  if(useMaxTok && cfg.maxTok && +cfg.maxTok>0) body.max_tokens = +cfg.maxTok;
+  const res = await fetch(base+"/chat/completions",{ method:"POST", headers, body:JSON.stringify(body) });
+  if(!res.ok){ const tx2=await res.text().catch(()=>""); throw new Error(`HTTP ${res.status} ${tx2.slice(0,140)}`); }
   const data = await res.json();
   return data.choices?.[0]?.message?.content ?? t("err_no_content");
 }
 
-$("#aiTest").onclick = async ()=>{
-  setStatus("wait",t("status_testing"));
-  try{
-    if(!$("#aiModel").value.trim()){ setStatus("err",t("status_need_model")); return; }
-    await aiCall([{role:"system",content:"ping"},{role:"user",content:"Reply with exactly one word: OK"}],{test:true});
-    setStatus("ok",t("status_ok"));
-  }catch(e){ setStatus("err",t("status_err")+e.message); }
-};
+function openSettings(){ loadAiCfg(); $("#settingsModal").hidden=false; setTimeout(()=>$("#setUrl").focus(),30); }
+function closeSettings(){ saveAiCfg(); $("#settingsModal").hidden=true; }
+function initSettings(){
+  loadAiCfg(); renderAiChip();
+  $("#setBtn").onclick=openSettings;
+  $("#setClose").onclick=closeSettings;
+  $("#settingsModal").addEventListener("mousedown",e=>{ if(e.target===$("#settingsModal")) closeSettings(); });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&!$("#settingsModal").hidden) closeSettings(); });
+  $("#setTest").onclick = async ()=>{
+    setStatus("wait",t("status_testing"));
+    try{
+      if(!$("#setModel").value.trim()){ setStatus("err",t("status_need_model")); return; }
+      await aiCall([{role:"user",content:"Reply with exactly one word: OK"}],{test:true,temperature:0});
+      setStatus("ok",t("status_ok"));
+    }catch(e){ setStatus("err",t("status_err")+e.message); }
+  };
+}
 
 const chatLog = $("#chatLog"), chatInput = $("#chatInput"), chatSend = $("#chatSend");
 function addMsg(role,text){
@@ -1365,7 +1416,7 @@ function addMsg(role,text){
 }
 async function sendChat(text){
   text=text.trim(); if(!text) return;
-  if(!$("#aiModel").value.trim()){ addMsg("system",t("need_config")); return; }
+  if(!aiReady()){ addMsg("system",t("need_config")); return; }
   const c=curChat();
   if(!c.msgs.length) chatLog.innerHTML="";        // drop the intro placeholder
   addMsg("user",text);
@@ -1936,7 +1987,7 @@ $$("#lcTabs .lc-tab").forEach(b=>b.onclick=()=>{
 });
 
 /* --- AI settings toggle (gear in the ask column) --- */
-$("#aiGear").onclick=()=>{ const s=$("#aiSettings"); s.hidden=!s.hidden; };
+$("#aiGear").onclick=openSettings;
 
 /* ============================================================ VISUALIZER (ported from dsa-visualization) */
 Object.assign(T.vi, {
@@ -1961,12 +2012,15 @@ Object.assign(T.vi, {
   gen_run:"✨ Sinh bằng AI", gen_copy:"Sao chép prompt", gen_copied:"Đã sao chép prompt vào clipboard. Dán vào Claude, rồi đưa JSON trả về sang tab <b>Nhập JSON</b>.",
   gen_copyfail:"Không sao chép được — hãy chọn và copy thủ công.",
   gen_need_fields:"Cần ít nhất <b>Đề bài</b> và <b>Mã nguồn</b>.",
-  gen_need_model:"Hãy cấu hình <b>AI trực quan</b> ở cột bên phải trước.",
+  gen_need_model:"Hãy cấu hình nguồn AI trong <b>⚙ Thiết lập</b> (góc trên bên phải) trước.",
   gen_running:"Đang sinh trace… việc này có thể mất một lúc vì mô hình phải mô phỏng từng bước.",
   gen_ok:"Thành công — trace gồm {n} bước. Đã lưu vào <b>Đã lưu</b> và mở ở tab <b>Xem</b>.",
   gen_badjson:"Mô hình không trả về JSON hợp lệ:", gen_invalid:"JSON sai cấu trúc:", gen_failed:"Gọi mô hình lỗi: ",
-  vai_head:"AI trực quan", vai_maxtok:"Max tokens",
-  vai_hint:'Đây là AI <b>riêng</b> cho việc sinh dữ liệu trực quan — tách khỏi AI gia sư. Nên dùng model mạnh về code, cửa sổ ngữ cảnh lớn.',
+  vai_head:"Nguồn AI", vai_maxtok:"Max tokens",
+  vai_hint:'Dùng <b>chung</b> một nguồn AI với gia sư. Việc sinh trace cần model mạnh về code và <b>Max tokens</b> lớn.',
+  settings_title:"Thiết lập AI", settings_head:"Thiết lập AI",
+  settings_lead:'Cả <b>gia sư Socratic</b> và <b>trình sinh trực quan</b> dùng chung nguồn AI này. Chúng chỉ khác nhau ở prompt hệ thống.',
+  open_settings:"⚙ Mở thiết lập AI", ai_not_set:"Chưa cấu hình AI",
   gen_nokey_head:"Không có API key?", gen_nokey_body:'Bấm <b>Sao chép prompt</b>, dán vào Claude (claude.ai / Claude Code), rồi dán JSON nhận được vào tab <b>Nhập JSON</b>.',
   imp_lbl:"Dán JSON visualization", imp_run:"Nhập & xem", imp_file:"Chọn file .json",
   saved_search:"Tìm theo tên bài / thuật toán...", saved_export_all:"Xuất tất cả",
@@ -1997,12 +2051,15 @@ Object.assign(T.en, {
   gen_run:"✨ Generate with AI", gen_copy:"Copy prompt", gen_copied:"Prompt copied. Paste it into Claude, then bring the returned JSON to the <b>Import JSON</b> tab.",
   gen_copyfail:"Could not copy — please select and copy manually.",
   gen_need_fields:"Need at least a <b>Problem</b> and <b>Source code</b>.",
-  gen_need_model:"Configure the <b>visualizer AI</b> in the right column first.",
+  gen_need_model:"Configure the AI source in <b>⚙ Settings</b> (top right) first.",
   gen_running:"Generating the trace… this can take a while — the model has to simulate every step.",
   gen_ok:"Success — {n}-step trace. Saved to <b>Saved</b> and opened in the <b>View</b> tab.",
   gen_badjson:"The model did not return valid JSON:", gen_invalid:"JSON failed validation:", gen_failed:"Model call failed: ",
-  vai_head:"Visualizer AI", vai_maxtok:"Max tokens",
-  vai_hint:'This is a <b>separate</b> AI from the tutor, used only to generate visualization data. Prefer a strong coding model with a large context window.',
+  vai_head:"AI source", vai_maxtok:"Max tokens",
+  vai_hint:'Uses the <b>same</b> AI source as the tutor. Trace generation wants a strong coding model and a large <b>Max tokens</b>.',
+  settings_title:"AI settings", settings_head:"AI settings",
+  settings_lead:'Both the <b>Socratic tutor</b> and the <b>visualization generator</b> use this one AI source. They differ only in system prompt.',
+  open_settings:"⚙ Open AI settings", ai_not_set:"AI not configured",
   gen_nokey_head:"No API key?", gen_nokey_body:'Click <b>Copy prompt</b>, paste it into Claude (claude.ai / Claude Code), then paste the returned JSON into the <b>Import JSON</b> tab.',
   imp_lbl:"Paste visualization JSON", imp_run:"Import & view", imp_file:"Choose .json file",
   saved_search:"Search by problem / algorithm...", saved_export_all:"Export all",
@@ -2616,22 +2673,9 @@ function extractJson(text){
 }
 
 /* ---- separate AI endpoint for visualization generation ---- */
-let vizAiCfg = LS.get("dsac_viz_ai", {url:"http://localhost:11434/v1", model:"", key:"", maxTok:"16000"});
-function loadVizAiCfg(){ $("#vaiUrl").value=vizAiCfg.url||""; $("#vaiModel").value=vizAiCfg.model||""; $("#vaiKey").value=vizAiCfg.key||""; $("#vaiMaxTok").value=vizAiCfg.maxTok||""; }
-function setVStatus(cls,text){ const s=$("#vaiStatus"); s.className="status "+cls; s.removeAttribute("data-i18n"); s.textContent=text; }
-async function vizAiCall(messages,{test=false}={}){
-  const base=normUrl($("#vaiUrl").value), model=$("#vaiModel").value.trim(), key=$("#vaiKey").value.trim(), mt=$("#vaiMaxTok").value.trim();
-  vizAiCfg={url:$("#vaiUrl").value.trim(),model,key,maxTok:mt}; LS.set("dsac_viz_ai",vizAiCfg);
-  if(!base) throw new Error(t("err_no_url"));
-  if(!model&&!test) throw new Error(t("err_no_model"));
-  const headers={"Content-Type":"application/json"}; if(key) headers["Authorization"]="Bearer "+key;
-  const body={model:model||"test",messages,temperature:0.2,stream:false};
-  if(mt&&+mt>0) body.max_tokens=+mt;
-  const res=await fetch(base+"/chat/completions",{method:"POST",headers,body:JSON.stringify(body)});
-  if(!res.ok){ const tx2=await res.text().catch(()=>""); throw new Error(`HTTP ${res.status} ${tx2.slice(0,160)}`); }
-  const data=await res.json();
-  return data.choices?.[0]?.message?.content ?? "";
-}
+/* The visualizer generator reuses the SHARED ai source (see Settings); only the
+   system prompt and sampling differ: near-deterministic + a large token budget. */
+const vizAiCall = messages => aiCall(messages, {temperature:0.2, useMaxTok:true});
 function setGenStatus(el,cls,html){ const e=$(el); e.hidden=false; e.className="viz-status "+cls; e.innerHTML=html; }
 
 /* ---- load a generated / imported visualization into the viewer ---- */
@@ -2699,14 +2743,8 @@ function setVizTab(v){
 }
 function initVizTabs(){
   $$("#vizTabs .lc-tab").forEach(b=>b.onclick=()=>setVizTab(b.dataset.vt));
-  loadVizAiCfg();
-  $("#vaiTest").onclick=async()=>{
-    setVStatus("wait",t("status_testing"));
-    try{ if(!$("#vaiModel").value.trim()){ setVStatus("err",t("status_need_model")); return; }
-      await vizAiCall([{role:"user",content:"Reply with exactly one word: OK"}],{test:true});
-      setVStatus("ok",t("status_ok"));
-    }catch(e){ setVStatus("err",t("status_err")+e.message); }
-  };
+  $("#genOpenSet").onclick=openSettings;
+  renderAiChip();
   $("#genCopy").onclick=async()=>{
     const p=VIZ_SYSTEM_PROMPT+"\n\n"+buildVizUserPrompt({problem:$("#genProblem").value,algorithm:$("#genAlgo").value,input:$("#genInput").value,sourceCode:$("#genCode").value,language:$("#genLang").value});
     try{ await navigator.clipboard.writeText(p); setGenStatus("#genStatus","ok",t("gen_copied")); }
@@ -2717,7 +2755,7 @@ function initVizTabs(){
   $("#genRun").onclick=async()=>{
     const problem=$("#genProblem").value.trim(), code=$("#genCode").value.trim();
     if(!problem||!code){ setGenStatus("#genStatus","err",t("gen_need_fields")); return; }
-    if(!$("#vaiModel").value.trim()){ setGenStatus("#genStatus","err",t("gen_need_model")); return; }
+    if(!aiReady()){ setGenStatus("#genStatus","err",t("gen_need_model")); return; }
     $("#genRun").disabled=true; setGenStatus("#genStatus","busy",t("gen_running"));
     try{
       const reply=await vizAiCall([{role:"system",content:VIZ_SYSTEM_PROMPT},
@@ -2810,6 +2848,7 @@ function applyLang(){
   renderSaved();
   renderChatLog();
   renderChatHist();
+  renderAiChip();
 }
 $("#langBtn").onclick = ()=>{ lang = lang==="vi"?"en":"vi"; LS.set("dsac_lang",lang); applyLang(); };
 
@@ -2826,6 +2865,7 @@ initLC();
 renderRoadmap();
 initViz();
 mountViz();
+initSettings();
 initVizTabs();
 initChatHistory();
 applyTabs(false);

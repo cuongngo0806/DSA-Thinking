@@ -47,7 +47,7 @@ npx serve .
 | **Luyện tập · Practice** | Làm việc hằng ngày | *Lộ trình 150* (kế hoạch + theo dõi + **AI gia sư** có lịch sử chat) · *Trực quan thuật toán* (xem / **tạo bằng AI** / nhập JSON / đã lưu) |
 | **Lý thuyết · Theory** | Nền tảng tư duy | Bản đồ tư duy · Từ điển tín hiệu · Dẫn lối · Luyện nén · Nhật ký · Ghi chú |
 
-> ⚠️ **Hai AI tách biệt · Two separate AIs.** *AI gia sư* (trong Lộ trình 150) chỉ **hỏi**, không bao giờ đưa lời giải. *AI trực quan* (trong tab Tạo bằng AI) chỉ **sinh dữ liệu JSON** cho trình trực quan. Hai endpoint/model cấu hình **độc lập** với nhau.
+> ⚠️ **Hai vai trò AI, một nguồn · Two AI roles, one source.** *AI gia sư* (trong Lộ trình 150) chỉ **hỏi**, không bao giờ đưa lời giải. *AI trực quan* (tab Tạo bằng AI) chỉ **sinh dữ liệu JSON**. Cả hai **dùng chung một endpoint/model**, cấu hình một chỗ ở **⚙ Thiết lập** trên thanh trên cùng — chúng chỉ khác nhau ở prompt hệ thống (và sampling: gia sư `temp 0.6`, sinh trace `temp 0.2` + `max_tokens`).
 
 ### Tab Lý thuyết · Theory tab
 
@@ -101,9 +101,9 @@ Trapping Rain Water (monotonic stack) · Binary Search · Two Sum (hashmap) · V
 - **Nhập JSON · Import JSON** — dán JSON hoặc chọn file `.json`. Dùng khi bạn không có API key: bấm **Sao chép prompt** ở tab Tạo, dán vào Claude, rồi mang JSON về đây.
 - **Đã lưu · Saved** — danh sách gom nhóm theo tên bài, có tìm kiếm, **Mở / Xuất / Xóa**, và **Xuất tất cả**.
 
-### Cấu hình AI trực quan · Visualizer AI
+### Cấu hình AI · AI settings
 
-Trong tab **Tạo bằng AI**, cột phải: Base URL · Model · API key · **Max tokens** (mặc định 16000 — trace dài cần nhiều token). Nên chọn model mạnh về code, ngữ cảnh lớn.
+Mở **⚙ Thiết lập** ở thanh trên cùng (hoặc nút ⚙ trong khung chat / nút *Mở thiết lập AI* ở tab Tạo). Một nơi duy nhất cho **cả hai** vai trò AI: Base URL · Model · API key · **Max tokens** (mặc định 16000 — trace dài cần nhiều token). Nên chọn model mạnh về code, ngữ cảnh lớn.
 
 > Nếu JSON sai, app báo **đúng trường bị lỗi** (ví dụ `steps[12].components[0].id "stack2" is not declared in the root "components" array.`) thay vì crash — cứ đưa thông báo đó lại cho AI để nó sửa.
 
@@ -124,6 +124,7 @@ Trong tab **Tạo bằng AI**, cột phải: Base URL · Model · API key · **M
 ---
 
 ### Nút trên thanh điều hướng · Toolbar buttons
+- **⚙** — thiết lập nguồn AI (dùng chung cho cả gia sư và trình sinh trực quan).
 - **EN / VI** — đổi ngôn ngữ toàn bộ giao diện. Gia sư AI cũng **trả lời theo đúng ngôn ngữ đang chọn**.
 - **☾ / ☀** — đổi giao diện tối / sáng.
 
@@ -131,16 +132,16 @@ Mặc định: **tiếng Anh + nền tối**. Mọi lựa chọn được nhớ 
 
 ---
 
-## 🤖 Cấu hình gia sư AI · Configure the AI tutor
+## 🤖 Gia sư AI · The AI tutor
 
-> Đây là AI **thứ nhất** (gia sư Socratic). AI **thứ hai** (sinh dữ liệu trực quan) cấu hình riêng ở tab *Trực quan → Tạo bằng AI* — xem mục trên.
+> Gia sư và trình sinh trực quan **dùng chung** nguồn AI cấu hình ở **⚙ Thiết lập**; xem mục trên.
 
 ### Lịch sử trò chuyện · Chat history
 Ở đầu khung chat có 3 nút: **＋** tạo cuộc trò chuyện mới · **🕘** mở danh sách lịch sử (bấm để quay lại, có nút xóa từng cuộc) · **⚙** thiết lập endpoint. Mỗi cuộc được **tự đặt tên theo câu hỏi đầu tiên** và lưu trong trình duyệt.
 
 At the top of the chat: **＋** new conversation · **🕘** history list (click to reopen, delete per item) · **⚙** endpoint settings. Each conversation is auto-titled from its first message and stored locally.
 
-Gia sư gọi một endpoint **OpenAI-compatible** chạy trên máy bạn. Trong bàn làm việc **Lộ trình 150**, bấm nút **⚙** ở cột *La bàn sống* để mở **Thiết lập**, điền:
+Gia sư gọi một endpoint **OpenAI-compatible** chạy trên máy bạn. Mở **⚙ Thiết lập** (thanh trên cùng) và điền:
 
 - **Base URL** — ví dụ:
   - Ollama: `http://localhost:11434/v1`
@@ -169,9 +170,9 @@ Gia sư **không bao giờ đưa lời giải, mã nguồn, hay gọi tên patte
 
 ## 🔐 Quyền riêng tư · Privacy
 
-Toàn bộ dữ liệu (từ điển của bạn, nhật ký, tiến độ 150 câu, **lịch sử chat**, **visualization đã lưu**, thiết lập của cả hai AI, ngôn ngữ, theme) lưu trong `localStorage` của **chính trình duyệt này** — không gửi đi đâu cả. Chat và việc sinh trace chỉ đi thẳng tới endpoint AI **bạn tự cấu hình**.
+Toàn bộ dữ liệu (từ điển của bạn, nhật ký, tiến độ 150 câu, **lịch sử chat**, **visualization đã lưu**, thiết lập AI, ngôn ngữ, theme) lưu trong `localStorage` của **chính trình duyệt này** — không gửi đi đâu cả. Chat và việc sinh trace chỉ đi thẳng tới endpoint AI **bạn tự cấu hình**.
 
-All your data (custom dictionary, log, 150-problem progress, **chat history**, **saved visualizations**, both AI configs, language, theme) lives in this browser's `localStorage` — nothing is sent anywhere. Chat and trace generation go only to the **AI endpoints you configure**.
+All your data (custom dictionary, log, 150-problem progress, **chat history**, **saved visualizations**, AI settings, language, theme) lives in this browser's `localStorage` — nothing is sent anywhere. Chat and trace generation go only to the **AI endpoints you configure**.
 
 ---
 
