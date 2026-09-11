@@ -190,7 +190,23 @@ export async function doPull(): Promise<void> {
   busy(true);
   say('busy', t('git_pulling'));
   try {
-    const result = await api<PullResult>('pull', { method: 'POST' });
+    let result: PullResult;
+    try {
+      result = await api<PullResult>('pull', { method: 'POST' });
+    } catch (e) {
+      // Pulling app source makes the dev server restart, which can kill the
+      // in-flight response even though git already fast-forwarded. Re-check
+      // before reporting a failure that did not happen.
+      if (unavailable) throw e;
+      await new Promise((r) => setTimeout(r, 1200));
+      latest = await api<SyncStatus>('status');
+      if ((latest.behind ?? 0) === 0) {
+        say('ok', `${t('git_pulled')} ${t('git_app_updated')}`);
+        renderDetail(latest);
+        return;
+      }
+      throw e;
+    }
     if (result.note) {
       say('ok', result.note);
     } else if (result.state) {
