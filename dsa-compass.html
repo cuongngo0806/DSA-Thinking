@@ -268,8 +268,6 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
 .lc-stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 15px}
 .lc-stat .num{font-family:var(--serif);font-size:30px;line-height:1;color:var(--brass)}
 .lc-stat .lbl{font-size:12.5px;color:var(--muted);margin-top:6px}
-.lc-progress{height:9px;border-radius:6px;background:var(--surface-2);overflow:hidden;margin:6px 0 20px;border:1px solid var(--line-soft)}
-.lc-progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--dependency),var(--brass));transition:width .4s}
 .lc-pace{display:flex;flex-wrap:wrap;gap:14px;font-size:13.5px;color:var(--text-dim);margin:-12px 0 22px}
 .lc-pace span{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:5px 13px}
 .lc-pace .good{border-color:var(--dependency-line);color:var(--dependency)}
@@ -339,7 +337,7 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
 .lc-ms b{font-family:var(--serif);font-size:22px;color:var(--brass);line-height:1}
 .lc-ms span{font-size:12.5px;color:var(--muted)}
 .lc-ms-bar{flex:1;min-width:120px;height:8px;border-radius:6px;background:var(--surface-2);overflow:hidden;border:1px solid var(--line-soft)}
-.lc-ms-bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--dependency),var(--brass));transition:width .4s}
+.lc-ms-bar > i{display:block;height:100%;width:100%;transform-origin:left;background:linear-gradient(90deg,var(--dependency),var(--brass));transition:transform .4s}
 .lc-ms-pace{font-size:12.5px;padding:3px 11px;border-radius:20px;border:1px solid var(--line)}
 .lc-ms-pace.good{border-color:var(--dependency-line);color:var(--dependency)}
 .lc-ms-pace.bad{border-color:#e07a6a;color:#e07a6a}
@@ -1636,7 +1634,7 @@ function renderMiniStat(){
   const status = key==="lc_pace_behind" ? t("lc_pace_behind").replace("{n}",n) : t(key);
   $("#lcMiniStat").innerHTML = `
     <div class="lc-ms"><b>${done}</b><span>/ 150 · ${pct}%</span></div>
-    <div class="lc-ms-bar"><i style="width:${pct}%"></i></div>
+    <div class="lc-ms-bar"><i style="transform:scaleX(${(pct/100).toFixed(4)})"></i></div>
     <div class="lc-ms"><b>${cur}</b><span>${esc(t("lc_stat_streak").toLowerCase())}</span></div>
     <span class="lc-ms-pace ${cls}">${esc(status)}</span>`;
 }
