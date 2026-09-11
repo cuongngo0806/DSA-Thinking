@@ -64,20 +64,22 @@ npx serve .
 
 ## 🗺️ Lộ trình 150 · Roadmap 150 (Top Interview 150)
 
-Một kế hoạch ôn luyện [**Top Interview 150**](https://leetcode.com/studyplan/top-interview-150/) đặt ngay trong ứng dụng — vẫn theo tinh thần *nén, không phải cày*: mỗi câu giải xong hãy rút **một dòng tín hiệu** ("đặc trưng nào lẽ ra phải kích hoạt công cụ này?").
+Một kế hoạch ôn luyện [**Top Interview 150**](https://leetcode.com/studyplan/top-interview-150/) đặt ngay trong ứng dụng, **thời hạn do bạn đặt** — vẫn theo tinh thần *nén, không phải cày*: mỗi câu giải xong hãy rút **một dòng tín hiệu** ("đặc trưng nào lẽ ra phải kích hoạt công cụ này?").
 
 A built-in study plan for the **Top Interview 150** list — still in the compass spirit: for each solved problem, compress it into **one line of signal**.
 
 ### Tính năng · Features
 - **Bàn làm việc 2 cột · Two-column workbench** — không cần lướt: bên **trái** là *Hôm nay cần giải* + *Ôn lại*, bên **phải** là gia sư AL (*La bàn sống*) luôn kề bên để hỏi ngay. Thống kê, lịch nhiệt, radar và *toàn bộ 150 câu* nằm gọn sau tab **Tiến độ / Toàn bộ 150 câu**; thiết lập AI ẩn sau nút ⚙. On narrow screens the two columns stack.
-- **Kế hoạch hằng ngày trộn chủ đề · Interleaved daily plan** — đặt *ngày bắt đầu* và *số câu/ngày* (mặc định 3/ngày ≈ 50 ngày cho 150 câu). Lô mỗi ngày **luân phiên qua nhiều chủ đề** (round-robin) và tăng độ khó nhẹ từ dễ → khó, để **không đóng khung tư duy** vào một dạng bài duy nhất. Danh sách *Toàn bộ 150 câu* vẫn nhóm theo chủ đề để dễ tra cứu.
+- **Thời hạn tự đặt · Your own deadline** — không còn mốc 2 tháng cố định. Đặt **ngày bắt đầu**, **ngày kết thúc** và **số câu/ngày**; hai trong ba là tự do, cái còn lại **tự tính** (sửa ngày kết thúc → số câu/ngày đổi theo, và ngược lại), ô được suy ra có nhãn *(tự tính)*. Mọi dự báo tiến độ đều bám ngày kết thúc bạn chọn.
+- **Lịch chuỗi ngày · Streak calendar** — lịch theo tháng (điều hướng ‹ ›, nút *Hôm nay*): ngày có hoạt động tô đậm dần theo mức độ, **các ngày liên tiếp nối liền thành một dải** để bạn thấy chuỗi của mình, ngày trong kế hoạch có viền, hôm nay được khoanh. Kèm *chuỗi hiện tại* 🔥 và *dài nhất*.
+- **Kế hoạch hằng ngày trộn chủ đề · Interleaved daily plan** — lô mỗi ngày theo *số câu/ngày* (mặc định 3/ngày ≈ 50 ngày cho 150 câu). Lô mỗi ngày **luân phiên qua nhiều chủ đề** (round-robin) và tăng độ khó nhẹ từ dễ → khó, để **không đóng khung tư duy** vào một dạng bài duy nhất. Danh sách *Toàn bộ 150 câu* vẫn nhóm theo chủ đề để dễ tra cứu.
 - **Check-off + streak** — tick từng câu là xong; **chuỗi ngày** (streak) và **lịch nhiệt** kiểu GitHub theo dõi đều đặn.
 - **Đồng bộ LeetCode · Sync** — nhập **username công khai** rồi bấm *Đồng bộ*: app đọc các bài **Accepted gần đây** qua một API cộng đồng và tự tick các câu khớp. Không cần mật khẩu, không gửi dữ liệu riêng tư. Nếu API lỗi/offline → cứ dùng check-off thủ công.
 - **Spaced repetition · Ôn lại** — câu đã giải tự quay lại sau **3 / 7 / 21 ngày**; đánh dấu *Chưa chắc* sẽ được đẩy lịch ôn sớm hơn.
 - **Đánh giá độ chắc · Confidence** — mỗi câu: *Chưa chắc / Chắc*, dùng để ưu tiên ôn.
 - **Ghi chú nén · Compression note** — một ô một dòng cho mỗi câu, nối thẳng với triết lý Từ điển tín hiệu.
 - **Radar chủ đề · Weak-topic map** — 23 nhóm chủ đề, nhóm yếu nhất nổi lên đầu để bạn tái cân bằng.
-- **Dự báo tiến độ · Adaptive ETA** — tính lại *cần bao nhiêu câu/ngày* và *ngày dự kiến xong* từ nhịp thực tế so với mốc 2 tháng.
+- **Dự báo tiến độ · Adaptive ETA** — tính lại *cần bao nhiêu câu/ngày* và *ngày dự kiến xong* từ nhịp thực tế so với **ngày kết thúc bạn đặt**.
 
 > **Lưu ý sync · Sync note:** LeetCode không có API chính thức thân thiện CORS cho danh sách đã giải, nên đồng bộ dùng một API cộng đồng công khai chỉ với username của bạn. Nó có thể tạm lỗi khi dịch vụ miễn phí đó gián đoạn — khi ấy check-off thủ công vẫn hoạt động 100% offline.
 

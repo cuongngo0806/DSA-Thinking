@@ -523,6 +523,34 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
   font-size:13px;font-weight:600;padding:8px 14px;font-family:var(--sans)}
 .viz-savebtn:hover{background:rgba(78,201,176,.12)}
 .viz-custom-tag{font-size:11px;font-weight:700;color:var(--brass);background:var(--brass-glow);padding:3px 10px;border-radius:20px}
+/* streak calendar */
+.lc-calhead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.lc-calnav{display:flex;gap:6px;align-items:center}
+.lc-calmonth{font-family:var(--serif);font-size:16px;font-weight:600;min-width:130px;text-align:center;text-transform:capitalize}
+.lc-calstreak{display:flex;flex-wrap:wrap;gap:16px;align-items:center;font-size:13px;color:var(--muted);margin-bottom:14px}
+.lc-calstreak b{color:var(--text);font-size:15px}
+.lc-flame b{color:var(--brass)}
+.lc-calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.lc-calwd{font-size:10.5px;color:var(--muted-2);text-align:center;padding:2px 0 6px;font-weight:700;letter-spacing:.3px}
+.lc-calday{aspect-ratio:1;min-height:30px;display:grid;place-items:center;font-size:12.5px;border-radius:8px;
+  color:var(--muted);background:var(--bg);border:1px solid transparent;font-variant-numeric:tabular-nums}
+.lc-calday.out{background:none}
+.lc-calday.plan{border-color:var(--line);color:var(--text-dim)}
+.lc-calday.has{color:var(--ink-0);font-weight:700;border-color:transparent}
+:root[data-theme=light] .lc-calday.has{color:#fff}
+.lc-calday.has.a1{background:color-mix(in srgb,var(--dependency) 45%,var(--bg))}
+.lc-calday.has.a2{background:color-mix(in srgb,var(--dependency) 70%,var(--bg))}
+.lc-calday.has.a3{background:var(--dependency)}
+/* a run of consecutive active days reads as one connected streak */
+.lc-calday.has.jl{border-top-left-radius:2px;border-bottom-left-radius:2px}
+.lc-calday.has.jr{border-top-right-radius:2px;border-bottom-right-radius:2px}
+.lc-calday.today{outline:2px solid var(--brass);outline-offset:1px}
+.lc-callegend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:14px;font-size:11.5px;color:var(--muted-2)}
+.lc-callegend .lg-item{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.lc-callegend .lg-box{width:12px;height:12px;border-radius:4px;display:inline-block;flex:0 0 auto}
+.lc-callegend .lg-box.plan{border:1px solid var(--line);background:var(--bg)}
+.lc-callegend .lg-box.today{background:var(--bg);outline:2px solid var(--brass);outline-offset:-1px}
+.lc-derived{font-weight:400;color:var(--brass);font-size:10.5px;letter-spacing:.2px}
 /* settings modal */
 .modal-back{position:fixed;inset:0;z-index:60;background:rgba(6,12,20,.6);backdrop-filter:blur(3px);
   display:flex;align-items:flex-start;justify-content:center;padding:80px 18px 40px;overflow-y:auto}
@@ -779,6 +807,7 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
 
     <div class="lc-tabpane" id="lcTabProgress">
       <div class="lc-stats" id="lcStats"></div>
+      <div class="lc-panel" id="lcCal"></div>
       <div class="lc-two">
         <div class="lc-panel" id="lcHeat"></div>
         <div class="lc-panel" id="lcRadar"></div>
@@ -1446,16 +1475,20 @@ Object.assign(T.vi, {
   lc_tab_progress:"Tiến độ", lc_tab_list:"Toàn bộ 150 câu", lc_cfg_summary:"Cấu hình kế hoạch & đồng bộ",
   lc_head:'Lộ trình 150 <span class="sub-label">— Top Interview 150</span>',
   lc_sub:'Một kế hoạch hằng ngày để đi hết 150 câu trong 2 tháng — nhưng vẫn theo tinh thần la bàn: mỗi câu bạn giải xong, hãy nén nó thành <b>một dòng tín hiệu</b>. Dữ liệu ở lại trong trình duyệt này.',
-  lc_cfg_start:"Ngày bắt đầu", lc_cfg_perday:"Số câu / ngày", lc_cfg_user:"Username LeetCode (tùy chọn)",
+  lc_cfg_start:"Ngày bắt đầu", lc_cfg_end:"Ngày kết thúc", lc_cfg_perday:"Số câu / ngày", lc_cfg_user:"Username LeetCode (tùy chọn)",
+  lc_cfg_auto:"(tự tính)",
+  lc_plan_hint:"Kế hoạch: {d} ngày cho {n} câu. Sửa <b>Ngày kết thúc</b> thì số câu/ngày tự tính lại — và ngược lại.",
+  lc_cal_head:"Lịch chuỗi ngày", lc_cal_today:"Hôm nay", lc_cal_current:"ngày liên tiếp", lc_cal_longest:"Dài nhất",
+  lc_cal_active:"có hoạt động", lc_cal_plan:"trong kế hoạch", lc_cal_todaylbl:"hôm nay",
   lc_cfg_save:"Lưu kế hoạch", lc_sync_btn:"⟳ Đồng bộ từ LeetCode",
   lc_privacy:"Đồng bộ chỉ gửi username công khai của bạn tới một API cộng đồng để đọc các bài Accepted gần đây — không cần mật khẩu, không gửi dữ liệu riêng tư.",
   lc_sync_idle:"Chưa đồng bộ", lc_sync_need_user:"Hãy nhập username trước", lc_sync_running:"Đang đồng bộ…",
   lc_sync_done:"Đã đồng bộ: +{n} câu mới", lc_sync_fail:"Đồng bộ lỗi: ",
   lc_stat_solved:"Đã giải", lc_stat_remaining:"Còn lại", lc_stat_streak:"Chuỗi ngày", lc_stat_longest:"Dài nhất",
   lc_unit_day:"ngày",
-  lc_pace_deadline:"Hạn 2 tháng: {d}", lc_pace_need:"Cần {n} câu/ngày để kịp", lc_pace_eta:"Dự kiến xong: {d}",
+  lc_pace_deadline:"Hạn hoàn thành: {d}", lc_pace_need:"Cần {n} câu/ngày để kịp", lc_pace_eta:"Dự kiến xong: {d}",
   lc_pace_ahead:"Đang vượt tiến độ 🎉", lc_pace_ontrack:"Đúng tiến độ ✓", lc_pace_behind:"Đang chậm {n} câu",
-  lc_pace_finished:"Đã hoàn thành cả 150 câu 🏁", lc_pace_nopace:"Giải câu đầu tiên để có dự báo",
+  lc_pace_finished:"Đã hoàn thành toàn bộ 🏁", lc_pace_nopace:"Giải câu đầu tiên để có dự báo",
   lc_today_head:"Hôm nay cần giải", lc_today_overdue:"⚠ {n} câu trễ hạn", lc_today_clear:"Đã xong phần hôm nay 🎯 — nghỉ hoặc kéo thêm câu bên dưới.",
   lc_review_head:"Cần ôn lại — spaced repetition", lc_review_sub:"Câu đã giải sẽ quay lại sau 3 / 7 / 21 ngày. Ôn = giải lại trong đầu, không nhìn code.",
   lc_review_none:"Không có câu nào tới hạn ôn hôm nay.", lc_review_btn:"Đã ôn ✓",
@@ -1473,16 +1506,20 @@ Object.assign(T.en, {
   lc_tab_progress:"Progress", lc_tab_list:"All 150 problems", lc_cfg_summary:"Plan config & sync",
   lc_head:'Roadmap 150 <span class="sub-label">— Top Interview 150</span>',
   lc_sub:'A daily plan to clear all 150 problems in 2 months — still in the compass spirit: for every problem you solve, compress it into <b>one line of signal</b>. Your data stays in this browser.',
-  lc_cfg_start:"Start date", lc_cfg_perday:"Problems / day", lc_cfg_user:"LeetCode username (optional)",
+  lc_cfg_start:"Start date", lc_cfg_end:"Finish date", lc_cfg_perday:"Problems / day", lc_cfg_user:"LeetCode username (optional)",
+  lc_cfg_auto:"(auto)",
+  lc_plan_hint:"Plan: {d} days for {n} problems. Change the <b>finish date</b> and problems/day is recomputed — and vice versa.",
+  lc_cal_head:"Streak calendar", lc_cal_today:"Today", lc_cal_current:"day streak", lc_cal_longest:"Longest",
+  lc_cal_active:"active", lc_cal_plan:"in plan", lc_cal_todaylbl:"today",
   lc_cfg_save:"Save plan", lc_sync_btn:"⟳ Sync from LeetCode",
   lc_privacy:"Sync only sends your public username to a community API to read your recent Accepted problems — no password, no private data.",
   lc_sync_idle:"Not synced", lc_sync_need_user:"Enter a username first", lc_sync_running:"Syncing…",
   lc_sync_done:"Synced: +{n} new", lc_sync_fail:"Sync failed: ",
   lc_stat_solved:"Solved", lc_stat_remaining:"Remaining", lc_stat_streak:"Streak", lc_stat_longest:"Longest",
   lc_unit_day:"days",
-  lc_pace_deadline:"2-month deadline: {d}", lc_pace_need:"Need {n}/day to hit it", lc_pace_eta:"Projected finish: {d}",
+  lc_pace_deadline:"Finish by: {d}", lc_pace_need:"Need {n}/day to hit it", lc_pace_eta:"Projected finish: {d}",
   lc_pace_ahead:"Ahead of schedule 🎉", lc_pace_ontrack:"On track ✓", lc_pace_behind:"Behind by {n}",
-  lc_pace_finished:"All 150 done 🏁", lc_pace_nopace:"Solve your first to get a projection",
+  lc_pace_finished:"All done 🏁", lc_pace_nopace:"Solve your first to get a projection",
   lc_today_head:"Today's target", lc_today_overdue:"⚠ {n} overdue", lc_today_clear:"Today's batch cleared 🎯 — rest, or pull more below.",
   lc_review_head:"Due for review — spaced repetition", lc_review_sub:"Solved problems return after 3 / 7 / 21 days. Review = re-solve in your head, no peeking at code.",
   lc_review_none:"Nothing due for review today.", lc_review_btn:"Reviewed ✓",
@@ -1662,7 +1699,7 @@ const LC150 = [
 ];
 const LC_INDEX = {}; LC150.forEach((p,i)=>LC_INDEX[p.s]=i);
 const REV_INTERVALS = [3,7,21]; // days after solve for spaced-repetition reviews
-const GOAL_DAYS = 60;           // "2 months" target
+const LC_N = 150;               // problems in the plan (LC150.length)
 
 // Interleaved study order: round-robin across topic groups + gentle easy→hard ramp.
 // Purpose: never march through one topic in a row, so the mind isn't boxed into a single pattern.
@@ -1687,7 +1724,8 @@ const LC_ORDER = (()=>{
 })();
 const LC_ORDER_POS = {}; LC_ORDER.forEach((p,i)=>LC_ORDER_POS[p.s]=i);
 
-let lcCfg = LS.get("dsac_lc_cfg", {start:"", perDay:3, username:""});
+let lcCfg = LS.get("dsac_lc_cfg", {start:"", end:"", perDay:3, mode:"perDay", username:""});
+let lcCalMonth = null;          // "YYYY-MM" shown in the streak calendar
 let lcProgress = LS.get("dsac_lc_progress", {});   // slug -> {done,date,conf,note,stage,nextReview}
 let lcActivity = LS.get("dsac_lc_activity", {});   // "YYYY-MM-DD" -> action count
 let lcFilter = "todo";
@@ -1703,10 +1741,27 @@ function bumpActivity(d){ lcActivity[d]=(lcActivity[d]||0)+1; }
 function isDone(slug){ const p=lcProgress[slug]; return !!(p&&p.done); }
 function solvedCount(){ return LC150.reduce((n,p)=>n+(isDone(p.s)?1:0),0); }
 
+/* ---- plan window: start · finish · per-day. Two of the three are free, the
+       third follows. `mode` records which one the learner pinned last. ---- */
+function planDaysNeeded(){ return Math.max(1, Math.ceil(LC_N/Math.max(1,lcCfg.perDay))); }
+function deriveEnd(){ return dateAdd(lcCfg.start, planDaysNeeded()-1); }
+function derivePerDay(){ const span=Math.max(1, daysBetween(lcCfg.start,lcCfg.end)+1); return Math.max(1, Math.ceil(LC_N/span)); }
+/** Keep end/perDay consistent with whichever the learner set last. */
+function syncPlan(){
+  if(lcCfg.mode==="end"){
+    if(!lcCfg.end || daysBetween(lcCfg.start,lcCfg.end)<0) lcCfg.end = deriveEnd();
+    lcCfg.perDay = derivePerDay();
+  } else {
+    lcCfg.end = deriveEnd();
+  }
+}
+function planSpanDays(){ return Math.max(1, daysBetween(lcCfg.start,lcCfg.end)+1); }
 function initLC(){
   if(!lcCfg.start) lcCfg.start = todayStr();
   if(!lcCfg.perDay || lcCfg.perDay<1) lcCfg.perDay = 3;
+  if(lcCfg.mode!=="end" && lcCfg.mode!=="perDay") lcCfg.mode = "perDay";
   if(lcCfg.username==null) lcCfg.username = "";
+  syncPlan();
   saveLC();
 }
 
@@ -1784,32 +1839,42 @@ function renderCfgBar(){
           : t(lcSyncMsg.key);
   $("#lcCfgBar").innerHTML = `
     <div class="field"><label class="lbl">${esc(t("lc_cfg_start"))}</label><input class="inp" type="date" id="lcStart" value="${esc(lcCfg.start)}"></div>
-    <div class="field"><label class="lbl">${esc(t("lc_cfg_perday"))}</label><input class="inp" type="number" min="1" max="20" id="lcPerDay" value="${esc(lcCfg.perDay)}" style="width:90px"></div>
+    <div class="field"><label class="lbl">${esc(t("lc_cfg_end"))}${lcCfg.mode==="perDay"?` <span class="lc-derived">${esc(t("lc_cfg_auto"))}</span>`:""}</label><input class="inp" type="date" id="lcEnd" min="${esc(lcCfg.start)}" value="${esc(lcCfg.end)}"></div>
+    <div class="field"><label class="lbl">${esc(t("lc_cfg_perday"))}${lcCfg.mode==="end"?` <span class="lc-derived">${esc(t("lc_cfg_auto"))}</span>`:""}</label><input class="inp" type="number" min="1" max="50" id="lcPerDay" value="${esc(lcCfg.perDay)}" style="width:90px"></div>
     <div class="field lc-userwrap"><label class="lbl">${esc(t("lc_cfg_user"))}</label><input class="inp" id="lcUser" value="${esc(lcCfg.username||"")}" placeholder="leetcode_id"></div>
     <div class="lc-actions">
       <button class="btn btn-ghost" id="lcSave">${esc(t("lc_cfg_save"))}</button>
       <button class="btn btn-primary" id="lcSyncBtn">${esc(t("lc_sync_btn"))}</button>
     </div>
     <span class="lc-syncstate ${lcSyncMsg.cls}">${esc(s)}</span>
+    <p class="lc-privacy">${t("lc_plan_hint").replace("{d}",planSpanDays()).replace("{n}",LC_N)}</p>
     <p class="lc-privacy">${esc(t("lc_privacy"))}</p>`;
-  const save=()=>{ lcCfg.start=$("#lcStart").value||todayStr(); lcCfg.perDay=Math.max(1,+$("#lcPerDay").value||3); lcCfg.username=$("#lcUser").value.trim(); saveLC(); renderRoadmap(); };
-  $("#lcSave").onclick=save;
-  $("#lcStart").onchange=save; $("#lcPerDay").onchange=save;
+  const commit=()=>{ lcCfg.username=$("#lcUser").value.trim(); syncPlan(); saveLC(); renderRoadmap(); };
+  $("#lcStart").onchange=()=>{ lcCfg.start=$("#lcStart").value||todayStr(); commit(); };
+  $("#lcEnd").onchange=()=>{                       // pinning a finish date drives problems/day
+    const v=$("#lcEnd").value;
+    if(v && daysBetween(lcCfg.start,v)>=0){ lcCfg.end=v; lcCfg.mode="end"; }
+    commit();
+  };
+  $("#lcPerDay").onchange=()=>{                    // pinning problems/day drives the finish date
+    lcCfg.perDay=Math.max(1,Math.min(50,+$("#lcPerDay").value||3)); lcCfg.mode="perDay"; commit();
+  };
+  $("#lcSave").onclick=commit;
   $("#lcUser").onchange=()=>{ lcCfg.username=$("#lcUser").value.trim(); saveLC(); };
   $("#lcSyncBtn").onclick=lcSync;
 }
 
 function computePace(){
-  const done=solvedCount(), remaining=150-done;
-  const pct=Math.round(done/150*100);
-  const deadline=dateAdd(lcCfg.start,GOAL_DAYS);
-  const daysLeft=Math.max(0,daysBetween(todayStr(),deadline));
+  const done=solvedCount(), remaining=LC_N-done;
+  const pct=Math.round(done/LC_N*100);
+  const deadline=lcCfg.end||deriveEnd();
+  const daysLeft=Math.max(0,daysBetween(todayStr(),deadline)+1);
   const need = remaining>0 ? (daysLeft>0?Math.ceil(remaining/daysLeft):remaining) : 0;
   const elapsed=Math.max(1,daysBetween(lcCfg.start,todayStr())+1);
   const pace=done/elapsed;
   const projFinish = (done>0&&pace>0)? dateAdd(todayStr(),Math.max(0,Math.ceil(remaining/pace))) : null;
   const todayIdx=Math.max(0,daysBetween(lcCfg.start,todayStr()));
-  const scheduled=Math.min(150, todayIdx*lcCfg.perDay); // due by END of yesterday
+  const scheduled=Math.min(LC_N, todayIdx*lcCfg.perDay); // due by END of yesterday
   const behind=scheduled-done;
   let cls, key, n=0;
   if(remaining===0){ cls="good"; key="lc_pace_finished"; }
@@ -1823,7 +1888,7 @@ function renderMiniStat(){
   const {cur}=computeStreak();
   const status = key==="lc_pace_behind" ? t("lc_pace_behind").replace("{n}",n) : t(key);
   $("#lcMiniStat").innerHTML = `
-    <div class="lc-ms"><b>${done}</b><span>/ 150 · ${pct}%</span></div>
+    <div class="lc-ms"><b>${done}</b><span>/ ${LC_N} · ${pct}%</span></div>
     <div class="lc-ms-bar"><i style="transform:scaleX(${(pct/100).toFixed(4)})"></i></div>
     <div class="lc-ms"><b>${cur}</b><span>${esc(t("lc_stat_streak").toLowerCase())}</span></div>
     <span class="lc-ms-pace ${cls}">${esc(status)}</span>`;
@@ -1868,6 +1933,59 @@ function renderReview(){
     <p class="lc-psub">${esc(t("lc_review_sub"))}</p>
     ${body}`;
   wireRows("#lcReview");
+}
+
+/* ---- month calendar that draws streaks as connected runs ---- */
+function monthLabel(ym){
+  const [y,m]=ym.split("-").map(Number);
+  return new Date(y,m-1,1).toLocaleDateString(lang==="vi"?"vi-VN":"en-US",{month:"long",year:"numeric"});
+}
+function renderCal(){
+  const today=todayStr();
+  if(!lcCalMonth) lcCalMonth=today.slice(0,7);
+  const [y,m]=lcCalMonth.split("-").map(Number);
+  const first=new Date(y,m-1,1), last=new Date(y,m,0);
+  const lead=(first.getDay()+6)%7;                    // Monday-first grid
+  const {cur,longest}=computeStreak();
+  const wd = lang==="vi" ? ["T2","T3","T4","T5","T6","T7","CN"] : ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  const pad=n=>String(n).padStart(2,"0");
+  let cells="";
+  for(let i=0;i<lead;i++) cells+=`<div class="lc-calday out"></div>`;
+  for(let d=1;d<=last.getDate();d++){
+    const ds=`${y}-${pad(m)}-${pad(d)}`;
+    const n=lcActivity[ds]||0;
+    const prev=!!lcActivity[dateAdd(ds,-1)], next=!!lcActivity[dateAdd(ds,1)];
+    const inPlan = lcCfg.start && lcCfg.end && daysBetween(lcCfg.start,ds)>=0 && daysBetween(ds,lcCfg.end)>=0;
+    const cls=["lc-calday"];
+    if(n){ cls.push("has"); cls.push("a"+Math.min(3,Math.ceil(n/2))); if(prev) cls.push("jl"); if(next) cls.push("jr"); }
+    else if(inPlan) cls.push("plan");
+    if(ds===today) cls.push("today");
+    cells+=`<div class="${cls.join(" ")}" title="${esc(fmtDate(ds))}${n?` · ${n}`:""}">${d}</div>`;
+  }
+  $("#lcCal").innerHTML=`
+    <div class="lc-calhead">
+      <div class="lc-phead" style="margin:0">${esc(t("lc_cal_head"))}</div>
+      <div class="lc-calnav">
+        <button class="viz-sbtn" id="lcCalPrev" aria-label="prev">‹</button>
+        <span class="lc-calmonth">${esc(monthLabel(lcCalMonth))}</span>
+        <button class="viz-sbtn" id="lcCalNext" aria-label="next">›</button>
+        <button class="viz-sbtn" id="lcCalToday">${esc(t("lc_cal_today"))}</button>
+      </div>
+    </div>
+    <div class="lc-calstreak">
+      <span class="lc-flame">🔥 <b>${cur}</b> ${esc(t("lc_cal_current"))}</span>
+      <span>${esc(t("lc_cal_longest"))}: <b>${longest}</b></span>
+    </div>
+    <div class="lc-calgrid">${wd.map(w=>`<div class="lc-calwd">${esc(w)}</div>`).join("")}${cells}</div>
+    <div class="lc-callegend">
+      <span class="lg-item"><i class="lg-box has a3"></i>${esc(t("lc_cal_active"))}</span>
+      <span class="lg-item"><i class="lg-box plan"></i>${esc(t("lc_cal_plan"))}</span>
+      <span class="lg-item"><i class="lg-box today"></i>${esc(t("lc_cal_todaylbl"))}</span>
+    </div>`;
+  const shift=k=>{ const d=new Date(y,m-1+k,1); lcCalMonth=`${d.getFullYear()}-${pad(d.getMonth()+1)}`; renderCal(); };
+  $("#lcCalPrev").onclick=()=>shift(-1);
+  $("#lcCalNext").onclick=()=>shift(1);
+  $("#lcCalToday").onclick=()=>{ lcCalMonth=todayStr().slice(0,7); renderCal(); };
 }
 
 function renderHeat(){
@@ -1970,7 +2088,7 @@ function renderRoadmap(){
     const pace=document.createElement("div"); pace.className="lc-pace"; pace.id="lcPace";
     $("#lcStats").after(pace);
   }
-  renderMiniStat(); renderCfgBar(); renderStats(); renderToday(); renderReview(); renderHeat(); renderRadar(); renderList();
+  renderMiniStat(); renderCfgBar(); renderStats(); renderToday(); renderReview(); renderCal(); renderHeat(); renderRadar(); renderList();
 }
 
 $$("#lcFilter .chip").forEach(c=>c.onclick=()=>{
