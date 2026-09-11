@@ -1,7 +1,7 @@
 {
   "app": "dsa-compass",
   "schema": 2,
-  "updatedAt": "2026-09-11T17:13:30.331Z",
+  "updatedAt": "2026-09-11T17:14:44.879Z",
   "data": {
     "plan": {
       "start": "2026-09-11",
@@ -45,15 +45,39 @@
     ],
     "chats": [
       {
+        "id": "cmtx7uo5y",
+        "title": "",
+        "at": 1789146869974,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7umtr",
+        "title": "",
+        "at": 1789146868239,
+        "msgs": []
+      },
+      {
         "id": "cmtx7t8ga",
         "title": "",
         "at": 1789146802954,
         "msgs": []
       },
       {
+        "id": "cmtx7t51h",
+        "title": "",
+        "at": 1789146798533,
+        "msgs": []
+      },
+      {
         "id": "cmtx7t4d1",
         "title": "",
         "at": 1789146797653,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7s597",
+        "title": "",
+        "at": 1789146752155,
         "msgs": []
       },
       {
@@ -69,15 +93,33 @@
         "msgs": []
       },
       {
+        "id": "cmtx7r92a",
+        "title": "",
+        "at": 1789146710434,
+        "msgs": []
+      },
+      {
         "id": "cmtx7r8xt",
         "title": "",
         "at": 1789146710273,
         "msgs": []
       },
       {
+        "id": "cmtx7r5wv",
+        "title": "",
+        "at": 1789146706351,
+        "msgs": []
+      },
+      {
         "id": "cmtx7r5pw",
         "title": "",
         "at": 1789146706100,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7qydp",
+        "title": "",
+        "at": 1789146696589,
         "msgs": []
       },
       {
@@ -93,9 +135,21 @@
         "msgs": []
       },
       {
+        "id": "cmtx7pwlg",
+        "title": "",
+        "at": 1789146647620,
+        "msgs": []
+      },
+      {
         "id": "cmtx7pwdy",
         "title": "",
         "at": 1789146647350,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7pgc2",
+        "title": "",
+        "at": 1789146626546,
         "msgs": []
       },
       {
@@ -105,9 +159,27 @@
         "msgs": []
       },
       {
+        "id": "cmtx7p069",
+        "title": "",
+        "at": 1789146605601,
+        "msgs": []
+      },
+      {
         "id": "cmtx7p00p",
         "title": "",
         "at": 1789146605401,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7lqi3",
+        "title": "",
+        "at": 1789146453099,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7lp77",
+        "title": "",
+        "at": 1789146451411,
         "msgs": []
       },
       {
