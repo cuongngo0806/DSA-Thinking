@@ -177,23 +177,33 @@ Gia sư **không bao giờ đưa lời giải, mã nguồn, hay gọi tên patte
 
 ## 💾 Đưa dữ liệu vào git · Getting your data into git
 
-Tiến độ học nằm trong `localStorage` của trình duyệt — **git không nhìn thấy chỗ đó**. App chỉ cần làm đúng một việc: đổ nó ra thành file. Còn lại là git như mọi khi.
+Tiến độ học nằm trong `localStorage` của trình duyệt — **git không nhìn thấy chỗ đó**, và một trang web thì không chạy được `git`. Hai việc đó được nối lại bằng một script trong repo.
 
-Your progress lives in the browser's `localStorage`, which **git cannot see**. The app's only job is to dump it to a file; the rest is ordinary git.
+Your progress lives in the browser's `localStorage`, which **git cannot see**, and a web page cannot run `git`. A script in the repo bridges the two.
 
-**Mở ⚙ Thiết lập → Dữ liệu:**
+### Cách dùng · How to use
 
-1. Bấm **💾 Lưu ra file** → được `dsa-compass-data.json`
-2. Đặt nó vào thư mục repo
-3. ```bash
-   git add -A && git commit -m "update" && git push
-   ```
+1. Trong app: **⚙ Thiết lập → Dữ liệu → 💾 Lưu ra file**
+2. Bấm đúp **`sync.bat`** trong `D:\DSA_Thinking\`
 
-Trên máy khác: `git pull` rồi bấm **📂 Nạp từ file** (nạp là **gộp**, không ghi đè — việc bạn làm ở hai máy đều còn).
+Hết. Script tự nhặt bản xuất mới nhất từ thư mục **Downloads** (kể cả dạng `dsa-compass-data (1).json`), đặt vào repo, rồi `git add` + `commit` + `push`. Bạn **không phải gõ lệnh nào**.
 
-> 💡 **Mẹo bỏ hẳn bước 2:** trỏ thư mục tải về của trình duyệt vào chính thư mục repo, file sẽ rơi thẳng vào đúng chỗ — chỉ còn commit.
+| File | Làm gì |
+|---|---|
+| **`sync.bat`** | Bấm đúp → đồng bộ một lần rồi thoát |
+| **`sync-auto.bat`** | Ngồi canh, hễ thấy bản xuất mới là tự đồng bộ (Ctrl+C để dừng) |
+| **`sync.ps1`** | Phần logic — hai file trên chỉ là vỏ bấm đúc |
 
-**Source code** thì không cần gì cả: `dsa-compass.html` đã nằm trong repo, sửa xong `git push` là xong.
+Script không **xóa** gì trong Downloads, chỉ *chuyển* bản mới nhất đi. Nếu không có gì thay đổi nó báo *nothing to sync* rồi thoát — không tạo commit rỗng.
+
+### Trên máy khác · On another machine
+
+```bash
+git pull
+```
+rồi mở app → **📂 Nạp từ file**. Nạp là **gộp**, không ghi đè — việc bạn làm ở cả hai máy đều còn.
+
+**Source code** thì không cần cầu nối gì: `dsa-compass.html` vốn đã là file trong repo, `git push` như bình thường.
 
 > 🔑 Thiết lập AI (kể cả API key) **không** nằm trong file dữ liệu. · AI settings, API key included, are never written into the data file.
 

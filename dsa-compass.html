@@ -542,7 +542,11 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
 .git-route .pt{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--dependency);margin-bottom:6px}
 .git-route p{margin:0 0 12px;font-size:13px;color:var(--muted);line-height:1.6}
 .git-route p b{color:var(--text-dim)}
-.git-cmd{margin:12px 0 0;padding:11px 13px;border-radius:10px;background:var(--ink-0);border:1px solid var(--line);
+.git-oneclick{margin:14px 0 0;padding:11px 13px;border-radius:10px;background:color-mix(in srgb,var(--dependency) 12%,var(--surface));
+  border:1px solid color-mix(in srgb,var(--dependency) 40%,var(--line));font-size:13px;color:var(--text-dim);line-height:1.6}
+.git-oneclick b{color:var(--dependency);font-family:ui-monospace,Menlo,monospace}
+.git-cmdlabel{margin:14px 0 5px;font-size:11px;color:var(--muted-2);letter-spacing:.3px}
+.git-cmd{margin:0;padding:11px 13px;border-radius:10px;background:var(--ink-0);border:1px solid var(--line);
   font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.3px;line-height:1.75;color:var(--text-dim);white-space:pre;overflow-x:auto}
 :root[data-theme=light] .git-cmd{background:#f6f0e2}
 .git-route2{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
@@ -891,6 +895,8 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
         <button class="btn btn-ghost" id="dataImportBtn" data-i18n="git_file_load">📂 Nạp từ file</button>
         <input type="file" id="dataImport" accept="application/json,.json" hidden>
       </div>
+      <div class="git-oneclick" data-i18n="git_oneclick">Rồi bấm đúp <b>sync.bat</b> trong thư mục repo — nó tự nhặt file từ Downloads, commit và push.</div>
+      <div class="git-cmdlabel" data-i18n="git_cmd_manual">hoặc tự chạy:</div>
       <pre class="git-cmd">git add -A
 git commit -m "update"
 git push</pre>
@@ -2132,10 +2138,12 @@ Object.assign(T.vi, {
   settings_title:"Thiết lập", settings_head:"Thiết lập",
   set_tab_ai:"AI", set_tab_git:"Dữ liệu",
   git_lead:'Tiến độ của bạn nằm trong bộ nhớ của trình duyệt, <b>git không nhìn thấy</b>. Bấm <b>Lưu ra file</b> để đổ nó thành một file trong repo — rồi commit như mọi khi.',
+  git_oneclick:'Rồi bấm đúp <b>sync.bat</b> trong thư mục repo — nó tự nhặt file từ Downloads, commit và push.',
+  git_cmd_manual:"hoặc tự chạy:",
   git_idle:"Chưa lưu lần nào",
   git_file_save:"💾 Lưu ra file", git_file_load:"📂 Nạp từ file",
   git_saved_file:"Đã lưu:", git_loaded_file:"Đã nạp và gộp dữ liệu từ file.", git_failed:"Lỗi: ",
-  git_hint:'Mẹo: trỏ thư mục tải về của trình duyệt vào chính thư mục repo, thì <b>Lưu ra file</b> là file rơi thẳng vào đó — chỉ còn việc commit. Trên máy mới: <code>git pull</code> rồi bấm <b>Nạp từ file</b>. Thiết lập AI (kể cả API key) <b>không</b> nằm trong file này.',
+  git_hint:'Không phải gõ lệnh: <b>sync.bat</b> làm hết. Muốn tự động luôn thì chạy <b>sync-auto.bat</b> — nó ngồi canh, hễ thấy bản xuất mới là đồng bộ. Trên máy khác: <code>git pull</code> rồi bấm <b>Nạp từ file</b>. Thiết lập AI (kể cả API key) <b>không</b> nằm trong file này.',
   settings_lead:'Cả <b>gia sư Socratic</b> và <b>trình sinh trực quan</b> dùng chung nguồn AI này. Chúng chỉ khác nhau ở prompt hệ thống.',
   open_settings:"⚙ Mở thiết lập AI", ai_not_set:"Chưa cấu hình AI",
   gen_nokey_head:"Không có API key?", gen_nokey_body:'Bấm <b>Sao chép prompt</b>, dán vào Claude (claude.ai / Claude Code), rồi dán JSON nhận được vào tab <b>Nhập JSON</b>.',
@@ -2177,10 +2185,12 @@ Object.assign(T.en, {
   settings_title:"Settings", settings_head:"Settings",
   set_tab_ai:"AI", set_tab_git:"Data",
   git_lead:'Your progress lives in browser storage, which <b>git cannot see</b>. Hit <b>Save to file</b> to dump it into a file in your repo — then commit as usual.',
+  git_oneclick:'Then double-click <b>sync.bat</b> in the repo folder — it grabs the file from Downloads, commits and pushes.',
+  git_cmd_manual:"or run it yourself:",
   git_idle:"Not saved yet",
   git_file_save:"💾 Save to file", git_file_load:"📂 Load from file",
   git_saved_file:"Saved:", git_loaded_file:"Loaded and merged from file.", git_failed:"Error: ",
-  git_hint:'Tip: point your browser download folder at the repo folder and <b>Save to file</b> drops it straight in — all that is left is the commit. On a new machine: <code>git pull</code>, then <b>Load from file</b>. AI settings (including the API key) are <b>not</b> in this file.',
+  git_hint:'No typing required: <b>sync.bat</b> does it all. For hands-off syncing run <b>sync-auto.bat</b>, which watches for new exports. On another machine: <code>git pull</code>, then <b>Load from file</b>. AI settings (including the API key) are <b>not</b> in this file.',
   settings_lead:'Both the <b>Socratic tutor</b> and the <b>visualization generator</b> use this one AI source. They differ only in system prompt.',
   open_settings:"⚙ Open AI settings", ai_not_set:"AI not configured",
   gen_nokey_head:"No API key?", gen_nokey_body:'Click <b>Copy prompt</b>, paste it into Claude (claude.ai / Claude Code), then paste the returned JSON into the <b>Import JSON</b> tab.',
