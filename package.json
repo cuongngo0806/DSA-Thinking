@@ -13,7 +13,6 @@
     "format": "prettier --write \"src/**/*.{ts,css}\" \"tests/**/*.ts\"",
     "test": "vitest run",
     "test:watch": "vitest",
-    "sync": "node scripts/sync.mjs",
     "start": "node server.mjs"
   },
   "devDependencies": {

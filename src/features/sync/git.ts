@@ -139,12 +139,20 @@ export function renderSyncPanel(status: SyncStatus | null): void {
   box.innerHTML = rows.join('') + renderPrivacyNote();
 }
 
-export async function refreshStatus(): Promise<void> {
-  renderSyncPanel(null);
+/**
+ * Reload the repository shape.
+ *
+ * `announce` stays false after a push or pull, so the result of what you just
+ * did is not immediately overwritten by "Ready".
+ */
+export async function refreshStatus(announce = true): Promise<void> {
+  if (announce) renderSyncPanel(null);
   try {
     const status = await api<SyncStatus>('status');
     renderSyncPanel(status);
-    setStatus(status.configured ? 'ok' : 'err', status.configured ? t('git_ready') : t('git_not_repo'));
+    if (announce) {
+      setStatus(status.configured ? 'ok' : 'err', status.configured ? t('git_ready') : t('git_not_repo'));
+    }
   } catch (e) {
     renderSyncPanel(null);
     setStatus('err', (e as Error).message);
@@ -165,7 +173,7 @@ export async function doPush(): Promise<void> {
       const app = result.appPushed ? tf('git_with_app', { n: result.appFileCount ?? 0 }) : '';
       setStatus('ok', `${t('git_pushed')} ${result.commit ?? ''} ${app}`.trim());
     }
-    await refreshStatus();
+    await refreshStatus(false);
   } catch (e) {
     setStatus('err', (e as Error).message);
   } finally {
@@ -186,7 +194,7 @@ export async function doPull(): Promise<void> {
       const app = result.appUpdated ? ` ${t('git_app_updated')}` : '';
       setStatus('ok', `${t('git_pulled')} ${fmtTime(result.updatedAt)}.${app}`);
     }
-    await refreshStatus();
+    await refreshStatus(false);
   } catch (e) {
     setStatus('err', (e as Error).message);
   } finally {
@@ -197,11 +205,11 @@ export async function doPull(): Promise<void> {
 export function initGitSync(): void {
   must('#gitPush').addEventListener('click', () => void doPush());
   must('#gitPull').addEventListener('click', () => void doPull());
-  must('#gitRefresh').addEventListener('click', () => void refreshStatus());
+  must('#gitRefresh').addEventListener('click', () => void refreshStatus(true));
   // Only look the server up when the panel is actually opened.
   must('#setTabs').addEventListener('click', (ev) => {
     const el = ev.target as HTMLElement;
-    if (el.dataset.st === 'git' && !unavailable) void refreshStatus();
+    if (el.dataset.st === 'git' && !unavailable) void refreshStatus(true);
   });
 }
 

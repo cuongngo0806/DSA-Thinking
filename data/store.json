@@ -1,7 +1,7 @@
 {
   "app": "dsa-compass",
   "schema": 2,
-  "updatedAt": "2026-09-11T17:12:10.010Z",
+  "updatedAt": "2026-09-11T17:13:30.331Z",
   "data": {
     "plan": {
       "start": "2026-09-11",
@@ -36,8 +36,32 @@
         "rel": "identity"
       }
     ],
-    "log": [],
+    "log": [
+      {
+        "problem": "local-only problem",
+        "trigger": "kept by merge",
+        "date": "12/09/2026"
+      }
+    ],
     "chats": [
+      {
+        "id": "cmtx7t8ga",
+        "title": "",
+        "at": 1789146802954,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7t4d1",
+        "title": "",
+        "at": 1789146797653,
+        "msgs": []
+      },
+      {
+        "id": "cmtx7s548",
+        "title": "",
+        "at": 1789146751976,
+        "msgs": []
+      },
       {
         "id": "cmtx7rcjs",
         "title": "",
