@@ -121,15 +121,20 @@ Nên app đi theo hướng của một **máy chủ cục bộ**: trình duyệt
 
 ### Dùng
 
-Mở **⚙ Thiết lập → Dữ liệu**:
+Thanh đồng bộ nằm ngay **đầu tab Luyện tập**, trên phần học — vì "kéo về" là việc lúc ngồi xuống và "đẩy lên" là việc lúc đứng dậy, không phải thứ đi tìm trong Thiết lập.
 
-| Nút | Làm gì |
+Nó nói **một câu tại một thời điểm**, theo thứ tự ưu tiên:
+
+| Trạng thái | Thanh hiện |
 |---|---|
-| **⬆ Đẩy lên** | Ghi `data/store.json`, stage kèm mọi thay đổi trong `src/`, `server/`, `index.html`… rồi commit + push — **database và web trong một commit** |
-| **⬇ Kéo về** | `fetch` + `merge --ff-only`, rồi **gộp** dữ liệu vào trình duyệt |
-| **⟳ Kiểm tra** | Nhánh, dữ liệu trên git cập nhật lúc nào, số commit đi trước/sau, file đang sửa, commit gần nhất |
+| Có commit mới trên git | 🟠 *"Có N commit mới trên git — nên Kéo về trước khi học."* (nút Kéo về sáng lên) |
+| Bạn có tiến độ chưa đẩy | 🟠 *"Có tiến độ chưa đẩy lên git."* |
+| Mọi thứ khớp | 🟢 *"Đã đồng bộ với git"* |
 
-Panel cũng **đếm trước** số tin nhắn chat / nhật ký / ghi chú sắp đẩy lên — nếu repo public thì chúng cũng public.
+- **Mở app** → tự kiểm tra remote một lần, báo ngay nếu có việc đang chờ.
+- **Đóng app** → nếu còn tiến độ chưa đẩy, trình duyệt hỏi lại trước khi rời đi. git không nhìn thấy `localStorage`, nên app tự vân tay dữ liệu lúc push rồi so lại — không nhắc bừa.
+
+Mở **Chi tiết kho git** để xem nhánh, **file dữ liệu**, **file web** (chính xác những đường dẫn được commit kèm), dữ liệu trên git cập nhật lúc nào, số commit đi trước/sau, commit gần nhất, và số tin nhắn/ghi chú mà một lần đẩy sẽ công khai.
 
 ### Trên máy khác · On another machine
 
