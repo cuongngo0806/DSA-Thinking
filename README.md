@@ -196,12 +196,27 @@ Open **⚙ Settings → Git sync**. The app pushes/pulls one JSON file through t
 | Ô | Ý nghĩa |
 |---|---|
 | **Repo** | `owner/name` (dán cả URL GitHub cũng được, app tự cắt) |
+| **File dữ liệu · Data file** | mặc định `dsa-compass-data.json` — tiến độ học của bạn |
+| **File source code** | mặc định `dsa-compass.html` — chính phần mềm |
 | **Nhánh · Branch** | mặc định `main` |
-| **Đường dẫn · Path** | mặc định `dsa-compass-data.json` |
 | **Token** | fine-grained PAT |
 
-- **⬆ Đẩy lên** (cần token) — ghi toàn bộ dữ liệu thành một commit qua **GitHub Contents API** (tự lấy `sha` nếu file đã tồn tại nên ghi đè an toàn).
+- **⬆ Đẩy lên** (cần token) — ghi dữ liệu thành một commit qua **GitHub Contents API** (tự lấy `sha` nếu file đã tồn tại nên ghi đè an toàn). Tích **Đẩy cả source code** thì đẩy luôn `dsa-compass.html` — app tự đọc source của chính nó. Nếu nội dung không đổi thì **bỏ qua**, không tạo commit rỗng.
+- **⬇ Tải code từ repo** — lấy bản `dsa-compass.html` đang nằm trên repo về máy (trình duyệt không ghi đè được file của bạn, nên nó tải xuống để bạn tự thay). Giống hệt bản đang chạy thì báo "code đã trùng".
 - **⬇ Kéo về** (không cần token với repo public) — tải về rồi **gộp (union merge)**, không ghi đè mù quáng: tiến độ giữ bản đã *done*, hoạt động mỗi ngày lấy `max`, từ điển / nhật ký / visualization gộp theo định danh, chat giữ phiên dài hơn. Làm việc trên hai máy rồi sync — không mất bên nào.
+
+### Đồng bộ code · Syncing the app itself
+
+App là **một file HTML duy nhất**, nên nó tự đẩy chính mình lên repo được:
+
+- **Mở qua `http://`** (ví dụ `python -m http.server`): app `fetch` chính URL của nó → lấy đúng source gốc, đẩy thẳng, không hỏi gì.
+- **Mở qua `file://`**: trình duyệt chặn không cho trang đọc file của chính nó, nên app sẽ **mở hộp chọn file** để bạn trỏ tới `dsa-compass.html`, rồi đẩy file đó.
+
+App **từ chối** đẩy nếu file bạn chọn không phải source của nó (kiểm tra dấu hiệu nhận dạng), để không ghi đè nhầm file khác trong repo.
+
+> ⚠️ **Không phải git thực sự.** Mỗi lần đẩy là một commit ghi đè thẳng lên nhánh, không có branch/merge/diff. Nếu bạn vừa sửa code bằng git ở nơi khác, hãy `git pull` trước — push từ app sẽ ghi đè bằng bản đang chạy trong trình duyệt.
+
+---
 
 ### Được đồng bộ · What syncs
 Tiến độ 150 câu + cấu hình kế hoạch · lịch hoạt động · từ điển tín hiệu riêng · nhật ký va chạm · lịch sử chat · visualization đã lưu.

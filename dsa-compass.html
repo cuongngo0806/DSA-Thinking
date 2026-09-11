@@ -538,6 +538,8 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
 .lc-derived{font-weight:400;color:var(--brass);font-size:10.5px;letter-spacing:.2px}
 .set-tabs{margin:0 20px}
 .git-meta{font-size:11.5px;color:var(--muted-2);margin-top:10px}
+.git-check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);margin:2px 0 12px;cursor:pointer}
+.git-check input{accent-color:var(--brass);width:15px;height:15px;cursor:pointer}
 .git-alt{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
 .git-alt .pt{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--brass);margin-bottom:6px}
 .git-alt p{margin:0 0 10px;font-size:12.8px;color:var(--muted);line-height:1.6}
@@ -873,12 +875,16 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
       <div class="field"><label class="lbl" data-i18n="git_repo">Repo (owner/name)</label><input class="inp" id="gitRepo" placeholder="cuongngo0806/DSA-Thinking"></div>
       <div class="row2">
         <div class="field"><label class="lbl" data-i18n="git_branch">Nhánh</label><input class="inp" id="gitBranch" placeholder="main"></div>
-        <div class="field"><label class="lbl" data-i18n="git_path">Đường dẫn file</label><input class="inp" id="gitPath" placeholder="dsa-compass-data.json"></div>
+        <div class="field"><label class="lbl" data-i18n="git_path">File dữ liệu</label><input class="inp" id="gitPath" placeholder="dsa-compass-data.json"></div>
       </div>
+      <div class="field"><label class="lbl" data-i18n="git_codepath">File source code</label><input class="inp" id="gitCodePath" placeholder="dsa-compass.html"></div>
+      <label class="git-check"><input type="checkbox" id="gitPushCode"> <span data-i18n="git_push_code_lbl">Đẩy cả source code khi bấm Đẩy lên</span></label>
       <div class="field"><label class="lbl" data-i18n="git_token">GitHub token</label><input class="inp" id="gitToken" type="password" data-i18n-attr="placeholder:git_token_ph"></div>
       <div class="viz-genbtns" style="margin-top:4px">
         <button class="btn btn-primary" id="gitPushBtn" data-i18n="git_push">⬆ Đẩy lên</button>
         <button class="btn btn-ghost" id="gitPullBtn" data-i18n="git_pull">⬇ Kéo về</button>
+        <button class="btn btn-ghost" id="gitGetCodeBtn" data-i18n="git_get_code">⬇ Tải code từ repo</button>
+        <input type="file" id="codePick" accept=".html,text/html" hidden>
       </div>
       <div class="git-alt">
         <div class="pt" data-i18n="git_file_head">Không muốn dùng token?</div>
@@ -2132,7 +2138,14 @@ Object.assign(T.vi, {
   git_file_save:"💾 Tải file dữ liệu", git_file_load:"📂 Nạp từ file",
   git_saved_file:"Đã tải về:", git_loaded_file:"Đã nạp và gộp dữ liệu từ file.",
   git_maybe_private:"(repo private thì cần token)",
-  git_idle:"Chưa đồng bộ", git_repo:"Repo (owner/name)", git_branch:"Nhánh", git_path:"Đường dẫn file",
+  git_codepath:"File source code", git_push_code_lbl:"Đẩy cả source code khi bấm Đẩy lên",
+  git_get_code:"⬇ Tải code từ repo",
+  git_code_pushed:"đã đẩy code", git_code_same:"code đã trùng, bỏ qua", git_data_same:"Dữ liệu đã trùng lúc",
+  git_code_downloaded:"Đã tải bản code từ repo về — thay thế file cũ của bạn rồi mở lại.",
+  git_pick_code:"Chọn file dsa-compass.html để đẩy lên…",
+  git_code_cancel:"Đã hủy chọn file code (dữ liệu vẫn được đẩy).",
+  git_not_app:"File này không phải source của La Bàn DSA — từ chối để không ghi đè nhầm.",
+  git_idle:"Chưa đồng bộ", git_repo:"Repo (owner/name)", git_branch:"Nhánh", git_path:"File dữ liệu",
   git_token:'GitHub token <span class="lc-derived">(chỉ cần khi Đẩy lên)</span>', git_token_ph:"ghp_... hoặc github_pat_...",
   git_push:"⬆ Đẩy lên", git_pull:"⬇ Kéo về",
   git_pushing:"Đang đẩy lên…", git_pulling:"Đang kéo về…",
@@ -2186,7 +2199,14 @@ Object.assign(T.en, {
   git_file_save:"💾 Save data file", git_file_load:"📂 Load from file",
   git_saved_file:"Saved:", git_loaded_file:"Loaded and merged from file.",
   git_maybe_private:"(a private repo needs a token)",
-  git_idle:"Not synced", git_repo:"Repo (owner/name)", git_branch:"Branch", git_path:"File path",
+  git_codepath:"Source code file", git_push_code_lbl:"Also push the source code on Push",
+  git_get_code:"⬇ Get code from repo",
+  git_code_pushed:"code pushed", git_code_same:"code unchanged, skipped", git_data_same:"Data already up to date at",
+  git_code_downloaded:"Downloaded the repo's copy — replace your old file and reopen it.",
+  git_pick_code:"Pick dsa-compass.html to push…",
+  git_code_cancel:"Code file pick cancelled (data was still pushed).",
+  git_not_app:"That file is not the DSA Compass source — refusing, to avoid overwriting the wrong thing.",
+  git_idle:"Not synced", git_repo:"Repo (owner/name)", git_branch:"Branch", git_path:"Data file",
   git_token:'GitHub token <span class="lc-derived">(only needed to Push)</span>', git_token_ph:"ghp_... or github_pat_...",
   git_push:"⬆ Push", git_pull:"⬇ Pull",
   git_pushing:"Pushing…", git_pulling:"Pulling…",
@@ -2935,10 +2955,12 @@ function b64dec(b64){
   for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
   return new TextDecoder().decode(bytes);
 }
-function loadGitCfg(){ $("#gitRepo").value=gitCfg.repo||""; $("#gitBranch").value=gitCfg.branch||"main"; $("#gitPath").value=gitCfg.path||"dsa-compass-data.json"; $("#gitToken").value=gitCfg.token||""; }
+function loadGitCfg(){ $("#gitRepo").value=gitCfg.repo||""; $("#gitBranch").value=gitCfg.branch||"main"; $("#gitPath").value=gitCfg.path||"dsa-compass-data.json"; $("#gitToken").value=gitCfg.token||"";
+  $("#gitCodePath").value=gitCfg.codePath||"dsa-compass.html"; $("#gitPushCode").checked=!!gitCfg.pushCode; }
 function saveGitCfg(){
   gitCfg={...gitCfg, repo:$("#gitRepo").value.trim().replace(/^https?:\/\/github\.com\//,"").replace(/\.git$/,"").replace(/\/+$/,""),
-    branch:$("#gitBranch").value.trim()||"main", path:$("#gitPath").value.trim()||"dsa-compass-data.json", token:$("#gitToken").value.trim()};
+    branch:$("#gitBranch").value.trim()||"main", path:$("#gitPath").value.trim()||"dsa-compass-data.json", token:$("#gitToken").value.trim(),
+    codePath:$("#gitCodePath").value.trim()||"dsa-compass.html", pushCode:$("#gitPushCode").checked};
   LS.set("dsac_git",gitCfg); return gitCfg;
 }
 function setGitStatus(cls,text){ const e=$("#gitStatus"); e.className="status "+cls; e.removeAttribute("data-i18n"); e.textContent=text; }
@@ -2993,19 +3015,95 @@ async function ghGetFile(c){
   if(!r.ok) throw new Error(`HTTP ${r.status} ${(await r.text()).slice(0,120)}`);
   return r.json();
 }
+/** Write one file to the repo. Returns "written", or "same" when it is unchanged. */
+async function ghPutFile(c, path, text, message){
+  let sha=null, current=null;
+  const g=await ghFetch(`repos/${c.repo}/contents/${path}?ref=${encodeURIComponent(c.branch)}`);
+  if(g.ok){ const j=await g.json(); sha=j.sha; try{ current=b64dec(j.content); }catch(_){} }
+  else if(g.status!==404){ throw new Error(`HTTP ${g.status} ${(await g.text()).slice(0,120)}`); }
+  if(current!==null && current===text) return "same";
+  const body={message, content:b64enc(text), branch:c.branch};
+  if(sha) body.sha=sha;
+  const r=await ghFetch(`repos/${c.repo}/contents/${path}`,{method:"PUT",body:JSON.stringify(body)});
+  if(!r.ok) throw new Error(`HTTP ${r.status} ${(await r.text()).slice(0,140)}`);
+  return "written";
+}
+
+const looksLikeApp = txt => /id="vizApp"/.test(txt) && /<\/html>/i.test(txt);
+
+/** The page's own source. Over http(s) it can fetch itself; file:// cannot. */
+async function readOwnSource(){
+  if(location.protocol==="http:"||location.protocol==="https:"){
+    try{
+      const r=await fetch(location.href.split("#")[0],{cache:"no-store"});
+      if(r.ok){ const txt=await r.text(); if(looksLikeApp(txt)) return txt; }
+    }catch(_){}
+  }
+  return null;
+}
+
+async function pushCodeText(c, text){
+  if(!looksLikeApp(text)) throw new Error(t("git_not_app"));
+  return ghPutFile(c, c.codePath||"dsa-compass.html", text,
+    `chore(dsa-compass): sync app source ${new Date().toISOString()}`);
+}
+
 async function gitPush(){
   let c; try{ c=ghCheck(); }catch(e){ setGitStatus("err",e.message); return; }
+  const withCode=$("#gitPushCode").checked;
   setGitStatus("wait",t("git_pushing"));
   try{
-    const existing=await ghGetFile(c);
-    const body={message:`chore(dsa-compass): sync data ${new Date().toISOString()}`,
-      content:b64enc(JSON.stringify(collectSyncData(),null,2)), branch:c.branch};
-    if(existing&&existing.sha) body.sha=existing.sha;
-    const r=await ghFetch(`repos/${c.repo}/contents/${c.path}`,{method:"PUT",body:JSON.stringify(body)});
-    if(!r.ok) throw new Error(`HTTP ${r.status} ${(await r.text()).slice(0,140)}`);
+    const dataRes=await ghPutFile(c, c.path, JSON.stringify(collectSyncData(),null,2),
+      `chore(dsa-compass): sync data ${new Date().toISOString()}`);
+    const stamp=new Date().toLocaleTimeString(lang==="vi"?"vi-VN":"en-US");
+    if(withCode){
+      const src=await readOwnSource();
+      if(src===null){                    // file:// — the browser cannot read its own source
+        window.__pendingDataStamp=stamp;
+        setGitStatus("wait",t("git_pick_code"));
+        $("#codePick").click();
+        return;                          // the picker handler finishes the push
+      }
+      const r=await pushCodeText(c, src);
+      gitCfg.lastSync=Date.now(); LS.set("dsac_git",gitCfg);
+      setGitStatus("ok",t(dataRes==="same"?"git_data_same":"git_pushed")+" "+stamp+" \u00b7 "+t(r==="same"?"git_code_same":"git_code_pushed"));
+      return;
+    }
     gitCfg.lastSync=Date.now(); LS.set("dsac_git",gitCfg);
-    setGitStatus("ok",t("git_pushed")+" "+new Date().toLocaleTimeString(lang==="vi"?"vi-VN":"en-US"));
+    setGitStatus("ok",t(dataRes==="same"?"git_data_same":"git_pushed")+" "+stamp);
   }catch(e){ setGitStatus("err",t("git_failed")+e.message); }
+}
+
+/** Fetch the app source that is in the repo. Browsers cannot overwrite the local file, so offer a download. */
+async function gitGetCode(){
+  const c=saveGitCfg();
+  if(!c.repo||!/^[^/]+\/[^/]+$/.test(c.repo)){ setGitStatus("err",t("git_need_repo")); return; }
+  const path=c.codePath||"dsa-compass.html";
+  setGitStatus("wait",t("git_pulling"));
+  try{
+    let text;
+    if(c.token){
+      const g=await ghFetch(`repos/${c.repo}/contents/${path}?ref=${encodeURIComponent(c.branch)}`);
+      if(g.status===404){ setGitStatus("err",t("git_nofile")); return; }
+      if(!g.ok) throw new Error(`HTTP ${g.status}`);
+      text=b64dec((await g.json()).content);
+    }else{
+      const r=await fetch(`https://raw.githubusercontent.com/${c.repo}/${encodeURIComponent(c.branch)}/${path}`,{cache:"no-store"});
+      if(r.status===404){ setGitStatus("err",t("git_nofile")); return; }
+      if(!r.ok) throw new Error(`HTTP ${r.status} `+t("git_maybe_private"));
+      text=await r.text();
+    }
+    const own=await readOwnSource();
+    if(own!==null && own===text){ setGitStatus("ok",t("git_code_same")); return; }
+    downloadText(text, path.split("/").pop()||"dsa-compass.html", "text/html");
+    setGitStatus("ok",t("git_code_downloaded"));
+  }catch(e){ setGitStatus("err",t("git_failed")+e.message); }
+}
+function downloadText(text,name,type){
+  const blob=new Blob([text],{type:type||"text/plain"});
+  const url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url; a.download=name; document.body.appendChild(a); a.click();
+  document.body.removeChild(a); setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 async function gitPull(){
   const c=saveGitCfg();
@@ -3050,6 +3148,20 @@ function initGitSync(){
   loadGitCfg();
   $("#gitPushBtn").onclick=gitPush;
   $("#gitPullBtn").onclick=gitPull;
+  $("#gitGetCodeBtn").onclick=gitGetCode;
+  $("#gitPushCode").onchange=saveGitCfg;
+  $("#gitCodePath").onchange=saveGitCfg;
+  $("#codePick").onchange=async e=>{                 // file:// fallback: the user hands us the source
+    const f=e.target.files&&e.target.files[0]; e.target.value="";
+    if(!f){ setGitStatus("err",t("git_code_cancel")); return; }
+    try{
+      const c=ghCheck();
+      const text=await f.text();
+      const r=await pushCodeText(c,text);
+      gitCfg.lastSync=Date.now(); LS.set("dsac_git",gitCfg);
+      setGitStatus("ok",t("git_pushed")+" "+(window.__pendingDataStamp||"")+" · "+t(r==="same"?"git_code_same":"git_code_pushed"));
+    }catch(err){ setGitStatus("err",t("git_failed")+err.message); }
+  };
   $("#dataExport").onclick=exportDataFile;
   $("#dataImportBtn").onclick=()=>$("#dataImport").click();
   $("#dataImport").onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(f) importDataFile(f); e.target.value=""; };
