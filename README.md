@@ -4,9 +4,9 @@
 >
 > A **compass**, not a key. A tool that teaches you *how to think* about algorithm problems — it never solves them for you.
 
-Ứng dụng web **một file duy nhất**, chạy offline, giao diện song ngữ **Việt / Anh**, kèm một gia sư Socratic nối tới mô hình AI chạy cục bộ trên máy bạn.
+Ứng dụng web **một file duy nhất**, chạy offline, giao diện song ngữ **Việt / Anh**. Gồm bản đồ tư duy, từ điển tín hiệu, chế độ dẫn lối, **trực quan thuật toán từng bước**, lộ trình ôn 150 câu (thời gian & số câu **cài đặt được**), và một gia sư Socratic nối tới mô hình AI chạy cục bộ trên máy bạn.
 
-A **single self-contained** web app, runs offline, bilingual **Vietnamese / English**, with a Socratic tutor that connects to a local AI model on your machine.
+A **single self-contained** web app, runs offline, bilingual **Vietnamese / English**. It bundles a thinking map, a trigger dictionary, a guided decision tree, a **step-by-step algorithm visualizer**, a 150-problem study roadmap (**configurable** duration & problem count), and a Socratic tutor that connects to a local AI model on your machine.
 
 ---
 
@@ -45,6 +45,7 @@ npx serve .
 | **Bản đồ tư duy** | Thinking Map | 4 câu hỏi la bàn (câu *thượng nguồn* hỏi trước) + thang chi phí tư duy 5 bậc. Bấm từng bậc để xem câu hỏi kích hoạt, "vì sao công cụ này", và "duyệt không gian nào". |
 | **Từ điển tín hiệu** | Trigger Dictionary | 14 mục cô đọng: tín hiệu trong đề → công cụ + vì sao. Lọc theo loại quan hệ. **Tự thêm mục của riêng bạn** (lưu cục bộ) — đây là phần cốt lõi để bạn tập tự đi. |
 | **Dẫn lối** | Guided | Cây quyết định **offline, không cần AI**. Bắt đầu từ "đầu ra đòi kiểu thông tin gì?", đi tới một **GIẢ THUYẾT** (không phải đáp án) kèm câu tự kiểm chứng. |
+| **Trực quan** | Visualizer | Chạy một thuật toán kinh điển **từng bước như debugger**: mảng/cột, ngăn xếp, hàng đợi, hashmap, danh sách liên kết, đồ thị + biến, phép tính, dòng mã đang chạy. Điều khiển play/step/tua + tốc độ. Xem mục riêng bên dưới. |
 | **Lộ trình 150** | Roadmap 150 | Kế hoạch ôn **Top Interview 150** trong 2 tháng: check-off hằng ngày, streak + lịch nhiệt, spaced-repetition, radar chủ đề yếu, và ETA thích ứng. Đồng bộ tùy chọn với LeetCode. Xem mục riêng bên dưới. |
 | **La bàn sống** | Living Compass | Gia sư AI Socratic nối mô hình local (xem dưới). |
 | **Luyện nén** | Compression Drill | Rút ngẫu nhiên một tín hiệu; tự nói *công cụ* và *vì sao* trước khi lật. |
@@ -75,6 +76,33 @@ A built-in study plan for the **Top Interview 150** list — still in the compas
 Toàn bộ tiến độ, streak, ghi chú, cấu hình kế hoạch đều lưu trong `localStorage` của trình duyệt này.
 
 ---
+
+## 🎬 Trực quan thuật toán · Algorithm visualizer
+
+Xem một thuật toán chạy **từng bước như debugger** — cùng một tinh thần la bàn: ở mỗi bước hãy tự hỏi *đang duyệt KHÔNG GIAN nào?*. Tích hợp từ dự án [dsa-visualization](https://github.com/cuongngo0806/dsa-visualization) và viết lại bằng vanilla JS để chạy trong cùng một file, không cần build.
+
+Watch an algorithm run **step by step like a debugger** — same compass spirit: at each step ask *which space am I traversing?*. Ported from [dsa-visualization](https://github.com/cuongngo0806/dsa-visualization) into vanilla JS so it runs inside the one file, no build.
+
+### Có sẵn · Built-in
+Trapping Rain Water (monotonic stack) · Binary Search · Two Sum (hashmap) · Valid Parentheses (stack) · Reverse Linked List · BFS · DFS — mỗi bài kèm panel **Cách nó hoạt động** (trực giác / cách làm / vì sao đúng / bẫy) gắn với loại quan hệ trong Từ điển tín hiệu.
+
+### Điều khiển · Controls
+
+| Hành động · Action | Phím · Key |
+|---|---|
+| Chạy / Dừng · Play / Pause | `Space` |
+| Bước lùi / tiến · Prev / Next | `←` / `→` |
+| Về đầu / cuối · First / Last | `Home` / `End` |
+| Tốc độ · Speed | nút 0.5× / 1× / 2× |
+| Nhảy tới bước bất kỳ · Jump | kéo thanh trượt · drag the scrubber |
+
+> Bàn phím chỉ hoạt động khi con trỏ đang ở trong khu vực trực quan. · Keyboard shortcuts act only while the pointer is inside the visualizer.
+>
+> Lời tường thuật từng bước hiển thị bằng **tiếng Anh** (theo nguồn thuật toán); phần khung, nhãn và "Cách nó hoạt động" đổi theo VI/EN. · Step narration stays in **English** (from the algorithm source); chrome, labels and "How it works" follow the VI/EN toggle.
+
+---
+
+### Nút trên thanh điều hướng · Toolbar buttons
 - **EN / VI** — đổi ngôn ngữ toàn bộ giao diện. Gia sư AI cũng **trả lời theo đúng ngôn ngữ đang chọn**.
 - **☾ / ☀** — đổi giao diện tối / sáng.
 

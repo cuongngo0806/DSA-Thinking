@@ -366,6 +366,127 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
 
 @media (max-width:720px){.lc-stats{grid-template-columns:repeat(2,1fr)}.lc-two{grid-template-columns:1fr}.lc-radarrow .rn{flex-basis:96px}}
 @media (max-width:860px){.wb{grid-template-columns:1fr}.wb-ask{position:static}.wb-ask .chat{max-height:640px}}
+
+/* ---------- VISUALIZER ---------- */
+.viz-app{display:flex;flex-direction:column;gap:16px}
+.viz-head{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.viz-pick{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.viz-select{background:var(--surface);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:9px 12px;font-family:var(--sans);font-size:14.5px;min-width:210px}
+.viz-select:focus{border-color:var(--brass);outline:none}
+.viz-meta{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.viz-badge{font-size:12px;font-weight:600;color:var(--text-dim);background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:4px 11px}
+.viz-badge b{color:var(--brass);font-weight:700}
+.viz-main{display:grid;grid-template-columns:1.38fr 1fr;gap:16px;align-items:start}
+.viz-stage{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;min-height:300px;display:flex;flex-direction:column;gap:24px;overflow-x:auto}
+.viz-side{display:flex;flex-direction:column;gap:13px}
+.viz-code{background:var(--ink-0);border:1px solid var(--line);border-radius:12px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.6px;line-height:1.72;max-height:320px;overflow:auto;padding:8px 0}
+:root[data-theme=light] .viz-code{background:#f6f0e2}
+.viz-cl{display:grid;grid-template-columns:36px 1fr;white-space:pre;color:var(--muted)}
+.viz-cl .lnno{color:var(--muted-2);text-align:right;padding-right:12px;user-select:none}
+.viz-cl .lntx{padding-right:12px}
+.viz-cl.on{background:var(--brass-glow)}
+.viz-cl.on .lntx{color:var(--text)}
+.viz-cl.on .lnno{color:var(--brass);font-weight:700}
+.viz-panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.viz-panel .pt{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--brass);margin-bottom:6px}
+.viz-calc{font-family:ui-monospace,Menlo,monospace;font-size:12.8px;color:var(--text-dim);white-space:pre-wrap;line-height:1.65;margin:0}
+.viz-result{font-family:var(--serif);font-size:20px;color:var(--dependency);font-weight:600}
+.viz-desc{font-size:14.5px;color:var(--text-dim);line-height:1.6}
+.viz-phasechip{display:inline-block;font-size:11px;font-weight:700;color:var(--brass);background:var(--brass-glow);border-radius:20px;padding:3px 11px;margin-bottom:9px;letter-spacing:.3px}
+
+.viz-controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 15px}
+.viz-btns{display:flex;gap:6px}
+.viz-cbtn{min-width:40px;height:38px;padding:0 10px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;font-size:14px;display:grid;place-items:center;font-family:var(--sans)}
+.viz-cbtn:hover:not(:disabled){border-color:var(--brass);color:var(--brass)}
+.viz-cbtn.play{background:var(--brass);color:var(--ink-0);border-color:var(--brass);min-width:50px;font-size:16px}
+.viz-cbtn.play:hover:not(:disabled){background:var(--brass-deep);color:var(--ink-0)}
+.viz-cbtn:disabled{opacity:.38;cursor:not-allowed}
+.viz-speeds{display:flex;gap:4px}
+.viz-sp{padding:7px 11px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--muted);cursor:pointer;font-size:12.5px;font-weight:600;font-family:var(--sans)}
+.viz-sp.on{border-color:var(--brass);color:var(--brass);background:var(--brass-glow)}
+.viz-scrub{flex:1;min-width:150px;display:flex;align-items:center;gap:11px}
+.viz-scrub input[type=range]{flex:1;accent-color:var(--brass);cursor:pointer}
+.viz-count{font-size:12.5px;color:var(--muted-2);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* role → color via --rc */
+.viz-app [data-role=active]{--rc:var(--brass)}
+.viz-app [data-role=compare]{--rc:var(--identity)}
+.viz-app [data-role=boundary]{--rc:var(--order)}
+.viz-app [data-role=visited]{--rc:var(--muted-2)}
+.viz-app [data-role=push]{--rc:var(--dependency)}
+.viz-app [data-role=pop]{--rc:#d98a6a}
+.viz-app [data-role=result]{--rc:#57c98a}
+
+.viz-struct{display:flex;flex-direction:column;gap:5px;min-width:0}
+.viz-slabel{font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted-2)}
+/* array (boxes) */
+.viz-row{display:flex}
+.viz-cell{min-width:42px;height:42px;padding:0 8px;display:grid;place-items:center;border:1px solid var(--line);border-left:none;background:var(--bg);font-family:ui-monospace,monospace;font-size:14px;color:var(--text);transition:background .18s,border-color .18s}
+.viz-cell:first-child{border-left:1px solid var(--line);border-radius:8px 0 0 8px}
+.viz-cell:last-child{border-radius:0 8px 8px 0}
+.viz-cell[data-role]{border-color:var(--rc);background:color-mix(in srgb,var(--rc) 20%,var(--bg));color:var(--text);position:relative;z-index:1}
+.viz-idxrow{display:flex}
+.viz-idx{min-width:42px;text-align:center;font-size:10px;color:var(--muted-2);font-family:ui-monospace,monospace}
+.viz-ptrrow{display:flex;min-height:20px}
+.viz-ptrcol{min-width:42px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.viz-ptr{font-size:9.5px;font-weight:700;padding:1px 5px;border-radius:5px;line-height:1.35;white-space:nowrap;color:var(--rc,var(--muted));background:color-mix(in srgb,var(--rc,var(--muted)) 18%,transparent)}
+/* array as bars */
+.viz-bars{display:flex;align-items:flex-end;height:150px}
+.viz-barcol{min-width:42px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;height:100%}
+.viz-barval{font-size:10px;color:var(--muted-2);font-family:monospace}
+.viz-barfill{width:26px;min-height:2px;background:color-mix(in srgb,var(--rc,var(--muted)) 34%,var(--bg));border:1px solid var(--rc,var(--line));border-bottom:none;border-radius:4px 4px 0 0}
+/* stack */
+.viz-stack{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.viz-sbox{min-width:56px;padding:8px 13px;border:1px solid var(--line);border-radius:7px;background:var(--bg);font-family:ui-monospace,monospace;font-size:13.5px;text-align:center;position:relative}
+.viz-sbox[data-role]{border-color:var(--rc);background:color-mix(in srgb,var(--rc) 18%,var(--bg))}
+.viz-sbox .tp{position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);font-size:10px;font-weight:700;color:var(--brass);white-space:nowrap}
+.viz-stackempty{font-size:12.5px;color:var(--muted-2);font-style:italic}
+/* queue */
+.viz-queue{display:flex;gap:4px;align-items:center}
+.viz-qbox{min-width:44px;height:40px;padding:0 10px;display:grid;place-items:center;border:1px solid var(--line);border-radius:7px;background:var(--bg);font-family:ui-monospace,monospace;font-size:13.5px;position:relative}
+.viz-qbox[data-role]{border-color:var(--rc);background:color-mix(in srgb,var(--rc) 18%,var(--bg))}
+.viz-qtag{font-size:9.5px;font-weight:700;color:var(--muted-2);position:absolute;top:-16px;left:50%;transform:translateX(-50%)}
+/* variables */
+.viz-vars{display:flex;flex-wrap:wrap;gap:8px}
+.viz-var{font-family:ui-monospace,monospace;font-size:12.5px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 11px;color:var(--text-dim)}
+.viz-var b{color:var(--brass);font-weight:700}
+/* hashmap */
+.viz-map{display:flex;flex-wrap:wrap;gap:8px}
+.viz-me{border:1px solid var(--line);border-radius:8px;padding:5px 11px;font-family:ui-monospace,monospace;font-size:12.5px;background:var(--bg);color:var(--text-dim)}
+.viz-me[data-role]{border-color:var(--rc);background:color-mix(in srgb,var(--rc) 18%,var(--bg))}
+.viz-me b{color:var(--brass)}
+.viz-mapempty{font-size:12.5px;color:var(--muted-2);font-style:italic}
+/* linked list */
+.viz-list{display:flex;align-items:flex-start;flex-wrap:wrap;gap:0}
+.viz-lcol{display:flex;flex-direction:column;align-items:center;gap:3px}
+.viz-lptr{min-height:18px;display:flex;flex-direction:column;gap:1px;align-items:center}
+.viz-lnode{min-width:46px;height:42px;border:1px solid var(--line);border-radius:9px;display:grid;place-items:center;background:var(--bg);font-family:ui-monospace,monospace;font-size:14px}
+.viz-lnode[data-role]{border-color:var(--rc);background:color-mix(in srgb,var(--rc) 20%,var(--bg))}
+.viz-larrow{align-self:center;color:var(--muted-2);padding:0 7px;margin-top:19px;font-size:15px}
+.viz-lnull{font-size:12px;color:var(--muted-2);align-self:center;margin-top:19px;padding-left:8px;font-family:monospace}
+/* graph */
+.viz-graph{width:100%;max-width:420px;height:auto}
+.viz-gedge{stroke:var(--line);stroke-width:1.6}
+.viz-gedge.on{stroke:var(--brass);stroke-width:2.6}
+.viz-gnode circle{fill:var(--bg);stroke:var(--muted-2);stroke-width:2}
+.viz-gnode.active circle{fill:color-mix(in srgb,var(--brass) 26%,var(--bg));stroke:var(--brass)}
+.viz-gnode.visited circle{fill:color-mix(in srgb,var(--muted-2) 22%,var(--bg));stroke:var(--muted-2)}
+.viz-gnode.push circle{fill:color-mix(in srgb,var(--dependency) 22%,var(--bg));stroke:var(--dependency)}
+.viz-gnode text{fill:var(--text);font-family:var(--serif);font-size:13px;font-weight:600}
+/* legend + how */
+.viz-legend{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:11.5px;color:var(--muted)}
+.viz-lg{display:inline-flex;align-items:center;gap:5px}
+.viz-lg::before{content:"";width:11px;height:11px;border-radius:3px;background:color-mix(in srgb,var(--rc,var(--muted)) 30%,var(--bg));border:1px solid var(--rc,var(--line))}
+.viz-narr{font-size:12px;color:var(--muted-2);font-style:italic}
+.viz-how{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px}
+.viz-how h3{margin:0 0 14px;font-size:19px;font-weight:600}
+.viz-howgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.viz-howblk .pt{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--brass);margin-bottom:6px}
+.viz-howblk p{margin:0;font-size:14px;color:var(--text-dim);line-height:1.6}
+.viz-howblk ul{margin:0;padding-left:18px;font-size:14px;color:var(--text-dim);line-height:1.6}
+.viz-howblk ol{margin:0;padding-left:20px;font-size:14px;color:var(--text-dim);line-height:1.65}
+.viz-howblk li{margin-bottom:3px}
+@media (max-width:860px){.viz-main{grid-template-columns:1fr}.viz-howgrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -380,6 +501,7 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
       <a href="#ban-do" data-i18n="nav_map">Bản đồ tư duy</a>
       <a href="#tu-dien" data-i18n="nav_dict">Từ điển tín hiệu</a>
       <a href="#dan-loi" data-i18n="nav_guide">Dẫn lối</a>
+      <a href="#truc-quan" data-i18n="nav_viz">Trực quan</a>
       <a href="#lo-trinh" data-i18n="nav_roadmap">Lộ trình 150</a>
       <a href="#luyen-tap" data-i18n="nav_drill">Luyện nén</a>
       <a href="#nhat-ky" data-i18n="nav_log">Nhật ký</a>
@@ -473,6 +595,14 @@ footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--mut
       <div class="guide-crumbs" id="guideCrumbs"></div>
       <div id="guideBody"></div>
     </div>
+  </div>
+</section>
+
+<section class="block" id="truc-quan">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="viz_head">Trực quan thuật toán <span class="sub-label">— chạy từng bước như debugger</span></h2>
+    <p class="sec-sub" data-i18n="viz_sub">Xem một thuật toán kinh điển chạy từng bước: mảng, ngăn xếp, con trỏ, biến, phép tính và kết quả — kèm dòng mã đang chạy được tô sáng. Hãy để ý <b>không gian nào đang bị duyệt</b> ở mỗi bước.</p>
+    <div class="viz-app" id="vizApp" tabindex="0"></div>
   </div>
 </section>
 
@@ -1671,6 +1801,388 @@ $$("#lcTabs .lc-tab").forEach(b=>b.onclick=()=>{
 /* --- AI settings toggle (gear in the ask column) --- */
 $("#aiGear").onclick=()=>{ const s=$("#aiSettings"); s.hidden=!s.hidden; };
 
+/* ============================================================ VISUALIZER (ported from dsa-visualization) */
+Object.assign(T.vi, {
+  nav_viz:"Trực quan",
+  viz_head:'Trực quan thuật toán <span class="sub-label">— chạy từng bước như debugger</span>',
+  viz_sub:'Xem một thuật toán kinh điển chạy từng bước: mảng, ngăn xếp, con trỏ, biến, phép tính và kết quả — kèm dòng mã đang chạy được tô sáng. Hãy để ý <b>không gian nào đang bị duyệt</b> ở mỗi bước.',
+  viz_pick:"Chọn thuật toán", viz_algorithm:"Thuật toán", viz_time:"Thời gian", viz_space:"Bộ nhớ",
+  viz_step_lbl:"Bước hiện tại", viz_calc:"Phép tính", viz_result:"Kết quả", viz_code:"Mã nguồn",
+  viz_first:"Về đầu (Home)", viz_prev:"Lùi (←)", viz_play:"Chạy (Space)", viz_pause:"Dừng (Space)", viz_next:"Tiến (→)", viz_last:"Tới cuối (End)",
+  viz_speed:"Tốc độ", viz_top:"top", viz_front:"đầu", viz_back:"cuối", viz_empty:"rỗng",
+  viz_how:"Cách nó hoạt động", viz_intuition:"Trực giác", viz_approach:"Cách làm", viz_why:"Vì sao đúng", viz_pitfalls:"Bẫy thường gặp",
+  viz_legend:"Chú giải", viz_narr:"Lời tường thuật từng bước hiển thị bằng tiếng Anh (theo nguồn thuật toán).",
+  viz_r_active:"đang xử lý", viz_r_compare:"so sánh", viz_r_boundary:"biên/tường", viz_r_visited:"đã thăm", viz_r_push:"thêm vào", viz_r_pop:"lấy ra", viz_r_result:"kết quả"
+});
+Object.assign(T.en, {
+  nav_viz:"Visualizer",
+  viz_head:'Algorithm visualizer <span class="sub-label">— step through it like a debugger</span>',
+  viz_sub:'Watch a classic algorithm run step by step: arrays, stacks, pointers, variables, calculations and results — with the running code line highlighted. Notice <b>which space is being traversed</b> at each step.',
+  viz_pick:"Pick an algorithm", viz_algorithm:"Algorithm", viz_time:"Time", viz_space:"Space",
+  viz_step_lbl:"Current step", viz_calc:"Calculation", viz_result:"Result", viz_code:"Source",
+  viz_first:"First (Home)", viz_prev:"Previous (←)", viz_play:"Play (Space)", viz_pause:"Pause (Space)", viz_next:"Next (→)", viz_last:"Last (End)",
+  viz_speed:"Speed", viz_top:"top", viz_front:"front", viz_back:"back", viz_empty:"empty",
+  viz_how:"How it works", viz_intuition:"Intuition", viz_approach:"Approach", viz_why:"Why it works", viz_pitfalls:"Common pitfalls",
+  viz_legend:"Color key", viz_narr:"",
+  viz_r_active:"active", viz_r_compare:"compare", viz_r_boundary:"boundary/wall", viz_r_visited:"visited", viz_r_push:"push", viz_r_pop:"pop", viz_r_result:"result"
+});
+
+/* ---- example traces (ported verbatim from the visualization repo) ---- */
+function buildTrappingRainWater(){
+  const HEIGHT=[0,1,0,2,1,0,1,3,2,1,2,1];
+  const SOURCE=`int trap(vector<int>& height) {\n    int n = height.size();\n    stack<int> st;              // stores indices, heights decreasing\n    int res = 0;\n    for (int i = 0; i < n; i++) {\n        while (!st.empty() &&\n               height[i] > height[st.top()]) {\n            int bottom = st.top();\n            st.pop();\n            if (st.empty()) break;\n            int left = st.top();\n            int right = i;\n            int width = right - left - 1;\n            int bounded = min(height[left], height[right]) - height[bottom];\n            res += width * bounded;\n        }\n        st.push(i);\n    }\n    return res;\n}`;
+  const L={forLoop:5,whileCond:6,bottom:8,pop:9,breakEmpty:10,left:11,computeWidth:13,computeWater:14,addRes:15,push:17,ret:19};
+  const snap=(stack,vars,ptrs)=>[{type:'array',id:'height',values:HEIGHT,pointers:ptrs},{type:'stack',id:'stack',values:[...stack]},{type:'variables',id:'vars',values:vars}];
+  const steps=[]; let id=0; const stack=[]; let res=0;
+  const push=s=>steps.push({id:id++,...s});
+  push({description:'Start. We scan the bars left to right, keeping a stack of indices whose heights are decreasing. When a taller bar appears it becomes a right wall and we settle the water trapped over the popped bar.',variables:{i:'-',res},components:snap(stack,{i:'-',res},[]),codeLine:L.forLoop,result:res});
+  for(let i=0;i<HEIGHT.length;i++){
+    const iPtr={name:'i',index:i,role:'active'};
+    push({description:`Consider bar i=${i} with height ${HEIGHT[i]}.`,variables:{i,res},components:snap(stack,{i,res},[iPtr]),highlights:[{component:'height',indices:[i],role:'active'}],codeLine:L.forLoop,result:res});
+    while(stack.length>0 && HEIGHT[i]>HEIGHT[stack[stack.length-1]]){
+      const top=stack[stack.length-1];
+      push({description:`height[${i}] = ${HEIGHT[i]} is greater than height[${top}] = ${HEIGHT[top]} (the stack top), so bar ${i} can act as a right boundary. We settle the bar at index ${top}.`,variables:{i,res,top},components:snap(stack,{i,res,top},[iPtr,{name:'top',index:top,role:'boundary'}]),highlights:[{component:'height',indices:[i],role:'active'},{component:'height',indices:[top],role:'compare'}],codeLine:L.whileCond,result:res});
+      const bottom=stack.pop();
+      push({description:`Pop index ${bottom} — this is the "bottom" of the basin (its floor). Its water will be bounded by the walls on either side.`,variables:{i,res,bottom},components:snap(stack,{i,res,bottom},[iPtr,{name:'bottom',index:bottom,role:'boundary'}]),highlights:[{component:'height',indices:[bottom],role:'pop'}],codeLine:L.pop,result:res});
+      if(stack.length===0){ push({description:`The stack is now empty, so there is no left wall for this basin — water would spill off the left edge. Stop settling and move on.`,variables:{i,res,bottom},components:snap(stack,{i,res,bottom},[iPtr]),highlights:[{component:'height',indices:[bottom],role:'visited'}],codeLine:L.breakEmpty,result:res}); break; }
+      const left=stack[stack.length-1], right=i, width=right-left-1, bounded=Math.min(HEIGHT[left],HEIGHT[right])-HEIGHT[bottom], added=width*bounded; res+=added;
+      push({description:`Left wall is index ${left} (height ${HEIGHT[left]}), right wall is index ${right} (height ${HEIGHT[right]}). Width between the walls is right − left − 1 = ${width}. The water height above the bottom is min(${HEIGHT[left]}, ${HEIGHT[right]}) − ${HEIGHT[bottom]} = ${bounded}. This adds ${added} unit(s) of water.`,variables:{i,res,bottom,left,right,width,bounded},components:snap(stack,{i,res,left,right,bottom},[{name:'left',index:left,role:'boundary'},{name:'bottom',index:bottom,role:'active'},{name:'right',index:right,role:'boundary'}]),highlights:[{component:'height',indices:[left,right],role:'boundary'},{component:'height',indices:[bottom],role:'active'}],calculation:`width = ${right} − ${left} − 1 = ${width}\nboundedHeight = min(${HEIGHT[left]}, ${HEIGHT[right]}) − ${HEIGHT[bottom]} = ${bounded}\nwater = ${width} × ${bounded} = ${added}   →   res = ${res}`,codeLine:L.addRes,result:res});
+    }
+    stack.push(i);
+    push({description:`Push index ${i} onto the stack. It becomes a potential left wall for bars that come later.`,variables:{i,res},components:snap(stack,{i,res},[{name:'i',index:i,role:'active'}]),highlights:[{component:'height',indices:[i],role:'push'}],codeLine:L.push,result:res});
+  }
+  push({description:`All bars processed. The total trapped rain water is ${res}.`,variables:{res},components:snap(stack,{res},[]),codeLine:L.ret,result:res});
+  return {title:'Trapping Rain Water',algorithm:'Monotonic Stack',complexity:{time:'O(n)',space:'O(n)'},components:[{type:'array',id:'height',label:'height',renderAsBars:true,showIndices:true},{type:'stack',id:'stack',label:'stack (indices)',indicesInto:'height'},{type:'variables',id:'vars',label:'variables'}],sourceCode:{language:'cpp',code:SOURCE},steps};
+}
+function buildBinarySearch(){
+  const ARR=[1,3,4,7,9,11,15,20,24,30], TARGET=15;
+  const SOURCE=`int binarySearch(vector<int>& a, int target) {\n    int left = 0, right = a.size() - 1;\n    while (left <= right) {\n        int mid = left + (right - left) / 2;\n        if (a[mid] == target) return mid;\n        if (a[mid] < target)  left = mid + 1;\n        else                  right = mid - 1;\n    }\n    return -1;\n}`;
+  const snap=(vars,ptrs)=>[{type:'array',id:'arr',values:ARR,pointers:ptrs},{type:'variables',id:'vars',values:vars}];
+  const steps=[]; let id=0,left=0,right=ARR.length-1,found=-1; const push=s=>steps.push({id:id++,...s});
+  push({description:`Search for ${TARGET} in a sorted array. Start with the whole range: left=0, right=${right}.`,variables:{left,right},components:snap({left,right},[{name:'left',index:left,role:'boundary'},{name:'right',index:right,role:'boundary'}]),codeLine:2,result:-1});
+  while(left<=right){
+    const mid=left+Math.floor((right-left)/2);
+    push({description:`Compute mid = ${mid}. Compare a[${mid}] = ${ARR[mid]} with target ${TARGET}.`,variables:{left,right,mid},components:snap({left,right,mid},[{name:'left',index:left,role:'boundary'},{name:'mid',index:mid,role:'active'},{name:'right',index:right,role:'boundary'}]),highlights:[{component:'arr',indices:[mid],role:'active'},{component:'arr',indices:[left,right],role:'boundary'}],calculation:`mid = ${left} + (${right} − ${left}) / 2 = ${mid}`,codeLine:4,result:-1});
+    if(ARR[mid]===TARGET){ found=mid; push({description:`a[${mid}] = ${ARR[mid]} equals the target. Found at index ${mid}.`,variables:{left,right,mid},components:snap({left,right,mid},[{name:'mid',index:mid,role:'active'}]),highlights:[{component:'arr',indices:[mid],role:'result'}],codeLine:5,result:mid}); break; }
+    if(ARR[mid]<TARGET){ push({description:`a[${mid}] = ${ARR[mid]} < ${TARGET}, so the target must be to the right. Move left to ${mid+1}.`,variables:{left,right,mid},components:snap({left,right,mid},[{name:'mid',index:mid,role:'active'}]),highlights:[{component:'arr',indices:[mid],role:'compare'}],codeLine:6,result:-1}); left=mid+1; }
+    else { push({description:`a[${mid}] = ${ARR[mid]} > ${TARGET}, so the target must be to the left. Move right to ${mid-1}.`,variables:{left,right,mid},components:snap({left,right,mid},[{name:'mid',index:mid,role:'active'}]),highlights:[{component:'arr',indices:[mid],role:'compare'}],codeLine:7,result:-1}); right=mid-1; }
+  }
+  if(found===-1) push({description:'Range is empty (left > right). Target is not present; return −1.',variables:{left,right},components:snap({left,right},[]),codeLine:9,result:-1});
+  return {title:'Binary Search',algorithm:'Divide & Conquer',complexity:{time:'O(log n)',space:'O(1)'},components:[{type:'array',id:'arr',label:'a',showIndices:true},{type:'variables',id:'vars',label:'variables'}],sourceCode:{language:'cpp',code:SOURCE},steps};
+}
+function buildTwoSum(){
+  const NUMS=[2,7,11,15], TARGET=9;
+  const SOURCE=`vector<int> twoSum(vector<int>& nums, int target) {\n    unordered_map<int,int> seen;      // value -> index\n    for (int i = 0; i < nums.size(); i++) {\n        int need = target - nums[i];\n        if (seen.count(need))\n            return { seen[need], i };\n        seen[nums[i]] = i;\n    }\n    return {};\n}`;
+  const mapEntries=(m,hk)=>[...m.entries()].map(([k,v])=>({key:String(k),value:v,role:k===hk?'active':undefined}));
+  const snap=(m,vars,ptr,hk)=>[{type:'array',id:'nums',values:NUMS,pointers:[{name:'i',index:ptr,role:'active'}]},{type:'hashmap',id:'seen',entries:mapEntries(m,hk)},{type:'variables',id:'vars',values:vars}];
+  const steps=[]; let id=0; const seen=new Map(); const push=s=>steps.push({id:id++,...s});
+  push({description:`Find two indices whose values sum to ${TARGET}. We keep a hashmap of value → index as we scan.`,variables:{target:TARGET},components:snap(seen,{target:TARGET},0),codeLine:2,result:'[]'});
+  for(let i=0;i<NUMS.length;i++){
+    const need=TARGET-NUMS[i];
+    push({description:`At i=${i}, nums[i]=${NUMS[i]}. The complement we need is ${TARGET} − ${NUMS[i]} = ${need}. Look it up in the map.`,variables:{i,'nums[i]':NUMS[i],need},components:snap(seen,{i,need},i,seen.has(need)?need:undefined),highlights:[{component:'nums',indices:[i],role:'active'}],calculation:`need = ${TARGET} − ${NUMS[i]} = ${need}`,codeLine:4,result:'[]'});
+    if(seen.has(need)){ const j=seen.get(need); push({description:`${need} is already in the map at index ${j}. So nums[${j}] + nums[${i}] = ${NUMS[j]} + ${NUMS[i]} = ${TARGET}. Return [${j}, ${i}].`,variables:{i,need,foundIndex:j},components:snap(seen,{i,need},i,need),highlights:[{component:'nums',indices:[j,i],role:'result'}],codeLine:6,result:`[${j}, ${i}]`}); return finalizeTwoSum(steps); }
+    seen.set(NUMS[i],i);
+    push({description:`${need} was not found. Store nums[${i}]=${NUMS[i]} → ${i} in the map for future lookups.`,variables:{i,'nums[i]':NUMS[i]},components:snap(seen,{i},i,NUMS[i]),highlights:[{component:'nums',indices:[i],role:'push'}],codeLine:7,result:'[]'});
+  }
+  push({description:'No pair sums to the target.',variables:{},components:snap(seen,{},NUMS.length-1),codeLine:9,result:'[]'});
+  return finalizeTwoSum(steps);
+}
+function finalizeTwoSum(steps){ return {title:'Two Sum',algorithm:'HashMap',complexity:{time:'O(n)',space:'O(n)'},components:[{type:'array',id:'nums',label:'nums',showIndices:true},{type:'hashmap',id:'seen',label:'seen (value → index)'},{type:'variables',id:'vars',label:'variables'}],sourceCode:{language:'cpp',code:`vector<int> twoSum(vector<int>& nums, int target) {\n    unordered_map<int,int> seen;      // value -> index\n    for (int i = 0; i < nums.size(); i++) {\n        int need = target - nums[i];\n        if (seen.count(need))\n            return { seen[need], i };\n        seen[nums[i]] = i;\n    }\n    return {};\n}`},steps}; }
+function buildValidParentheses(){
+  const INPUT='()[{}]', CHARS=INPUT.split(''), PAIRS={')':'(',']':'[','}':'{'};
+  const SOURCE=`bool isValid(string s) {\n    stack<char> st;\n    for (char c : s) {\n        if (c=='(' || c=='[' || c=='{') {\n            st.push(c);\n        } else {\n            if (st.empty() || st.top() != match(c))\n                return false;\n            st.pop();\n        }\n    }\n    return st.empty();\n}`;
+  const snap=(stack,vars,ptr)=>[{type:'array',id:'s',values:CHARS,pointers:[{name:'i',index:ptr,role:'active'}]},{type:'stack',id:'stack',values:[...stack]},{type:'variables',id:'vars',values:vars}];
+  const steps=[]; let id=0; const stack=[]; const push=s=>steps.push({id:id++,...s});
+  push({description:`Check whether "${INPUT}" is balanced. Push opening brackets; on a closing bracket, the top must be its matching opener.`,variables:{},components:snap(stack,{},0),codeLine:2,result:'?'});
+  for(let i=0;i<CHARS.length;i++){
+    const c=CHARS[i], isOpen=(c==='('||c==='['||c==='{');
+    if(isOpen){ stack.push(c); push({description:`'${c}' is an opening bracket — push it onto the stack.`,variables:{i,c},components:snap(stack,{i,c},i),highlights:[{component:'s',indices:[i],role:'push'}],codeLine:5,result:'?'}); }
+    else{ const expected=PAIRS[c], top=stack[stack.length-1];
+      if(stack.length===0||top!==expected){ push({description:`'${c}' is a closing bracket. The stack top is ${top?`'${top}'`:'empty'}, which does not match the required '${expected}'. The string is invalid.`,variables:{i,c,expected:expected??'',top:top??''},components:snap(stack,{i,c},i),highlights:[{component:'s',indices:[i],role:'pop'}],codeLine:7,result:false}); return finalizeVP(steps); }
+      push({description:`'${c}' closes the matching '${top}' on top of the stack — pop it.`,variables:{i,c,matched:top},components:snap(stack,{i,c},i),highlights:[{component:'s',indices:[i],role:'active'}],codeLine:9,result:'?'}); stack.pop();
+    }
+  }
+  const valid=stack.length===0;
+  push({description:valid?'The whole string is consumed and the stack is empty — every bracket was matched. Valid.':'The string ended but the stack still has unmatched openers. Invalid.',variables:{},components:snap(stack,{},CHARS.length-1),codeLine:12,result:valid});
+  return finalizeVP(steps);
+}
+function finalizeVP(steps){ return {title:'Valid Parentheses',algorithm:'Stack',complexity:{time:'O(n)',space:'O(n)'},components:[{type:'array',id:'s',label:'s',showIndices:true},{type:'stack',id:'stack',label:'stack'},{type:'variables',id:'vars',label:'variables'}],sourceCode:{language:'cpp',code:`bool isValid(string s) {\n    stack<char> st;\n    for (char c : s) {\n        if (c=='(' || c=='[' || c=='{') {\n            st.push(c);\n        } else {\n            if (st.empty() || st.top() != match(c))\n                return false;\n            st.pop();\n        }\n    }\n    return st.empty();\n}`},steps}; }
+function buildReverseLinkedList(){
+  const VALUES=[1,2,3,4,5], NODE_IDS=VALUES.map((_,i)=>`n${i}`);
+  const SOURCE=`ListNode* reverse(ListNode* head) {\n    ListNode* prev = nullptr;\n    ListNode* curr = head;\n    while (curr != nullptr) {\n        ListNode* next = curr->next;\n        curr->next = prev;\n        prev = curr;\n        curr = next;\n    }\n    return prev;\n}`;
+  const nodesInOrder=order=>order.map(idx=>({id:NODE_IDS[idx],value:VALUES[idx]}));
+  const snap=(order,prev,curr,next)=>{ const pointers=[{name:'prev',nodeId:prev===null?null:NODE_IDS[prev],role:'visited'},{name:'curr',nodeId:curr===null?null:NODE_IDS[curr],role:'active'},{name:'next',nodeId:next===null?null:NODE_IDS[next],role:'boundary'}]; return [{type:'linkedlist',id:'list',nodes:nodesInOrder(order),pointers},{type:'variables',id:'vars',values:{prev:prev===null?'null':VALUES[prev],curr:curr===null?'null':VALUES[curr],next:next===null?'null':VALUES[next]}}]; };
+  const steps=[]; let id=0; const push=s=>steps.push({id:id++,...s}); const vAt=i=>i===null?'null':VALUES[i];
+  const reversed=[], remaining=VALUES.map((_,i)=>i); let prev=null,curr=0; const order=()=>[...reversed,...remaining];
+  push({description:'Reverse the list iteratively with three pointers: prev (built-up reversed list), curr (node under work), next (lookahead so we do not lose the rest).',variables:{},components:snap(order(),prev,curr,null),codeLine:3,result:'null'});
+  while(curr!==null){
+    const next=curr+1<VALUES.length?curr+1:-1, nextVal=next===-1?null:next;
+    push({description:`Save next = ${vAt(nextVal)} so we don't lose the rest of the list.`,variables:{prev:vAt(prev),curr:vAt(curr),next:vAt(nextVal)},components:snap(order(),prev,curr,nextVal),codeLine:5,result:vAt(prev)});
+    remaining.shift(); reversed.unshift(curr);
+    push({description:`Point curr (${vAt(curr)}) back at prev. Node ${vAt(curr)} is now the new head of the reversed portion.`,variables:{prev:vAt(curr),curr:vAt(nextVal)},components:snap(order(),curr,nextVal,null),codeLine:6,result:vAt(curr)});
+    prev=curr; curr=nextVal;
+  }
+  push({description:`curr is null — the whole list is reversed. Return prev (${vAt(prev)}), the new head.`,variables:{head:vAt(prev)},components:snap(order(),prev,null,null),codeLine:10,result:vAt(prev)});
+  return {title:'Reverse Linked List',algorithm:'Iterative Pointers',complexity:{time:'O(n)',space:'O(1)'},components:[{type:'linkedlist',id:'list',label:'list'},{type:'variables',id:'vars',label:'pointers'}],sourceCode:{language:'cpp',code:SOURCE},steps};
+}
+function graphBase(){
+  const NODES=[{id:'A',x:0.5,y:0.12},{id:'B',x:0.22,y:0.42},{id:'C',x:0.78,y:0.42},{id:'D',x:0.1,y:0.82},{id:'E',x:0.4,y:0.82},{id:'F',x:0.9,y:0.82}];
+  const EDGES=[{from:'A',to:'B'},{from:'A',to:'C'},{from:'B',to:'D'},{from:'B',to:'E'},{from:'C',to:'F'}];
+  const ADJ={A:['B','C'],B:['D','E'],C:['F'],D:[],E:[],F:[]};
+  const gs=(roles,activeEdges=[])=>({type:'graph',id:'graph',nodes:NODES,edges:EDGES,nodeRoles:{...roles},activeEdges});
+  return {NODES,EDGES,ADJ,gs};
+}
+function buildBFS(){
+  const {ADJ,gs}=graphBase();
+  const SOURCE=`void bfs(Graph& g, char start) {\n    queue<char> q;\n    q.push(start);\n    visited.insert(start);\n    while (!q.empty()) {\n        char u = q.front(); q.pop();\n        for (char v : g.adj[u]) {\n            if (!visited.count(v)) {\n                visited.insert(v);\n                q.push(v);\n            }\n        }\n    }\n}`;
+  const steps=[]; let id=0; const push=s=>steps.push({id:id++,...s});
+  const roles={}, queue=['A'], visited=new Set(['A']); roles['A']='active'; const order=[];
+  push({description:'BFS from A. Enqueue the start node and mark it visited. BFS explores level by level using a FIFO queue.',variables:{start:'A'},components:[gs(roles),{type:'queue',id:'queue',values:[...queue]},{type:'variables',id:'vars',values:{order:order.join(' ')||'—'}}],codeLine:4,result:''});
+  while(queue.length>0){
+    const u=queue.shift(); roles[u]='active'; order.push(u);
+    push({description:`Dequeue ${u} and visit it. Now look at its neighbours.`,variables:{u,order:order.join(' ')},components:[gs(roles),{type:'queue',id:'queue',values:[...queue]},{type:'variables',id:'vars',values:{u,order:order.join(' ')}}],codeLine:6,result:order.join(' ')});
+    for(const v of ADJ[u]){ if(!visited.has(v)){ visited.add(v); queue.push(v); roles[v]='push';
+      push({description:`Neighbour ${v} is unvisited — mark it visited and enqueue it.`,variables:{u,v,order:order.join(' ')},components:[gs(roles,[`${u}->${v}`]),{type:'queue',id:'queue',values:[...queue]},{type:'variables',id:'vars',values:{u,v,order:order.join(' ')}}],codeLine:9,result:order.join(' ')}); } }
+    roles[u]='visited';
+  }
+  push({description:`Queue empty — BFS complete. Visit order: ${order.join(' → ')}.`,variables:{order:order.join(' ')},components:[gs(roles),{type:'queue',id:'queue',values:[]},{type:'variables',id:'vars',values:{order:order.join(' ')}}],codeLine:12,result:order.join(' ')});
+  return {title:'Breadth-First Search',algorithm:'BFS (Queue)',complexity:{time:'O(V + E)',space:'O(V)'},components:[{type:'graph',id:'graph',label:'graph'},{type:'queue',id:'queue',label:'queue (frontier)'},{type:'variables',id:'vars',label:'variables'}],sourceCode:{language:'cpp',code:SOURCE},steps};
+}
+function buildDFS(){
+  const {ADJ,gs}=graphBase();
+  const SOURCE=`void dfs(Graph& g, char start) {\n    stack<char> st;\n    st.push(start);\n    while (!st.empty()) {\n        char u = st.top(); st.pop();\n        if (visited.count(u)) continue;\n        visited.insert(u);\n        for (char v : g.adj[u])\n            if (!visited.count(v))\n                st.push(v);\n    }\n}`;
+  const steps=[]; let id=0; const push=s=>steps.push({id:id++,...s});
+  const roles={}, stack=['A'], visited=new Set(), order=[]; roles['A']='push';
+  push({description:'DFS from A using an explicit stack (LIFO). Push the start node.',variables:{start:'A'},components:[gs(roles),{type:'stack',id:'stack',values:[...stack]},{type:'variables',id:'vars',values:{order:'—'}}],codeLine:3,result:''});
+  while(stack.length>0){
+    const u=stack.pop(); if(visited.has(u))continue; visited.add(u); order.push(u); roles[u]='active';
+    push({description:`Pop ${u} from the stack and visit it.`,variables:{u,order:order.join(' ')},components:[gs(roles),{type:'stack',id:'stack',values:[...stack]},{type:'variables',id:'vars',values:{u,order:order.join(' ')}}],codeLine:7,result:order.join(' ')});
+    for(const v of ADJ[u]){ if(!visited.has(v)){ stack.push(v); roles[v]='push';
+      push({description:`Push unvisited neighbour ${v} onto the stack for later exploration.`,variables:{u,v,order:order.join(' ')},components:[gs(roles,[`${u}->${v}`]),{type:'stack',id:'stack',values:[...stack]},{type:'variables',id:'vars',values:{u,v,order:order.join(' ')}}],codeLine:9,result:order.join(' ')}); } }
+    roles[u]='visited';
+  }
+  push({description:`Stack empty — DFS complete. Visit order: ${order.join(' → ')}.`,variables:{order:order.join(' ')},components:[gs(roles),{type:'stack',id:'stack',values:[]},{type:'variables',id:'vars',values:{order:order.join(' ')}}],codeLine:11,result:order.join(' ')});
+  return {title:'Depth-First Search',algorithm:'DFS (Stack)',complexity:{time:'O(V + E)',space:'O(V)'},components:[{type:'graph',id:'graph',label:'graph'},{type:'stack',id:'stack',label:'stack'},{type:'variables',id:'vars',label:'variables'}],sourceCode:{language:'cpp',code:SOURCE},steps};
+}
+
+/* ---- example registry + compass-aligned explanations (bilingual) ---- */
+const VIZ_EXAMPLES = [
+  {key:'trapping-rain-water', rel:'order', name:{vi:'Hứng nước mưa',en:'Trapping Rain Water'}, viz:buildTrappingRainWater(),
+   expl:{vi:{intuition:'Nước trên một cột do bức tường cao gần nhất mỗi bên quyết định. Một ngăn xếp giữ các chiều cao giảm dần chính là bộ nhớ những "tường trái" ứng viên, nên bạn không quét lại.',approach:['Quét các cột từ trái sang phải, giữ ngăn xếp chỉ số có chiều cao giảm dần.','Gặp cột cao hơn → nó là tường phải: lấy đáy ra và tính nước bị giữ.','Bề rộng × chiều cao bị chặn cộng vào kết quả; đẩy mỗi chỉ số làm tường trái tương lai.'],why:'Mỗi cột được đẩy và lấy ra tối đa một lần → O(n). Ngăn xếp biến việc "nhìn trái, nhìn phải" 2 chiều thành một lượt duy nhất — đây là quan hệ THỨ TỰ (đơn điệu).',pitfalls:['Dừng khi ngăn xếp rỗng sau khi pop — không có tường trái thì không có bồn chứa.','So sánh chặt (height[i] > top) để giữ tính giảm dần.']},en:{intuition:'Water over a bar is decided by the nearest taller wall on each side. A stack of decreasing heights remembers exactly those candidate left walls, so you never rescan.',approach:['Scan bars left to right, keeping a stack of indices with decreasing heights.','When a taller bar appears it is a right wall: pop the bottom and settle the water it traps.','Width × bounded-height adds to the result; push each index as a future left wall.'],why:'Each bar is pushed and popped at most once → O(n). The stack turns a 2-D "look left and right" into one pass — the ORDER (monotonic) relation.',pitfalls:['Break when the stack becomes empty after a pop — no left wall means no basin.','Compare strictly (height[i] > top) to keep heights decreasing.']}}},
+  {key:'binary-search', rel:'order', name:{vi:'Tìm kiếm nhị phân',en:'Binary Search'}, viz:buildBinarySearch(),
+   expl:{vi:{intuition:'Mảng đã sắp xếp là một trục đơn điệu: một phép so sánh ở giữa cho biết nửa nào chắc chắn không chứa mục tiêu, nên bạn vứt cả nửa đó.',approach:['Giữ khoảng [left, right]; nhìn phần tử giữa.','Nếu bằng mục tiêu → xong.','Nếu nhỏ hơn → đáp án ở bên phải; ngược lại bên trái. Chia đôi và lặp.'],why:'Mỗi bước bỏ đi một nửa khoảng còn lại → O(log n). Đây là bản chất của quan hệ THỨ TỰ.',pitfalls:['Dùng left + (right−left)/2 để tránh tràn số.','Lặp khi left ≤ right, và nhảy qua mid (mid±1) nếu không sẽ lặp vô hạn.']},en:{intuition:'A sorted array is a monotonic axis: one comparison at the middle tells you which half cannot contain the target, so you discard it wholesale.',approach:['Keep a [left, right] range; look at the middle.','If it equals the target, done.','If it is smaller, the answer is to the right; otherwise to the left. Halve and repeat.'],why:'Each step throws away half the remaining range → O(log n). This is the ORDER relation at its purest.',pitfalls:['Use left + (right−left)/2 to avoid overflow.','Loop while left ≤ right, and move past mid (mid±1) or you can loop forever.']}}},
+  {key:'two-sum', rel:'identity', name:{vi:'Two Sum',en:'Two Sum'}, viz:buildTwoSum(),
+   expl:{vi:{intuition:'Bạn không cần thứ tự — chỉ cần nhận ra một giá trị đã gặp. Hashmap trả lời "đã thấy phần bù chưa?" trong O(1).',approach:['Với mỗi số, tính phần bù = target − num.','Nếu phần bù đã có trong map → tìm được cặp.','Nếu chưa, lưu num → chỉ số rồi đi tiếp.'],why:'Mỗi phần tử được chèn và tra một lần → O(n). Chỉ dùng quan hệ DANH TÍNH (đã thấy hay chưa) — thứ tự vô nghĩa.',pitfalls:['Kiểm tra phần bù TRƯỚC khi chèn số hiện tại, nếu không một giá trị có thể tự khớp chính nó.','Lưu chỉ số, không chỉ sự tồn tại, để trả về vị trí.']},en:{intuition:"You don't need order — you only need to recognise a value you've seen. A hashmap answers 'have I seen the complement?' in O(1).",approach:['For each number, compute the complement target − num.','If the complement is already in the map, you found the pair.','Otherwise store num → index and move on.'],why:'Each element is inserted and looked up once → O(n). Only the IDENTITY relation (seen-or-not) is used — order is irrelevant.',pitfalls:['Check the complement before inserting the current number, or a value could match itself.','Store the index, not just presence, to return positions.']}}},
+  {key:'valid-parentheses', rel:'traverse', name:{vi:'Ngoặc hợp lệ',en:'Valid Parentheses'}, viz:buildValidParentheses(),
+   expl:{vi:{intuition:'Chỉ dấu mở chưa khớp GẦN NHẤT mới được đóng tiếp — nhu cầu "vào sau, ra trước" đó chính là một ngăn xếp.',approach:['Đẩy mọi dấu mở vào ngăn xếp.','Gặp dấu đóng, đỉnh phải là dấu mở tương ứng; lấy ra.','Hợp lệ ⇔ không có sai khớp nào và ngăn xếp rỗng ở cuối.'],why:'Mỗi ký tự được đẩy/lấy tối đa một lần → O(n). Ngăn xếp mã hóa sẵn cấu trúc lồng nhau.',pitfalls:['Dấu đóng gặp ngăn xếp rỗng là ngay lập tức không hợp lệ.','Còn dấu mở thừa ở cuối nghĩa là không cân bằng.']},en:{intuition:'Only the most recent unmatched opener can be closed next — that "last in, first out" need is exactly a stack.',approach:['Push every opening bracket.','On a closing bracket, the top must be its matching opener; pop it.','Valid iff nothing mismatches and the stack ends empty.'],why:'Each character is pushed/popped at most once → O(n). The stack encodes the nesting structure for free.',pitfalls:['A closing bracket with an empty stack is immediately invalid.','Leftover openers at the end mean unbalanced.']}}},
+  {key:'reverse-linked-list', rel:'traverse', name:{vi:'Đảo danh sách liên kết',en:'Reverse Linked List'}, viz:buildReverseLinkedList(),
+   expl:{vi:{intuition:'Đảo từng liên kết một, nhưng nhớ nút kế trước đã, để không mất phần đuôi.',approach:['Giữ prev (phần đã đảo), curr (nút đang xử lý), next (nhìn trước).','Trỏ curr ngược về prev, rồi trượt cả ba tiến lên.','Khi curr là null, prev là đầu mới.'],why:'Một lượt, O(1) bộ nhớ phụ — bạn viết lại con trỏ tại chỗ.',pitfalls:['Lưu next TRƯỚC khi viết lại curr→next, nếu không sẽ mất phần còn lại.','Trả về prev, không phải curr (curr là null ở cuối).']},en:{intuition:"Reverse the links one node at a time, but remember the next node first so you don't lose the tail.",approach:['Keep prev (reversed part), curr (node under work), next (lookahead).','Point curr back at prev, then slide all three forward.','When curr is null, prev is the new head.'],why:'One pass, O(1) extra memory — you rewrite pointers in place.',pitfalls:['Save next before rewriting curr→next, or the rest of the list is lost.','Return prev, not curr (which is null at the end).']}}},
+  {key:'bfs', rel:'traverse', name:{vi:'BFS — duyệt theo chiều rộng',en:'Breadth-First Search'}, viz:buildBFS(),
+   expl:{vi:{intuition:'Hàng đợi FIFO khám phá đồ thị theo từng vòng cùng khoảng cách từ điểm bắt đầu — nên lần đầu chạm một nút là theo đường ngắn nhất (số cạnh).',approach:['Đưa nút bắt đầu vào hàng đợi và đánh dấu đã thăm.','Lặp: lấy một nút ra, đưa các hàng xóm chưa thăm vào.','Thứ tự lấy ra chính là thứ tự BFS.'],why:'Mỗi đỉnh và cạnh được chạm một lần → O(V+E). Hàng đợi bảo đảm thứ tự theo tầng.',pitfalls:['Đánh dấu đã thăm khi ĐƯA VÀO (không phải khi lấy ra) để tránh trùng trong hàng đợi.','Cạnh vô hướng phải đi được cả hai chiều.']},en:{intuition:'A FIFO queue explores the graph in rings of equal distance from the start — so the first time you reach a node is by a shortest path (in edges).',approach:['Enqueue the start and mark it visited.','Repeatedly dequeue a node and enqueue its unvisited neighbours.','The dequeue order is the BFS order.'],why:'Every vertex and edge is touched once → O(V+E). The queue guarantees level-by-level order.',pitfalls:['Mark visited when enqueuing (not dequeuing) to avoid duplicates in the queue.','Undirected edges must be walkable both ways.']}}},
+  {key:'dfs', rel:'traverse', name:{vi:'DFS — duyệt theo chiều sâu',en:'Depth-First Search'}, viz:buildDFS(),
+   expl:{vi:{intuition:'Ngăn xếp LIFO lao sâu hết mức trước khi lùi lại — kỷ luật ngược với hàng đợi của BFS.',approach:['Đẩy nút bắt đầu.','Lấy một nút ra; nếu chưa thăm thì thăm và đẩy các hàng xóm chưa thăm.','Tiếp tục cho tới khi ngăn xếp rỗng.'],why:'Mỗi đỉnh và cạnh được chạm một lần → O(V+E). Ngăn xếp mã hóa thứ tự "đi sâu trước".',pitfalls:['Kiểm tra đã thăm khi LẤY RA (một nút có thể bị đẩy nhiều lần trước khi được thăm lần đầu).','Thứ tự đẩy hàng xóm sẽ lật thứ tự thăm.']},en:{intuition:"A LIFO stack dives as deep as possible before backing up — the opposite discipline to BFS's queue.",approach:['Push the start.','Pop a node; if unvisited, visit it and push its unvisited neighbours.','Continue until the stack is empty.'],why:'Every vertex and edge is touched once → O(V+E). The stack encodes the "go deeper first" order.',pitfalls:['Check visited on pop (a node can be pushed several times before it is first visited).','Neighbour push order flips the visit order.']}}}
+];
+
+/* ---- visualizer state + renderers ---- */
+const vizState = {key:VIZ_EXAMPLES[0].key, step:0, playing:false, speed:1, timer:null, focused:false};
+let vizCur=null, vizHi={};
+const vizEx = k => VIZ_EXAMPLES.find(e=>e.key===k) || VIZ_EXAMPLES[0];
+const PLAYBACK_SPEEDS=[0.5,1,2];
+const stepIntervalMs = sp => Math.round(900/(sp>0?sp:1));
+const fmtVal = v => v===null?'null':(typeof v==='object'?JSON.stringify(v):String(v));
+
+function vizStructWrap(def, inner){ return `<div class="viz-struct"><div class="viz-slabel">${esc((def&&def.label)||'')}</div>${inner}</div>`; }
+function renderArrayState(st){
+  const def=vizCur.viz.components.find(c=>c.id===st.id)||{};
+  const hi=vizHi[st.id]||{}; const n=st.values.length;
+  let body;
+  if(def.renderAsBars){
+    const nums=st.values.map(v=>typeof v==='number'?v:0); const max=Math.max(1,...nums);
+    body=`<div class="viz-bars">`+st.values.map((v,i)=>{const r=hi[i];const h=Math.round((Number(v||0)/max)*128)+2;return `<div class="viz-barcol"><span class="viz-barval">${esc(fmtVal(v))}</span><div class="viz-barfill" style="height:${h}px" ${r?`data-role="${r}"`:''}></div></div>`;}).join('')+`</div>`;
+  } else {
+    body=`<div class="viz-row">`+st.values.map((v,i)=>{const r=hi[i];return `<div class="viz-cell" ${r?`data-role="${r}"`:''}>${v===null?'∅':esc(fmtVal(v))}</div>`;}).join('')+`</div>`;
+  }
+  let idx=''; if(def.showIndices!==false) idx=`<div class="viz-idxrow">`+st.values.map((_,i)=>`<div class="viz-idx">${i}</div>`).join('')+`</div>`;
+  let ptr=''; if(st.pointers&&st.pointers.length){ ptr=`<div class="viz-ptrrow">`+st.values.map((_,i)=>{const ps=st.pointers.filter(p=>p.index===i);return `<div class="viz-ptrcol">`+ps.map(p=>`<span class="viz-ptr" data-role="${p.role||'active'}">${esc(p.name)}</span>`).join('')+`</div>`;}).join('')+`</div>`; }
+  return vizStructWrap(def, body+idx+ptr);
+}
+function renderStackState(st){
+  const def=vizCur.viz.components.find(c=>c.id===st.id)||{};
+  let inner; if(!st.values.length){ inner=`<div class="viz-stackempty">— ${esc(t('viz_empty'))} —</div>`; }
+  else { const top=[...st.values].reverse(); inner=`<div class="viz-stack">`+top.map((v,k)=>`<div class="viz-sbox">${esc(fmtVal(v))}${k===0?`<span class="tp">← ${esc(t('viz_top'))}</span>`:''}</div>`).join('')+`</div>`; }
+  return vizStructWrap(def, inner);
+}
+function renderQueueState(st){
+  const def=vizCur.viz.components.find(c=>c.id===st.id)||{};
+  let inner; if(!st.values.length){ inner=`<div class="viz-stackempty">— ${esc(t('viz_empty'))} —</div>`; }
+  else { inner=`<div class="viz-queue">`+st.values.map((v,i)=>{const tag=i===0?t('viz_front'):(i===st.values.length-1?t('viz_back'):'');return `<div class="viz-qbox">${tag?`<span class="viz-qtag">${esc(tag)}</span>`:''}${esc(fmtVal(v))}</div>`;}).join('')+`</div>`; }
+  return vizStructWrap(def, inner);
+}
+function renderVariablesState(st){
+  const def=vizCur.viz.components.find(c=>c.id===st.id)||{};
+  const keys=Object.keys(st.values||{});
+  const inner=keys.length?`<div class="viz-vars">`+keys.map(k=>`<span class="viz-var"><b>${esc(k)}</b> = ${esc(fmtVal(st.values[k]))}</span>`).join('')+`</div>`:`<div class="viz-mapempty">—</div>`;
+  return vizStructWrap(def, inner);
+}
+function renderHashMapState(st){
+  const def=vizCur.viz.components.find(c=>c.id===st.id)||{};
+  const inner=st.entries&&st.entries.length?`<div class="viz-map">`+st.entries.map(e=>`<span class="viz-me" ${e.role?`data-role="${e.role}"`:''}><b>${esc(e.key)}</b> → ${esc(fmtVal(e.value))}</span>`).join('')+`</div>`:`<div class="viz-mapempty">— ${esc(t('viz_empty'))} —</div>`;
+  return vizStructWrap(def, inner);
+}
+function renderLinkedListState(st){
+  const def=vizCur.viz.components.find(c=>c.id===st.id)||{};
+  const byNode={}, nullPtrs=[]; (st.pointers||[]).forEach(p=>{ if(p.nodeId==null) nullPtrs.push(p); else (byNode[p.nodeId]=byNode[p.nodeId]||[]).push(p); });
+  const prio={active:3,boundary:2,visited:1};
+  const nodesHtml=st.nodes.map((nd,i)=>{
+    const ps=byNode[nd.id]||[]; let role=null; ps.forEach(p=>{ if(p.role&&(role===null||(prio[p.role]||0)>(prio[role]||0))) role=p.role; });
+    const chips=ps.map(p=>`<span class="viz-ptr" data-role="${p.role||'active'}">${esc(p.name)}</span>`).join('');
+    const col=`<div class="viz-lcol"><div class="viz-lptr">${chips}</div><div class="viz-lnode" ${role?`data-role="${role}"`:''}>${esc(fmtVal(nd.value))}</div></div>`;
+    const tail=i<st.nodes.length-1?`<span class="viz-larrow">→</span>`:`<span class="viz-larrow">→</span><span class="viz-lnull">∅</span>`;
+    return col+tail;
+  }).join('');
+  let inner=`<div class="viz-list">${nodesHtml}</div>`;
+  if(nullPtrs.length) inner+=`<div class="viz-lnull" style="margin-top:8px;padding-left:0">`+nullPtrs.map(p=>`${esc(p.name)} → ∅`).join('  ·  ')+`</div>`;
+  return vizStructWrap(def, inner);
+}
+function renderGraphState(st){
+  const def=vizCur.viz.components.find(c=>c.id===st.id)||{};
+  const W=300,H=210,pad=28; const byId=Object.fromEntries(st.nodes.map(n=>[n.id,n]));
+  const px=n=>pad+(n.x??.5)*(W-2*pad), py=n=>pad+(n.y??.5)*(H-2*pad);
+  const active=new Set(st.activeEdges||[]);
+  const edges=st.edges.map(e=>{const a=byId[e.from],b=byId[e.to];const on=active.has(`${e.from}->${e.to}`)||active.has(`${e.to}->${e.from}`);return `<line class="viz-gedge ${on?'on':''}" x1="${px(a).toFixed(1)}" y1="${py(a).toFixed(1)}" x2="${px(b).toFixed(1)}" y2="${py(b).toFixed(1)}"/>`;}).join('');
+  const nodes=st.nodes.map(n=>{const role=(st.nodeRoles||{})[n.id]||'';return `<g class="viz-gnode ${role}"><circle cx="${px(n).toFixed(1)}" cy="${py(n).toFixed(1)}" r="16"/><text x="${px(n).toFixed(1)}" y="${py(n).toFixed(1)}" dy=".34em" text-anchor="middle">${esc(n.label||n.id)}</text></g>`;}).join('');
+  return vizStructWrap(def, `<svg class="viz-graph" viewBox="0 0 ${W} ${H}">${edges}${nodes}</svg>`);
+}
+function renderMatrixState(st){
+  const def=vizCur.viz.components.find(c=>c.id===st.id)||{};
+  const cur=st.current?`${st.current[0]},${st.current[1]}`:'';
+  const inner=`<div>`+st.values.map((row,r)=>`<div class="viz-row">`+row.map((v,c)=>{const isCur=cur===`${r},${c}`;return `<div class="viz-cell" ${isCur?'data-role="active"':''}>${v===null?'·':esc(fmtVal(v))}</div>`;}).join('')+`</div>`).join('')+`</div>`;
+  return vizStructWrap(def, inner);
+}
+function renderState(st){
+  switch(st.type){
+    case 'array': return renderArrayState(st);
+    case 'stack': return renderStackState(st);
+    case 'queue': return renderQueueState(st);
+    case 'variables': return renderVariablesState(st);
+    case 'hashmap': return renderHashMapState(st);
+    case 'linkedlist': return renderLinkedListState(st);
+    case 'graph': return renderGraphState(st);
+    case 'matrix': return renderMatrixState(st);
+    default: return '';
+  }
+}
+
+/* ---- shell + step painting ---- */
+function mountViz(){
+  vizCur=vizEx(vizState.key); const viz=vizCur.viz;
+  const opts=VIZ_EXAMPLES.map(e=>`<option value="${e.key}" ${e.key===vizState.key?'selected':''}>${esc(tx(e.name))}</option>`).join('');
+  const roles=['active','compare','boundary','visited','push','pop','result'];
+  const legend=roles.map(r=>`<span class="viz-lg" data-role="${r}">${esc(t('viz_r_'+r))}</span>`).join('');
+  const codeLines=(viz.sourceCode?viz.sourceCode.code.split('\n'):[]).map((ln,i)=>`<div class="viz-cl" data-ln="${i+1}"><span class="lnno">${i+1}</span><span class="lntx">${esc(ln)||' '}</span></div>`).join('');
+  const narr=t('viz_narr')?`<div class="viz-narr">${esc(t('viz_narr'))}</div>`:'';
+  $("#vizApp").innerHTML=`
+    <div class="viz-head">
+      <div class="viz-pick"><label class="lbl" style="margin:0" for="vizSelect">${esc(t('viz_pick'))}</label>
+        <select class="viz-select" id="vizSelect">${opts}</select></div>
+      <div class="viz-meta">
+        <span class="viz-badge"><b>${esc(t('viz_algorithm'))}:</b> ${esc(viz.algorithm)}</span>
+        ${viz.complexity?`<span class="viz-badge"><b>${esc(t('viz_time'))}:</b> ${esc(viz.complexity.time)}</span><span class="viz-badge"><b>${esc(t('viz_space'))}:</b> ${esc(viz.complexity.space)}</span>`:''}
+      </div>
+    </div>
+    <div class="viz-main">
+      <div class="viz-stage" id="vizStage"></div>
+      <div class="viz-side">
+        <div class="viz-panel"><div class="pt">${esc(t('viz_step_lbl'))}</div><span class="viz-phasechip" id="vizPhase" hidden></span><div class="viz-desc" id="vizDesc"></div></div>
+        <div class="viz-panel" id="vizCalcPanel" hidden><div class="pt">${esc(t('viz_calc'))}</div><pre class="viz-calc" id="vizCalc"></pre></div>
+        <div class="viz-panel"><div class="pt">${esc(t('viz_result'))}</div><div class="viz-result" id="vizResult"></div></div>
+        <div class="viz-panel"><div class="pt">${esc(t('viz_code'))}</div><div class="viz-code" id="vizCode">${codeLines}</div></div>
+      </div>
+    </div>
+    <div class="viz-controls">
+      <div class="viz-btns">
+        <button class="viz-cbtn" id="vizFirst" title="${esc(t('viz_first'))}">⏮</button>
+        <button class="viz-cbtn" id="vizPrev" title="${esc(t('viz_prev'))}">◀</button>
+        <button class="viz-cbtn play" id="vizPlay" title="${esc(t('viz_play'))}">▶</button>
+        <button class="viz-cbtn" id="vizNext" title="${esc(t('viz_next'))}">▶</button>
+        <button class="viz-cbtn" id="vizLast" title="${esc(t('viz_last'))}">⏭</button>
+      </div>
+      <div class="viz-speeds" title="${esc(t('viz_speed'))}">${PLAYBACK_SPEEDS.map(s=>`<button class="viz-sp ${s===vizState.speed?'on':''}" data-sp="${s}">${s}×</button>`).join('')}</div>
+      <div class="viz-scrub"><input type="range" id="vizScrub" min="0" max="${viz.steps.length-1}" value="${vizState.step}"><span class="viz-count" id="vizCount"></span></div>
+    </div>
+    <div class="viz-legend"><span style="font-weight:700;color:var(--text-dim)">${esc(t('viz_legend'))}:</span>${legend}</div>
+    ${narr}
+    <div class="viz-how" id="vizHow"></div>`;
+  // wire
+  $("#vizSelect").onchange=e=>vizSelect(e.target.value);
+  $("#vizFirst").onclick=()=>{vizStop();vizGo(0);};
+  $("#vizPrev").onclick=()=>{vizStop();vizGo(vizState.step-1);};
+  $("#vizNext").onclick=()=>{vizStop();vizGo(vizState.step+1);};
+  $("#vizLast").onclick=()=>{vizStop();vizGo(viz.steps.length-1);};
+  $("#vizPlay").onclick=vizToggle;
+  $("#vizScrub").oninput=e=>{vizStop();vizGo(+e.target.value);};
+  $$("#vizApp .viz-sp").forEach(b=>b.onclick=()=>vizSetSpeed(+b.dataset.sp));
+  renderHow();
+  paintStep();
+}
+function renderHow(){
+  const ex=vizCur, ex2=ex.expl[lang]||ex.expl.en;
+  $("#vizHow").innerHTML=`<h3>${esc(t('viz_how'))} — ${esc(ex.viz.title)}</h3>
+    <div class="viz-howgrid">
+      <div class="viz-howblk"><div class="pt">${esc(t('viz_intuition'))}</div><p>${esc(ex2.intuition)}</p></div>
+      <div class="viz-howblk"><div class="pt">${esc(t('viz_approach'))}</div><ol>${ex2.approach.map(a=>`<li>${esc(a)}</li>`).join('')}</ol></div>
+      ${ex2.why?`<div class="viz-howblk"><div class="pt">${esc(t('viz_why'))}</div><p>${esc(ex2.why)}</p></div>`:''}
+      ${ex2.pitfalls&&ex2.pitfalls.length?`<div class="viz-howblk"><div class="pt">${esc(t('viz_pitfalls'))}</div><ul>${ex2.pitfalls.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>`:''}
+    </div>`;
+}
+function paintStep(){
+  const viz=vizCur.viz, i=vizState.step, step=viz.steps[i]; if(!step) return;
+  vizHi={}; (step.highlights||[]).forEach(h=>{ vizHi[h.component]=vizHi[h.component]||{}; (h.indices||[]).forEach(ix=>{ vizHi[h.component][ix]=h.role||'active'; }); });
+  $("#vizStage").innerHTML=(step.components||[]).map(renderState).join('');
+  const phaseEl=$("#vizPhase"); if(step.phase){phaseEl.hidden=false;phaseEl.textContent=step.phase;}else phaseEl.hidden=true;
+  $("#vizDesc").textContent=step.description||'';
+  const calcP=$("#vizCalcPanel"); if(step.calculation){calcP.hidden=false;$("#vizCalc").textContent=step.calculation;}else calcP.hidden=true;
+  $("#vizResult").textContent=step.result===undefined?'—':fmtVal(step.result);
+  // code highlight
+  $$("#vizCode .viz-cl").forEach(el=>el.classList.toggle('on', +el.dataset.ln===step.codeLine));
+  const onLine=$("#vizCode .viz-cl.on"); if(onLine){const box=$("#vizCode");box.scrollTop=Math.max(0,onLine.offsetTop-box.clientHeight/2+onLine.offsetHeight/2);}
+  // controls
+  const last=viz.steps.length-1;
+  $("#vizFirst").disabled=$("#vizPrev").disabled=(i<=0);
+  $("#vizNext").disabled=$("#vizLast").disabled=(i>=last);
+  $("#vizPlay").textContent=vizState.playing?'⏸':'▶';
+  $("#vizPlay").title=vizState.playing?t('viz_pause'):t('viz_play');
+  $("#vizScrub").value=i; $("#vizCount").textContent=`${i+1} / ${viz.steps.length}`;
+}
+function vizGo(i){ const last=vizCur.viz.steps.length-1; vizState.step=Math.max(0,Math.min(last,Math.trunc(i))); paintStep(); }
+function vizStop(){ if(vizState.timer){clearInterval(vizState.timer);vizState.timer=null;} vizState.playing=false; const p=$("#vizPlay"); if(p){p.textContent='▶';p.title=t('viz_play');} }
+function vizToggle(){
+  const last=vizCur.viz.steps.length-1;
+  if(vizState.playing){ vizStop(); return; }
+  if(vizState.step>=last) vizGo(0);
+  vizState.playing=true; $("#vizPlay").textContent='⏸'; $("#vizPlay").title=t('viz_pause');
+  vizState.timer=setInterval(()=>{ if(vizState.step>=vizCur.viz.steps.length-1){ vizStop(); } else { vizGo(vizState.step+1); } }, stepIntervalMs(vizState.speed));
+}
+function vizSetSpeed(sp){ vizState.speed=sp; $$("#vizApp .viz-sp").forEach(b=>b.classList.toggle('on',+b.dataset.sp===sp)); if(vizState.playing){ clearInterval(vizState.timer); vizState.timer=setInterval(()=>{ if(vizState.step>=vizCur.viz.steps.length-1){vizStop();}else{vizGo(vizState.step+1);} }, stepIntervalMs(sp)); } }
+function vizSelect(key){ vizStop(); vizState.key=key; vizState.step=0; mountViz(); }
+function refreshViz(){ vizStop(); mountViz(); }
+function initViz(){
+  const app=$("#vizApp"); if(!app) return;
+  app.addEventListener('mouseenter',()=>vizState.focused=true);
+  app.addEventListener('mouseleave',()=>vizState.focused=false);
+  app.addEventListener('focusin',()=>vizState.focused=true);
+  document.addEventListener('keydown',e=>{
+    if(!vizState.focused) return;
+    const tag=(document.activeElement&&document.activeElement.tagName)||'';
+    if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT') return;
+    if(e.key===' '){e.preventDefault();vizToggle();}
+    else if(e.key==='ArrowRight'){e.preventDefault();vizStop();vizGo(vizState.step+1);}
+    else if(e.key==='ArrowLeft'){e.preventDefault();vizStop();vizGo(vizState.step-1);}
+    else if(e.key==='Home'){e.preventDefault();vizStop();vizGo(0);}
+    else if(e.key==='End'){e.preventDefault();vizStop();vizGo(vizCur.viz.steps.length-1);}
+  });
+}
+
 /* ============================================================ LANGUAGE SWITCH */
 function applyLang(){
   chatHistory[0] = {role:"system", content:buildSystemPrompt()}; // chat replies follow the UI language
@@ -1683,6 +2195,7 @@ function applyLang(){
   renderLog();
   renderNotes();
   renderRoadmap();
+  refreshViz();
 }
 $("#langBtn").onclick = ()=>{ lang = lang==="vi"?"en":"vi"; LS.set("dsac_lang",lang); applyLang(); };
 
@@ -1697,6 +2210,8 @@ renderLog();
 renderNotes();
 initLC();
 renderRoadmap();
+initViz();
+mountViz();
 </script>
 </body>
 </html>
