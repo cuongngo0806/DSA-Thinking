@@ -131,6 +131,23 @@ Mở **⚙ Thiết lập → Dữ liệu**:
 
 Panel cũng **đếm trước** số tin nhắn chat / nhật ký / ghi chú sắp đẩy lên — nếu repo public thì chúng cũng public.
 
+### Trên máy khác · On another machine
+
+Lần đầu:
+
+```bash
+git clone https://github.com/cuongngo0806/DSA-Thinking.git
+cd DSA-Thinking
+npm install
+npm run dev
+```
+
+Mở app là **đã có sẵn tiến độ** — nó tự nạp `data/store.json` đã commit vào trình duyệt (chỉ **gộp**, không bao giờ đè cái đang có).
+
+Những lần sau, chỉ cần bấm **⬇ Kéo về** trong app: server chạy `git pull` (lấy **tính năng mới**) rồi gộp data mới nhất vào trình duyệt. Nếu code có đổi, app sẽ nhắc tải lại trang — hoặc chạy lại `npm run build` nếu bạn dùng `npm start`.
+
+Xong việc thì bấm **⬆ Đẩy lên** để đưa tiến độ (và mọi thay đổi code) trở lại git.
+
 ### Cấu hình
 
 Mặc định chạy được ngay khi mở app từ trong repo. Muốn đổi thì copy `.env.example` → `.env`:

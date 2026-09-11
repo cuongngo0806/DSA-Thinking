@@ -282,7 +282,7 @@ export const en = {
   git_pulled: "Pulled and merged. Data on git from",
   git_nothing: "Nothing changed to push.",
   git_with_app: "· with {n} app file(s)",
-  git_app_updated: "The app was updated — reload the page.",
+  git_app_updated: "App code updated — reload the page (dev), or re-run npm run build (npm start).",
   git_branch_lbl: "Branch",
   git_file_lbl: "Data file",
   git_remote_data: "Data on git",

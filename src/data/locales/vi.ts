@@ -282,7 +282,7 @@ export const vi = {
   git_pulled: "Đã kéo về và gộp. Dữ liệu trên git lúc",
   git_nothing: "Không có gì thay đổi để đẩy.",
   git_with_app: "· kèm {n} file code",
-  git_app_updated: "Đã có bản code mới — tải lại trang.",
+  git_app_updated: "Có code mới — tải lại trang (dev) hoặc chạy lại npm run build (npm start).",
   git_branch_lbl: "Nhánh",
   git_file_lbl: "File dữ liệu",
   git_remote_data: "Dữ liệu trên git",
