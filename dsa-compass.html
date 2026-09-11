@@ -538,6 +538,20 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
 .lc-derived{font-weight:400;color:var(--brass);font-size:10.5px;letter-spacing:.2px}
 .set-tabs{margin:0 20px}
 .git-meta{font-size:11.5px;color:var(--muted-2);margin-top:10px}
+.git-route{margin-top:4px}
+.git-route .pt{font-size:10.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--dependency);margin-bottom:6px}
+.git-route p{margin:0 0 12px;font-size:13px;color:var(--muted);line-height:1.6}
+.git-route p b{color:var(--text-dim)}
+.git-cmd{margin:12px 0 0;padding:11px 13px;border-radius:10px;background:var(--ink-0);border:1px solid var(--line);
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.3px;line-height:1.75;color:var(--text-dim);white-space:pre;overflow-x:auto}
+:root[data-theme=light] .git-cmd{background:#f6f0e2}
+.git-route2{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.git-route2 > summary{cursor:pointer;font-size:12.5px;font-weight:600;color:var(--muted);padding:4px 0;list-style:none}
+.git-route2 > summary::-webkit-details-marker{display:none}
+.git-route2 > summary::before{content:"\25b8 ";color:var(--brass)}
+.git-route2[open] > summary::before{content:"\25be "}
+.git-route2 > summary:hover{color:var(--text-dim)}
+.git-r2-note{margin:10px 0 14px;font-size:12.5px;color:var(--muted-2);line-height:1.6}
 .git-check{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);margin:2px 0 12px;cursor:pointer}
 .git-check input{accent-color:var(--brass);width:15px;height:15px;cursor:pointer}
 .git-alt{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
@@ -870,32 +884,41 @@ textarea.inp.mono,input.inp.mono{font-family:ui-monospace,Menlo,Consolas,monospa
       <p class="hint-note" data-i18n="set_hint">Nếu mở file bằng <code>file://</code>, trình duyệt có thể chặn CORS. Hãy bật CORS ở endpoint (ví dụ <code>OLLAMA_ORIGINS=*</code>) hoặc chạy một máy chủ tĩnh cho trang này.</p>
     </div>
     <div class="modal-body" id="setPaneGit" hidden>
-      <p class="modal-lead" data-i18n="git_lead">Đẩy / kéo toàn bộ dữ liệu học (tiến độ 150 câu, nhật ký, từ điển riêng, lịch sử chat, visualization đã lưu) lên một repo GitHub để dùng chung trên nhiều máy.</p>
+      <p class="modal-lead" data-i18n="git_lead">Một trang web không chạy được <code>git</code>.</p>
       <div class="status" id="gitStatus" data-i18n="git_idle">Chưa đồng bộ</div>
-      <div class="field"><label class="lbl" data-i18n="git_repo">Repo (owner/name)</label><input class="inp" id="gitRepo" placeholder="cuongngo0806/DSA-Thinking"></div>
-      <div class="row2">
-        <div class="field"><label class="lbl" data-i18n="git_branch">Nhánh</label><input class="inp" id="gitBranch" placeholder="main"></div>
-        <div class="field"><label class="lbl" data-i18n="git_path">File dữ liệu</label><input class="inp" id="gitPath" placeholder="dsa-compass-data.json"></div>
-      </div>
-      <div class="field"><label class="lbl" data-i18n="git_codepath">File source code</label><input class="inp" id="gitCodePath" placeholder="dsa-compass.html"></div>
-      <label class="git-check"><input type="checkbox" id="gitPushCode"> <span data-i18n="git_push_code_lbl">Đẩy cả source code khi bấm Đẩy lên</span></label>
-      <div class="field"><label class="lbl" data-i18n="git_token">GitHub token</label><input class="inp" id="gitToken" type="password" data-i18n-attr="placeholder:git_token_ph"></div>
-      <div class="viz-genbtns" style="margin-top:4px">
-        <button class="btn btn-primary" id="gitPushBtn" data-i18n="git_push">⬆ Đẩy lên</button>
-        <button class="btn btn-ghost" id="gitPullBtn" data-i18n="git_pull">⬇ Kéo về</button>
-        <button class="btn btn-ghost" id="gitGetCodeBtn" data-i18n="git_get_code">⬇ Tải code từ repo</button>
-        <input type="file" id="codePick" accept=".html,text/html" hidden>
-      </div>
-      <div class="git-alt">
-        <div class="pt" data-i18n="git_file_head">Không muốn dùng token?</div>
-        <p data-i18n="git_file_body">Tải file dữ liệu về, đặt vào thư mục repo rồi <code>git commit</code> như bình thường. Không cần token, không cần mạng.</p>
+
+      <div class="git-route">
+        <div class="pt" data-i18n="git_r1_head">Cách 1 — dùng git như bình thường (khuyên dùng)</div>
+        <p data-i18n="git_r1_body">Máy bạn đã có repo và git rồi: chỉ cần lưu file dữ liệu vào thư mục repo rồi commit như mọi khi. <b>Không cần token.</b> Source code thì git đã quản lý sẵn.</p>
         <div class="viz-genbtns">
-          <button class="btn btn-ghost" id="dataExport" data-i18n="git_file_save">💾 Tải file dữ liệu</button>
+          <button class="btn btn-primary" id="dataExport" data-i18n="git_file_save">💾 Tải file dữ liệu</button>
           <button class="btn btn-ghost" id="dataImportBtn" data-i18n="git_file_load">📂 Nạp từ file</button>
           <input type="file" id="dataImport" accept="application/json,.json" hidden>
         </div>
+        <pre class="git-cmd">git add -A
+git commit -m "update"
+git push</pre>
       </div>
-      <p class="hint-note" data-i18n="git_hint">Dùng <b>fine-grained token</b> chỉ cấp quyền <b>Contents: Read and write</b> cho đúng repo này. Token lưu trong trình duyệt của bạn và chỉ được gửi tới <code>api.github.com</code> — không bao giờ nằm trong file dữ liệu đồng bộ. Thiết lập AI (kể cả API key) cũng <b>không</b> được đồng bộ.</p>
+
+      <details class="git-route2" id="gitApiWrap">
+        <summary data-i18n="git_r2_head">Cách 2 — đồng bộ thẳng từ app (cho máy không cài git)</summary>
+        <p class="git-r2-note" data-i18n="git_r2_body"><b>Kéo về</b> và <b>Tải code</b> từ repo public thì không cần gì. Chỉ <b>Đẩy lên</b> (ghi vào GitHub) mới cần token.</p>
+        <div class="field"><label class="lbl" data-i18n="git_repo">Repo (owner/name)</label><input class="inp" id="gitRepo" placeholder="cuongngo0806/DSA-Thinking"></div>
+        <div class="row2">
+          <div class="field"><label class="lbl" data-i18n="git_branch">Nhánh</label><input class="inp" id="gitBranch" placeholder="main"></div>
+          <div class="field"><label class="lbl" data-i18n="git_path">File dữ liệu</label><input class="inp" id="gitPath" placeholder="dsa-compass-data.json"></div>
+        </div>
+        <div class="field"><label class="lbl" data-i18n="git_codepath">File source code</label><input class="inp" id="gitCodePath" placeholder="dsa-compass.html"></div>
+        <label class="git-check"><input type="checkbox" id="gitPushCode"> <span data-i18n="git_push_code_lbl">Đẩy cả source code khi bấm Đẩy lên</span></label>
+        <div class="field"><label class="lbl" data-i18n="git_token">GitHub token</label><input class="inp" id="gitToken" type="password" data-i18n-attr="placeholder:git_token_ph"></div>
+        <div class="viz-genbtns" style="margin-top:4px">
+          <button class="btn btn-ghost" id="gitPushBtn" data-i18n="git_push">⬆ Đẩy lên</button>
+          <button class="btn btn-ghost" id="gitPullBtn" data-i18n="git_pull">⬇ Kéo về</button>
+          <button class="btn btn-ghost" id="gitGetCodeBtn" data-i18n="git_get_code">⬇ Tải code từ repo</button>
+          <input type="file" id="codePick" accept=".html,text/html" hidden>
+        </div>
+        <p class="hint-note" data-i18n="git_hint">Dùng <b>fine-grained token</b> chỉ cấp quyền <b>Contents: Read and write</b> cho đúng repo này. Token lưu trong trình duyệt của bạn và chỉ được gửi tới <code>api.github.com</code> — không bao giờ nằm trong file dữ liệu đồng bộ. Thiết lập AI (kể cả API key) cũng <b>không</b> được đồng bộ.</p>
+      </details>
     </div>
   </div>
 </div>
@@ -2132,7 +2155,7 @@ Object.assign(T.vi, {
   vai_hint:'Dùng <b>chung</b> một nguồn AI với gia sư. Việc sinh trace cần model mạnh về code và cửa sổ ngữ cảnh lớn.',
   settings_title:"Thiết lập", settings_head:"Thiết lập",
   set_tab_ai:"AI", set_tab_git:"Đồng bộ Git",
-  git_lead:'Trình duyệt <b>không chạy được <code>git</code></b>, nên app đồng bộ qua HTTP. <b>Kéo về</b> từ repo public thì không cần gì cả; chỉ <b>Đẩy lên</b> (ghi vào GitHub) mới cần token. Đồng bộ toàn bộ dữ liệu học (tiến độ 150 câu, nhật ký, từ điển riêng, lịch sử chat, visualization đã lưu) lên một repo GitHub để dùng chung trên nhiều máy.',
+  git_lead:'Một trang web <b>không chạy được <code>git</code></b> — nó không gọi được lệnh và không ghi được vào thư mục repo. Nên có hai đường:',
   git_file_head:"Không muốn dùng token?",
   git_file_body:'Tải file dữ liệu về, đặt vào thư mục repo rồi <code>git commit</code> như bình thường. Không cần token, không cần mạng.',
   git_file_save:"💾 Tải file dữ liệu", git_file_load:"📂 Nạp từ file",
@@ -2145,13 +2168,17 @@ Object.assign(T.vi, {
   git_pick_code:"Chọn file dsa-compass.html để đẩy lên…",
   git_code_cancel:"Đã hủy chọn file code (dữ liệu vẫn được đẩy).",
   git_not_app:"File này không phải source của La Bàn DSA — từ chối để không ghi đè nhầm.",
+  git_r1_head:"Cách 1 — dùng git như bình thường (khuyên dùng)",
+  git_r1_body:'Máy bạn đã có repo và git rồi: chỉ cần lưu file dữ liệu vào thư mục repo rồi commit như mọi khi. <b>Không cần token.</b> Source code thì git đã quản lý sẵn — push từ terminal còn an toàn hơn (có diff, có merge).',
+  git_r2_head:"Cách 2 — đồng bộ thẳng từ app (cho máy không cài git)",
+  git_r2_body:'<b>Kéo về</b> và <b>Tải code</b> từ repo public thì không cần gì. Chỉ <b>Đẩy lên</b> (ghi vào GitHub qua HTTP) mới cần token.',
   git_idle:"Chưa đồng bộ", git_repo:"Repo (owner/name)", git_branch:"Nhánh", git_path:"File dữ liệu",
   git_token:'GitHub token <span class="lc-derived">(chỉ cần khi Đẩy lên)</span>', git_token_ph:"ghp_... hoặc github_pat_...",
   git_push:"⬆ Đẩy lên", git_pull:"⬇ Kéo về",
   git_pushing:"Đang đẩy lên…", git_pulling:"Đang kéo về…",
   git_pushed:"Đã đẩy lên lúc", git_pulled:"Đã kéo về và gộp lúc",
   git_failed:"Lỗi: ", git_nofile:"Chưa có file trên repo — hãy Đẩy lên trước.",
-  git_need_repo:"Nhập repo dạng owner/name", git_need_token:"Cần GitHub token",
+  git_need_repo:"Nhập repo dạng owner/name", git_need_token:"Đẩy từ app cần token — hoặc dùng Cách 1: Tải file dữ liệu rồi git push.",
   git_hint:'Dùng <b>fine-grained token</b> chỉ cấp quyền <b>Contents: Read and write</b> cho đúng repo này. Token lưu trong trình duyệt của bạn và chỉ được gửi tới <code>api.github.com</code> — không bao giờ nằm trong file dữ liệu đồng bộ. Thiết lập AI (kể cả API key) cũng <b>không</b> được đồng bộ.',
   settings_lead:'Cả <b>gia sư Socratic</b> và <b>trình sinh trực quan</b> dùng chung nguồn AI này. Chúng chỉ khác nhau ở prompt hệ thống.',
   open_settings:"⚙ Mở thiết lập AI", ai_not_set:"Chưa cấu hình AI",
@@ -2193,7 +2220,7 @@ Object.assign(T.en, {
   vai_hint:'Uses the <b>same</b> AI source as the tutor. Trace generation wants a strong coding model with a large context window.',
   settings_title:"Settings", settings_head:"Settings",
   set_tab_ai:"AI", set_tab_git:"Git sync",
-  git_lead:'A browser <b>cannot run <code>git</code></b>, so syncing goes over HTTP. <b>Pull</b> from a public repo needs nothing; only <b>Push</b> (writing to GitHub) needs a token. Syncs all your learning data (150-problem progress, log, your own dictionary, chat history, saved visualizations) through a GitHub repo so you can work on several machines.',
+  git_lead:'A web page <b>cannot run <code>git</code></b> — it can neither invoke the command nor write into the repo folder. So there are two routes:',
   git_file_head:"Rather not use a token?",
   git_file_body:'Save the data file, drop it in your repo folder and <code>git commit</code> it as usual. No token, no network.',
   git_file_save:"💾 Save data file", git_file_load:"📂 Load from file",
@@ -2206,13 +2233,17 @@ Object.assign(T.en, {
   git_pick_code:"Pick dsa-compass.html to push…",
   git_code_cancel:"Code file pick cancelled (data was still pushed).",
   git_not_app:"That file is not the DSA Compass source — refusing, to avoid overwriting the wrong thing.",
+  git_r1_head:"Route 1 — just use git (recommended)",
+  git_r1_body:'You already have the repo and git on this machine: save the data file into the repo folder and commit it as usual. <b>No token needed.</b> The source is already under git — pushing from the terminal is safer anyway (real diffs and merges).',
+  git_r2_head:"Route 2 — sync straight from the app (for machines without git)",
+  git_r2_body:'<b>Pull</b> and <b>Get code</b> from a public repo need nothing. Only <b>Push</b> (writing to GitHub over HTTP) needs a token.',
   git_idle:"Not synced", git_repo:"Repo (owner/name)", git_branch:"Branch", git_path:"Data file",
   git_token:'GitHub token <span class="lc-derived">(only needed to Push)</span>', git_token_ph:"ghp_... or github_pat_...",
   git_push:"⬆ Push", git_pull:"⬇ Pull",
   git_pushing:"Pushing…", git_pulling:"Pulling…",
   git_pushed:"Pushed at", git_pulled:"Pulled & merged at",
   git_failed:"Error: ", git_nofile:"No file in the repo yet — Push first.",
-  git_need_repo:"Enter a repo as owner/name", git_need_token:"A GitHub token is required",
+  git_need_repo:"Enter a repo as owner/name", git_need_token:"Pushing from the app needs a token — or use Route 1: save the data file and git push.",
   git_hint:'Use a <b>fine-grained token</b> scoped to <b>Contents: Read and write</b> on this one repo. The token is stored in your browser and only ever sent to <code>api.github.com</code> — it is never written into the synced data file. AI settings (including the API key) are <b>not</b> synced either.',
   settings_lead:'Both the <b>Socratic tutor</b> and the <b>visualization generator</b> use this one AI source. They differ only in system prompt.',
   open_settings:"⚙ Open AI settings", ai_not_set:"AI not configured",

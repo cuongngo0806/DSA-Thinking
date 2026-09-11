@@ -183,7 +183,9 @@ Mở **⚙ Thiết lập → Đồng bộ Git**.
 >
 > **Why a token when the file already sits in the repo?** The page runs in the browser sandbox: it cannot invoke `git`, cannot write into the repo folder, and has no idea it lives in one. Only HTTP — so *writing* to GitHub needs auth. Reading does not.
 
-### Ba cách dùng · Three routes
+### Hai đường · Two routes
+
+**Nếu máy bạn đã có git và repo thì không cần token gì cả** — cứ `git push` như bình thường. Push từ terminal còn an toàn hơn push từ app (có diff, có merge, không ghi đè mù). Token chỉ dành cho máy **không cài git**.
 
 | Cách | Cần token? | Dùng khi |
 |---|---|---|
