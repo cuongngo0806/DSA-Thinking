@@ -5,7 +5,7 @@
  * same machine, and that process runs git.
  */
 
-import { getStatus, pull, push, syncConfig } from './git-sync.mjs';
+import { getStatus, pull, push, readData, syncConfig } from './git-sync.mjs';
 
 const MAX_BODY = 8 * 1024 * 1024; // a long history of chats and traces
 
@@ -52,6 +52,10 @@ export async function handleSyncRequest(req, res) {
   try {
     if (url.pathname === '/api/sync/status' && req.method === 'GET') {
       json(res, 200, await getStatus());
+      return true;
+    }
+    if (url.pathname === '/api/sync/data' && req.method === 'GET') {
+      json(res, 200, await readData());
       return true;
     }
     if (url.pathname === '/api/sync/pull' && req.method === 'POST') {

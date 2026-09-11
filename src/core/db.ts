@@ -4,10 +4,11 @@
  * One JSON document holds everything the learner accumulates. It lives in three
  * places and moves between them deliberately:
  *
- *   localStorage        the working copy, written on every change
- *   data/store.json     the committed copy, versioned by git alongside the code
- *   a downloaded file   the bridge between the two, because a page cannot write
- *                       into the repo folder itself
+ *   localStorage      the working copy, written on every change
+ *   data/store.json   the committed copy, versioned by git alongside the code
+ *
+ * The local server moves data between them, because a page can neither run git
+ * nor write into the repo folder.
  *
  * Merging is always a union: syncing must never silently drop work done on the
  * other machine, so the rule is "keep both" wherever two copies disagree.
@@ -129,20 +130,40 @@ export function load(): StoreData {
 }
 
 /**
- * Seed from the copy committed in the repo. Only merges - a freshly cloned repo
- * should hand you your data, but never clobber work already in this browser.
+ * Seed from the copy committed in the repo, so a fresh clone opens with your
+ * data already in it. Only ever merges - it must never clobber work that is
+ * already in this browser.
+ *
+ * Asks the local server first, because it reads the repo directly and so works
+ * the same under `npm run dev` and `npm start`. The static path is the fallback
+ * for a build served without a server.
  */
 export async function bootstrapFromRepo(): Promise<boolean> {
-  try {
-    const res = await fetch(REPO_DATA_URL, { cache: 'no-store' });
-    if (!res.ok) return false;
-    const file = (await res.json()) as StoreFile;
-    if (file?.app !== 'dsa-compass' || !file.data) return false;
-    merge(file.data);
-    return true;
-  } catch {
-    return false; // no committed copy yet, or offline - both are fine
+  const sources: Array<() => Promise<StoreFile | null>> = [
+    async () => {
+      const res = await fetch('/api/sync/data', { cache: 'no-store' });
+      if (!res.ok) return null;
+      const body = (await res.json()) as { state?: StoreFile | null };
+      return body?.state ?? null;
+    },
+    async () => {
+      const res = await fetch(REPO_DATA_URL, { cache: 'no-store' });
+      if (!res.ok) return null;
+      return (await res.json()) as StoreFile;
+    },
+  ];
+
+  for (const load of sources) {
+    try {
+      const file = await load();
+      if (file?.app !== 'dsa-compass' || !file.data) continue;
+      merge(file.data);
+      return true;
+    } catch {
+      // try the next source; no committed copy yet is a normal first run
+    }
   }
+  return false;
 }
 
 /* ------------------------------------------------------------------ *

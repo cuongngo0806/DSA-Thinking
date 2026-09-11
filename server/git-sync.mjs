@@ -115,6 +115,22 @@ export async function getStatus() {
   return { ...base, dirty, ahead, behind, remoteExists, remoteUpdatedAt, lastCommit };
 }
 
+/**
+ * The database as committed in the repo, without touching the network.
+ *
+ * A fresh clone needs this on first load: the browser has nothing yet, and the
+ * built app does not carry `data/` inside `dist/`.
+ */
+export async function readData() {
+  const cfg = syncConfig();
+  try {
+    const raw = await readFile(dataPath(cfg), 'utf8');
+    return { ok: true, state: JSON.parse(raw), updatedAt: readUpdatedAt(raw) };
+  } catch {
+    return { ok: true, state: null };
+  }
+}
+
 /** Fast-forward to the remote and hand back the committed database. */
 export async function pull() {
   const cfg = syncConfig();
