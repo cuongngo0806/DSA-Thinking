@@ -1,0 +1,28 @@
+{
+  "app": "dsa-compass",
+  "schema": 1,
+  "updatedAt": "2026-09-11T02:20:14.559Z",
+  "data": {
+    "lcCfg": {
+      "start": "2026-09-11",
+      "perDay": 2,
+      "username": "cuongngo0806",
+      "mode": "end",
+      "target": 150,
+      "end": "2026-12-30"
+    },
+    "lcProgress": {},
+    "lcActivity": {},
+    "userDict": [],
+    "sessionLog": [],
+    "chatSessions": [
+      {
+        "id": "cmtwaf8px",
+        "title": "",
+        "at": 1789090722789,
+        "msgs": []
+      }
+    ],
+    "savedViz": []
+  }
+}
