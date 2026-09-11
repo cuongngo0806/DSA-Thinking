@@ -30,8 +30,25 @@ function Move-ExportIntoRepo {
     return $true
 }
 
+# The data file can hold chat transcripts and private notes. If this repo is
+# public, so are they - say so rather than pushing them silently.
+function Warn-IfPersonal {
+    $path = Join-Path $PSScriptRoot $DataFile
+    if (-not (Test-Path -LiteralPath $path)) { return }
+    try { $d = (Get-Content -LiteralPath $path -Raw | ConvertFrom-Json).data } catch { return }
+    $msgs = 0
+    foreach ($c in @($d.chatSessions)) { if ($c.msgs) { $msgs += @($c.msgs).Count } }
+    $logs  = @($d.sessionLog).Count
+    $notes = 0
+    foreach ($v in @($d.lcProgress.PSObject.Properties.Value)) { if ($v.note) { $notes++ } }
+    if (($msgs + $logs + $notes) -eq 0) { return }
+    Write-Host "  note: this export carries $msgs chat message(s), $logs log entry(ies), $notes problem note(s)." -ForegroundColor Yellow
+    Write-Host "        If this repo is public, so are they. Use a private repo if that matters." -ForegroundColor Yellow
+}
+
 function Invoke-SyncOnce {
     Move-ExportIntoRepo | Out-Null
+    Warn-IfPersonal
 
     git add -A 2>&1 | Out-Null
     git diff --cached --quiet
