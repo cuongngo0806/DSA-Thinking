@@ -1,0 +1,28 @@
+/* App chrome: top bar, Practice/Theory tabs, sub-tab strips, pane visibility. */
+
+header.nav{position:sticky;top:0;z-index:40;backdrop-filter:blur(10px);
+  background:color-mix(in srgb, var(--bg) 82%, transparent);border-bottom:1px solid var(--line-soft);}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--serif);font-size:19px;color:var(--text);white-space:nowrap}
+.brand .dot{width:26px;height:26px;flex:0 0 auto}
+[hidden]{display:none !important}
+.top-tabs{display:flex;gap:4px;flex:1;padding:3px;background:var(--surface);border:1px solid var(--line);border-radius:12px;max-width:340px}
+.top-tab{flex:1;background:none;border:none;color:var(--muted);font-family:var(--sans);font-size:14px;font-weight:600;
+  padding:8px 16px;border-radius:9px;cursor:pointer;white-space:nowrap;transition:color .18s,background .18s}
+.top-tab:hover{color:var(--text)}
+.top-tab.on{color:var(--ink-0);background:var(--brass)}
+.subtabs-wrap{border-bottom:1px solid var(--line-soft);position:sticky;top:59px;z-index:30;
+  background:color-mix(in srgb, var(--bg) 90%, transparent);backdrop-filter:blur(10px)}
+.sub-tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;padding:7px 0}
+.sub-tabs::-webkit-scrollbar{display:none}
+.sub-tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--sans);
+  font-size:14px;font-weight:500;padding:8px 13px;border-radius:8px 8px 0 0;cursor:pointer;white-space:nowrap;transition:color .18s}
+.sub-tab:hover{color:var(--text)}
+.sub-tab.on{color:var(--brass);border-bottom-color:var(--brass);font-weight:600}
+section.block[data-pane]{border-top:none;padding-top:34px}
+.icon-btn{flex:0 0 auto;background:var(--surface);border:1px solid var(--line);color:var(--text-dim);height:38px;
+  border-radius:10px;cursor:pointer;font-size:15px;display:grid;place-items:center;transition:border-color .18s,color .18s;font-family:var(--sans)}
+.theme-btn{width:38px}
+.lang-btn{padding:0 12px;font-weight:700;font-size:13px;letter-spacing:.5px}
+.icon-btn:hover{border-color:var(--brass);color:var(--brass)}
+section.block{padding:52px 0;border-top:1px solid var(--line-soft)}

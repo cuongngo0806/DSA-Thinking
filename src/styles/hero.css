@@ -1,0 +1,22 @@
+/* Landing hero and the compass needle. */
+
+.hero{position:relative;padding:64px 0 46px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center}
+.eyebrow{color:var(--brass);font-weight:600;font-size:13.5px;letter-spacing:.5px;margin:0 0 14px}
+.hero h1{font-size:clamp(34px,5.2vw,54px);line-height:1.06;margin:0 0 22px;font-weight:600}
+.hero h1 em{font-style:italic;color:var(--brass)}
+.aphorism{font-family:var(--serif);font-size:clamp(17px,2.1vw,21px);line-height:1.5;font-style:italic;color:var(--text-dim);
+  border-left:2px solid var(--brass);padding:2px 0 2px 20px;margin:0 0 26px;max-width:52ch}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.compass-holder{display:grid;place-items:center}
+.compass{width:min(340px,80vw);height:auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,.4))}
+@keyframes settle{0%{transform:rotate(-520deg)}70%{transform:rotate(18deg)}85%{transform:rotate(-9deg)}100%{transform:rotate(0deg)}}
+
+@media (prefers-reduced-motion:no-preference){
+  .needle-anim{animation:settle 2.2s cubic-bezier(.2,.8,.2,1) forwards;transform-origin:150px 150px}
+}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:26px}
+  .compass-holder{order:-1}
+}

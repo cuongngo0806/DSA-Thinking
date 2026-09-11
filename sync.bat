@@ -1,6 +1,5 @@
 @echo off
 cd /d "%~dp0"
-echo Syncing DSA Compass...
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0sync.ps1"
+npm run sync
 echo.
 pause

@@ -1,0 +1,41 @@
+/* Design tokens: palette, type, spacing. Relation colours are the spine of the
+   whole app, so they live here and nowhere else. */
+
+/* ============================================================
+   LA BÀN DSA — self-contained, bilingual (VI/EN).
+   Relation colors: Identity=sky, Order=brass/amber, Dependency=verdigris,
+   Traverse=pearl. Consistent everywhere.
+   ============================================================ */
+:root{
+  --ink-0:#0a1420;--ink-1:#0d1b2a;--ink-2:#122438;--ink-3:#18314a;
+  --line:#22405f;--line-soft:#1a3149;
+  --pearl:#eef3f7;--pearl-dim:#c3d0dc;--muted:#8ba0b4;--muted-2:#6e8397;
+  --brass:#d4af6a;--brass-deep:#b8923f;--brass-glow:rgba(212,175,106,.16);
+  --identity:#63b0e6;--identity-bg:rgba(99,176,230,.12);--identity-line:rgba(99,176,230,.42);
+  --order:#e0a94a;--order-bg:rgba(224,169,74,.12);--order-line:rgba(224,169,74,.42);
+  --dependency:#4ec9b0;--dependency-bg:rgba(78,201,176,.12);--dependency-line:rgba(78,201,176,.42);
+  --traverse:#e9e2d4;--traverse-bg:rgba(233,226,212,.10);--traverse-line:rgba(233,226,212,.40);
+  --bg:var(--ink-1);--surface:var(--ink-2);--surface-2:var(--ink-3);
+  --text:var(--pearl);--text-dim:var(--pearl-dim);--border:var(--line);
+  --shadow:0 18px 50px -24px rgba(0,0,0,.75);--radius:14px;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --maxw:1080px;
+}
+:root[data-theme="light"]{
+  --ink-1:#f3efe6;--bg:#f4f0e7;--surface:#fbf8f1;--surface-2:#efe9db;
+  --line:#d8cdb6;--line-soft:#e4dcc9;--border:#d8cdb6;
+  --text:#1c2b3a;--text-dim:#33475b;--muted:#5f7183;--muted-2:#7d8ea0;
+  --pearl:#1c2b3a;--pearl-dim:#33475b;
+  --brass:#a97e28;--brass-deep:#8a6717;--brass-glow:rgba(169,126,40,.14);
+  --identity:#1f79bd;--identity-bg:rgba(31,121,189,.10);--identity-line:rgba(31,121,189,.5);
+  --order:#a9761a;--order-bg:rgba(169,118,26,.12);--order-line:rgba(169,118,26,.5);
+  --dependency:#1f8f78;--dependency-bg:rgba(31,143,120,.12);--dependency-line:rgba(31,143,120,.5);
+  --traverse:#5a5142;--traverse-bg:rgba(90,81,66,.08);--traverse-line:rgba(90,81,66,.4);
+  --shadow:0 16px 40px -26px rgba(40,30,10,.35);
+}
+:root[data-theme="light"] body{background-image:radial-gradient(1100px 560px at 80% -12%, rgba(169,126,40,.10), transparent 60%);}
+:root[data-theme=light] .top-tab.on{color:#fff}
+:root[data-theme=light] .s30.has.a3{color:#fff}
+:root[data-theme=light] .viz-code{background:#f6f0e2}
+:root[data-theme=light] .git-cmd{background:#f6f0e2}

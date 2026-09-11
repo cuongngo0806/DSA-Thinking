@@ -1,0 +1,16 @@
+/* Element defaults and the page shell. */
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(1200px 600px at 78% -10%, var(--brass-glow), transparent 60%),
+    radial-gradient(900px 500px at 0% 100%, rgba(78,201,176,.06), transparent 55%);
+  background-attachment:fixed;}
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:500;letter-spacing:.2px}
+a{color:var(--brass);text-underline-offset:3px}
+code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.9em;background:var(--surface-2);padding:1px 5px;border-radius:5px}
+::selection{background:var(--brass);color:var(--ink-0)}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:6px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+footer{border-top:1px solid var(--line-soft);padding:30px 0 50px;color:var(--muted-2);font-size:13.5px;text-align:center}

@@ -1,0 +1,29 @@
+{
+  "name": "dsa-compass",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A compass, not a key - a bilingual tool for learning how to think about DSA problems.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src tests --ext .ts",
+    "format": "prettier --write \"src/**/*.{ts,css}\" \"tests/**/*.ts\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "sync": "node scripts/sync.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^9.17.0",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vitest": "^2.1.8"
+  }
+}

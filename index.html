@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DSA Compass</title>
+  <meta name="description" content="A compass, not a key: learn how to think about DSA problems." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg class="dot" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="none" stroke="var(--brass)" stroke-width="4"/><path d="M50 12 L60 50 L50 88 L40 50 Z" fill="var(--brass)"/><circle cx="50" cy="50" r="6" fill="var(--ink-0)" stroke="var(--brass)" stroke-width="3"/></svg>
+      <span data-i18n="brand">La Bàn DSA</span>
+    </div>
+    <nav class="top-tabs" id="topTabs">
+      <button class="top-tab on" data-top="practice" data-i18n="top_practice">Luyện tập</button>
+      <button class="top-tab" data-top="theory" data-i18n="top_theory">Lý thuyết</button>
+    </nav>
+    <button class="icon-btn theme-btn" id="setBtn" data-i18n-attr="title:settings_title" aria-label="Settings">⚙</button>
+    <button class="icon-btn lang-btn" id="langBtn" data-i18n-attr="title:lang_title">EN</button>
+    <button class="icon-btn theme-btn" id="themeBtn" data-i18n-attr="title:theme_title" aria-label="theme">☾</button>
+  </div>
+</header>
+
+<section class="hero" id="heroSec" data-pane="theory">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow" data-i18n="hero_eyebrow">Không phải chìa khóa — mà là la bàn</p>
+      <h1 data-i18n="hero_h1">Học <em>cách nghĩ</em> khi giải thuật, chứ không phải học thuộc lời giải.</h1>
+      <p class="aphorism" data-i18n="hero_aphorism">Giải một bài toán là tìm con đường rẻ nhất để chưng cất thông tin của câu trả lời ra khỏi thông tin của đề bài — bằng cách không bao giờ khám phá lại thứ mình đã biết, và sẵn lòng trả tài nguyên ở chỗ mình không tiếc để mua tốc độ ở chỗ mình cần.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#dan-loi" data-i18n="hero_cta1">Bắt đầu dẫn lối →</a>
+        <a class="btn btn-ghost" href="#ban-do" data-i18n="hero_cta2">Xem bản đồ tư duy</a>
+      </div>
+    </div>
+    <div class="compass-holder">
+      <svg class="compass" viewBox="0 0 300 300" role="img" data-i18n-attr="aria-label:compass_aria">
+        <defs><radialGradient id="face" cx="50%" cy="42%" r="65%"><stop offset="0%" stop-color="var(--ink-3)"/><stop offset="100%" stop-color="var(--ink-0)"/></radialGradient></defs>
+        <circle cx="150" cy="150" r="140" fill="url(#face)" stroke="var(--brass)" stroke-width="3"/>
+        <circle cx="150" cy="150" r="120" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+        <g stroke="var(--muted-2)" stroke-width="1.5"><line x1="150" y1="18" x2="150" y2="34"/><line x1="150" y1="266" x2="150" y2="282"/><line x1="18" y1="150" x2="34" y2="150"/><line x1="266" y1="150" x2="282" y2="150"/></g>
+        <text x="150" y="52" text-anchor="middle" font-family="Newsreader,serif" font-size="14" fill="var(--traverse)" font-style="italic">Traverse</text>
+        <text x="150" y="256" text-anchor="middle" font-family="Newsreader,serif" font-size="13" fill="var(--dependency)">Dependency</text>
+        <text x="58" y="154" text-anchor="middle" font-family="Newsreader,serif" font-size="13" fill="var(--identity)">Identity</text>
+        <text x="242" y="154" text-anchor="middle" font-family="Newsreader,serif" font-size="13" fill="var(--order)">Order</text>
+        <g class="needle-anim"><path d="M150 40 L162 150 L150 162 L138 150 Z" fill="var(--brass)"/><path d="M150 260 L138 150 L150 138 L162 150 Z" fill="var(--brass-deep)" opacity=".55"/></g>
+        <circle cx="150" cy="150" r="10" fill="var(--ink-0)" stroke="var(--brass)" stroke-width="3"/>
+        <circle cx="150" cy="150" r="3" fill="var(--brass)"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="subtabs-wrap" id="pSubTabs"><div class="wrap"><nav class="sub-tabs">
+  <button class="sub-tab on" data-sub="roadmap" data-i18n="sub_roadmap">Lộ trình 150</button>
+  <button class="sub-tab" data-sub="viz" data-i18n="sub_viz">Trực quan thuật toán</button>
+</nav></div></div>
+
+<div class="subtabs-wrap" id="tSubTabs" hidden><div class="wrap"><nav class="sub-tabs">
+  <button class="sub-tab on" data-sub="map" data-i18n="nav_map">Bản đồ tư duy</button>
+  <button class="sub-tab" data-sub="dict" data-i18n="nav_dict">Từ điển tín hiệu</button>
+  <button class="sub-tab" data-sub="guide" data-i18n="nav_guide">Dẫn lối</button>
+  <button class="sub-tab" data-sub="drill" data-i18n="nav_drill">Luyện nén</button>
+  <button class="sub-tab" data-sub="log" data-i18n="nav_log">Nhật ký</button>
+  <button class="sub-tab" data-sub="notes" data-i18n="nav_notes">Ghi chú</button>
+</nav></div></div>
+
+<section class="block" id="ban-do" data-pane="theory" data-sub="map">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="map_head">Bản đồ tư duy</h2>
+    <p class="sec-sub" data-i18n="map_sub">Bốn câu hỏi la bàn định tuyến suy nghĩ của bạn. Câu <b style="color:var(--brass)">thượng nguồn</b> phải hỏi trước — hầu hết bế tắc đến từ việc trả lời sai chính nó.</p>
+    <div class="qstrip" id="qstrip"></div>
+    <h3 style="font-size:20px;margin:0 0 6px;font-weight:600" data-i18n="ladder_head">Thang chi phí tư duy</h3>
+    <p class="sec-sub" style="margin-bottom:24px" data-i18n="ladder_sub">Thử từ bậc <b style="color:var(--dependency)">rẻ nhất để nghĩ</b> đến đắt nhất. Mỗi thuật toán nhanh đều khai thác một <i>cấu trúc</i> nào đó của dữ liệu; "lãng phí" chỉ là dấu chân mà cấu trúc để lại. Bấm vào từng bậc để xem chi tiết.</p>
+    <div class="ladder-layout">
+      <div class="ladder" id="ladder"></div>
+      <div class="detail" id="rungDetail"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="tu-dien" data-pane="theory" data-sub="dict">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="dict_head">Từ điển tín hiệu</h2>
+    <p class="sec-sub" data-i18n="dict_sub">14 mục cô đọng — phần "20%" quan trọng nhất. Mỗi mục: tín hiệu trong đề → công cụ, kèm cái "vì sao" nói rõ <i>thông tin phân biệt</i> để bạn không học vẹt. Hãy <b style="color:var(--brass)">tự thêm mục của riêng mình</b> — đó là lúc bạn tập tự đi.</p>
+    <div class="formcard">
+      <label class="lbl" style="font-size:13.5px;color:var(--brass);font-weight:700;margin-bottom:12px" data-i18n="dict_form_label">＋ Thêm tín hiệu của bạn</label>
+      <div class="row2">
+        <div class="field"><label class="lbl" data-i18n="dict_f_signal_lbl">Tín hiệu trong đề</label><input class="inp" id="fSignal" data-i18n-attr="placeholder:dict_f_signal_ph"></div>
+        <div class="field"><label class="lbl" data-i18n="dict_f_tool_lbl">Công cụ gợi ra</label><input class="inp" id="fTool" data-i18n-attr="placeholder:dict_f_tool_ph"></div>
+      </div>
+      <div class="field"><label class="lbl" data-i18n="dict_f_why_lbl">Vì sao (thông tin phân biệt)</label><textarea class="inp" id="fWhy" data-i18n-attr="placeholder:dict_f_why_ph"></textarea></div>
+      <div class="field"><label class="lbl" data-i18n="dict_f_rel_lbl">Loại quan hệ</label>
+        <select class="inp" id="fRel">
+          <option value="identity" data-i18n="rel_opt_identity">Danh tính — cái gì giống / đã thấy</option>
+          <option value="order" data-i18n="rel_opt_order">Thứ tự — cái gì lớn hơn / trước / gần</option>
+          <option value="dependency" data-i18n="rel_opt_dependency">Phụ thuộc — đáp án lớn lắp từ đáp án con</option>
+          <option value="traverse" data-i18n="rel_opt_traverse">Duyệt — đi qua một không gian</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" id="addEntry" data-i18n="dict_add_btn">Thêm vào từ điển</button>
+    </div>
+    <div class="filterbar" id="dictFilter">
+      <button class="chip on" data-rel="all" data-i18n="filter_all">Tất cả</button>
+      <button class="chip" data-rel="identity" data-i18n="rel_identity">Danh tính</button>
+      <button class="chip" data-rel="order" data-i18n="rel_order">Thứ tự</button>
+      <button class="chip" data-rel="dependency" data-i18n="rel_dependency">Phụ thuộc</button>
+      <button class="chip" data-rel="traverse" data-i18n="rel_traverse">Duyệt</button>
+    </div>
+    <div class="dict-grid" id="dictGrid"></div>
+  </div>
+</section>
+
+<section class="block" id="dan-loi" data-pane="theory" data-sub="guide">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="guide_head">Chế độ dẫn lối <span class="sub-label">— chạy offline, không cần AI</span></h2>
+    <p class="sec-sub" data-i18n="guide_sub">Bắt đầu từ câu thượng nguồn: <b>đầu ra của bài toán thật sự đòi kiểu thông tin gì?</b> Rồi men theo các câu hỏi kích hoạt để tới một <b style="color:var(--brass)">GIẢ THUYẾT</b> — không phải đáp án, mà là một hướng để bạn tự bước tiếp.</p>
+    <div class="guide-stage">
+      <div class="guide-crumbs" id="guideCrumbs"></div>
+      <div id="guideBody"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="truc-quan" data-pane="practice" data-sub="viz">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="viz_head">Trực quan thuật toán <span class="sub-label">— chạy từng bước như debugger</span></h2>
+    <p class="sec-sub" data-i18n="viz_sub">Xem một thuật toán kinh điển chạy từng bước: mảng, ngăn xếp, con trỏ, biến, phép tính và kết quả — kèm dòng mã đang chạy được tô sáng. Hãy để ý <b>không gian nào đang bị duyệt</b> ở mỗi bước.</p>
+    <div class="lc-tabs" id="vizTabs">
+      <button class="lc-tab on" data-vt="view" data-i18n="viz_tab_view">Xem</button>
+      <button class="lc-tab" data-vt="create" data-i18n="viz_tab_create">Tạo bằng AI</button>
+      <button class="lc-tab" data-vt="import" data-i18n="viz_tab_import">Nhập JSON</button>
+      <button class="lc-tab" data-vt="saved" data-i18n="viz_tab_saved">Đã lưu</button>
+    </div>
+
+    <div id="vizPaneView"><div class="viz-app" id="vizApp" tabindex="0"></div></div>
+
+    <div id="vizPaneCreate" hidden>
+      <div class="viz-create">
+        <div>
+          <div class="field"><label class="lbl" data-i18n="gen_problem">Đề bài</label><textarea class="inp" id="genProblem" rows="3" data-i18n-attr="placeholder:gen_problem_ph"></textarea></div>
+          <div class="row2">
+            <div class="field"><label class="lbl" data-i18n="gen_algo">Thuật toán</label><input class="inp" id="genAlgo" data-i18n-attr="placeholder:gen_algo_ph"></div>
+            <div class="field"><label class="lbl" data-i18n="gen_lang">Ngôn ngữ</label><input class="inp" id="genLang" value="cpp"></div>
+          </div>
+          <div class="field"><label class="lbl" data-i18n="gen_input">Đầu vào cụ thể</label><input class="inp" id="genInput" data-i18n-attr="placeholder:gen_input_ph"></div>
+          <div class="field"><label class="lbl" data-i18n="gen_code">Mã nguồn</label><textarea class="inp mono" id="genCode" rows="12" data-i18n-attr="placeholder:gen_code_ph"></textarea></div>
+          <div class="viz-genbtns">
+            <button class="btn btn-primary" id="genRun" data-i18n="gen_run">✨ Sinh bằng AI</button>
+            <button class="btn btn-ghost" id="genCopy" data-i18n="gen_copy">Sao chép prompt</button>
+          </div>
+          <div class="viz-status" id="genStatus" hidden></div>
+        </div>
+        <div class="viz-createside">
+          <div class="settings">
+            <h3 data-i18n="vai_head">Nguồn AI</h3>
+            <div class="ai-chip" id="genAiChip"></div>
+            <button class="btn btn-ghost" id="genOpenSet" style="width:100%" data-i18n="open_settings">⚙ Mở thiết lập AI</button>
+            <p class="hint-note" data-i18n="vai_hint">Dùng <b>chung</b> một nguồn AI với gia sư. Việc sinh trace cần model mạnh về code và <b>Max tokens</b> lớn.</p>
+          </div>
+          <div class="viz-panel" style="margin-top:13px">
+            <div class="pt" data-i18n="gen_nokey_head">Không có API key?</div>
+            <p style="margin:0;font-size:13.5px;color:var(--text-dim);line-height:1.6" data-i18n="gen_nokey_body">Bấm <b>Sao chép prompt</b>, dán vào Claude (claude.ai / Claude Code), rồi dán JSON nhận được vào tab <b>Nhập JSON</b>.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="vizPaneImport" hidden>
+      <div class="field"><label class="lbl" data-i18n="imp_lbl">Dán JSON visualization</label><textarea class="inp mono" id="impJson" rows="14" placeholder='{ "title": "...", "components": [...], "steps": [...] }'></textarea></div>
+      <div class="viz-genbtns">
+        <button class="btn btn-primary" id="impRun" data-i18n="imp_run">Nhập & xem</button>
+        <button class="btn btn-ghost" id="impFileBtn" data-i18n="imp_file">Chọn file .json</button>
+        <input type="file" id="impFile" accept="application/json,.json" hidden>
+      </div>
+      <div class="viz-status" id="impStatus" hidden></div>
+    </div>
+
+    <div id="vizPaneSaved" hidden>
+      <div class="viz-savedbar">
+        <input class="inp" id="savedSearch" data-i18n-attr="placeholder:saved_search" style="max-width:320px">
+        <button class="btn btn-ghost" id="savedExportAll" data-i18n="saved_export_all">Xuất tất cả</button>
+      </div>
+      <div id="savedList"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="lo-trinh" data-pane="practice" data-sub="roadmap">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="lc_head">Lộ trình 150 <span class="sub-label">— Top Interview 150</span></h2>
+    <p class="sec-sub" data-i18n="lc_sub">Một kế hoạch hằng ngày để đi hết 150 câu trong 2 tháng — nhưng vẫn theo tinh thần la bàn: mỗi câu bạn giải xong, hãy nén nó thành <b>một dòng tín hiệu</b>. Dữ liệu ở lại trong trình duyệt này.</p>
+
+    <div class="lc-ministat" id="lcMiniStat"></div>
+    <div class="lc-strip" id="lcStrip"></div>
+    <details class="lc-cfgwrap" id="lcPlanWrap">
+      <summary><span id="lcCfgSummary">⚙</span></summary>
+      <div class="lc-cfgbar" id="lcCfgBar"></div>
+    </details>
+
+    <div class="wb">
+      <div class="wb-solve">
+        <div class="lc-panel" id="lcToday"></div>
+        <div class="lc-panel" id="lcReview"></div>
+      </div>
+      <div class="wb-ask">
+        <div class="chat" id="tutorChat">
+          <div class="chat-head">
+            <h3 data-i18n="wb_ask_head">Hỏi la bàn sống</h3>
+            <div class="chat-actions">
+              <button class="lc-gear" id="chatNew" data-i18n-attr="title:chat_new" aria-label="New chat">＋</button>
+              <button class="lc-gear" id="chatHistBtn" data-i18n-attr="title:chat_history" aria-label="Chat history">🕘</button>
+              <button class="lc-gear" id="aiGear" data-i18n-attr="title:wb_ai_settings" aria-label="AI settings">⚙</button>
+            </div>
+          </div>
+          <div class="chat-hist" id="chatHistPanel" hidden></div>
+          <div class="chat-log" id="chatLog">
+            <div class="msg sys" data-i18n="chat_init">Cấu hình endpoint bên trái, rồi kể cho tôi bài toán bạn đang mắc. Tôi sẽ chỉ hỏi — không giải thay.</div>
+          </div>
+          <div class="suggests" id="suggests">
+            <button class="chip" data-i18n="sug1">Tôi không biết bắt đầu từ đâu</button>
+            <button class="chip" data-i18n="sug2">Tôi có brute force nhưng quá chậm</button>
+            <button class="chip" data-i18n="sug3">Cho tôi một gợi ý lớn hơn</button>
+          </div>
+          <div class="chat-input">
+            <textarea id="chatInput" data-i18n-attr="placeholder:chat_ph" rows="1"></textarea>
+            <button class="send-btn" id="chatSend" title="Send">➤</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lc-tabs" id="lcTabs">
+      <button class="lc-tab on" data-tab="progress" data-i18n="lc_tab_progress">Tiến độ</button>
+      <button class="lc-tab" data-tab="list" data-i18n="lc_tab_list">Toàn bộ 150 câu</button>
+    </div>
+
+    <div class="lc-tabpane" id="lcTabProgress">
+      <div class="lc-stats" id="lcStats"></div>
+      <div class="lc-panel" id="lcRadar"></div>
+    </div>
+
+    <div class="lc-tabpane" id="lcTabList" hidden>
+      <div class="lc-filterbar" id="lcFilter">
+        <button class="chip on" data-f="todo" data-i18n="lc_filter_todo">Chưa giải</button>
+        <button class="chip" data-f="all" data-i18n="lc_filter_all">Tất cả</button>
+        <button class="chip" data-f="done" data-i18n="lc_filter_done">Đã giải</button>
+        <button class="chip" data-f="review" data-i18n="lc_filter_review">Cần ôn</button>
+      </div>
+      <div class="lc-list" id="lcList"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="luyen-tap" data-pane="theory" data-sub="drill">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="drill_head">Luyện nén</h2>
+    <p class="sec-sub" data-i18n="drill_sub">Rút ngẫu nhiên một tín hiệu (gồm cả mục của bạn). Tự trả lời <b>công cụ</b> VÀ <b>vì sao</b> trước khi lật đáp án. Học bằng nén, không phải bằng số lượng.</p>
+    <div class="practice-card" id="practiceCard"></div>
+  </div>
+</section>
+
+<section class="block" id="nhat-ky" data-pane="theory" data-sub="log">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="log_head">Nhật ký va chạm</h2>
+    <p class="sec-sub" data-i18n="log_sub">Ghi lại "bài toán tôi đã va phải" và tín hiệu bạn rút ra được. Theo dõi từ điển của chính bạn dần hội tụ.</p>
+    <div class="formcard">
+      <div class="row2">
+        <div class="field"><label class="lbl" data-i18n="log_problem_lbl">Bài toán</label><input class="inp" id="logProblem" data-i18n-attr="placeholder:log_problem_ph"></div>
+        <div class="field"><label class="lbl" data-i18n="log_trigger_lbl">Tín hiệu tôi rút ra</label><input class="inp" id="logTrigger" data-i18n-attr="placeholder:log_trigger_ph"></div>
+      </div>
+      <button class="btn btn-primary" id="addLog" data-i18n="log_add_btn">Ghi vào nhật ký</button>
+    </div>
+    <div class="log-grid" id="logGrid"></div>
+  </div>
+</section>
+
+<section class="block" id="ghi-chu" data-pane="theory" data-sub="notes">
+  <div class="wrap">
+    <h2 class="sec-head" data-i18n="notes_head">Ghi chú phương pháp</h2>
+    <p class="sec-sub" data-i18n="notes_sub">Những điều thành thật về cách công cụ này hoạt động.</p>
+    <div class="notes-grid" id="notesGrid"></div>
+  </div>
+</section>
+
+<div class="modal-back" id="settingsModal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+    <div class="modal-head">
+      <h3 id="setTitle" data-i18n="settings_head">Thiết lập</h3>
+      <button class="lc-gear" id="setClose" aria-label="Close">✕</button>
+    </div>
+    <div class="lc-tabs set-tabs" id="setTabs">
+      <button class="lc-tab on" data-st="ai" data-i18n="set_tab_ai">AI</button>
+      <button class="lc-tab" data-st="git" data-i18n="set_tab_git">Dữ liệu</button>
+    </div>
+    <div class="modal-body" id="setPaneAi">
+      <p class="modal-lead" data-i18n="settings_lead">Cả <b>gia sư Socratic</b> và <b>trình sinh trực quan</b> dùng chung nguồn AI này. Chúng chỉ khác nhau ở prompt hệ thống.</p>
+      <div class="status" id="setStatus" data-i18n="status_untested">Chưa kiểm tra</div>
+      <div class="field"><label class="lbl" data-i18n="set_url_lbl">Base URL</label><input class="inp" id="setUrl" placeholder="http://localhost:11434/v1"></div>
+      <div class="field"><label class="lbl" data-i18n="set_model_lbl">Tên model</label><input class="inp" id="setModel" placeholder="qwen2.5-coder / llama3.1 ..."></div>
+      <div class="field"><label class="lbl" data-i18n="set_key_lbl">API key (tùy chọn)</label><input class="inp" id="setKey" type="password" data-i18n-attr="placeholder:set_key_ph"></div>
+      <button class="btn btn-primary" id="setTest" style="width:100%" data-i18n="set_test_btn">Lưu & kiểm tra kết nối</button>
+      <p class="hint-note" data-i18n="set_hint">Nếu mở file bằng <code>file://</code>, trình duyệt có thể chặn CORS. Hãy bật CORS ở endpoint (ví dụ <code>OLLAMA_ORIGINS=*</code>) hoặc chạy một máy chủ tĩnh cho trang này.</p>
+    </div>
+    <div class="modal-body" id="setPaneGit" hidden>
+      <p class="modal-lead" data-i18n="git_lead">Tiến độ của bạn nằm trong bộ nhớ của trình duyệt, <b>git không nhìn thấy</b>. Bấm <b>Lưu ra file</b> để đổ nó thành một file trong repo — rồi commit như mọi khi.</p>
+      <div class="status" id="gitStatus" data-i18n="git_idle">Chưa lưu lần nào</div>
+      <div class="viz-genbtns">
+        <button class="btn btn-primary" id="dataExport" data-i18n="git_file_save">💾 Lưu ra file</button>
+        <button class="btn btn-ghost" id="dataImportBtn" data-i18n="git_file_load">📂 Nạp từ file</button>
+        <input type="file" id="dataImport" accept="application/json,.json" hidden>
+      </div>
+      <div class="git-oneclick" data-i18n="git_oneclick">Rồi bấm đúp <b>sync.bat</b> trong thư mục repo — nó tự nhặt file từ Downloads, commit và push.</div>
+      <div class="git-cmdlabel" data-i18n="git_cmd_manual">hoặc tự chạy:</div>
+      <pre class="git-cmd">git add -A
+git commit -m "update"
+git push</pre>
+      <p class="hint-note" data-i18n="git_hint">Mẹo: trỏ thư mục tải về của trình duyệt vào chính thư mục repo, thì <b>Lưu ra file</b> là file rơi thẳng vào đó — chỉ còn việc commit. Trên máy mới: <code>git pull</code> rồi bấm <b>Nạp từ file</b>. Thiết lập AI (kể cả API key) <b>không</b> nằm trong file này.</p>
+    </div>
+  </div>
+</div>
+
+<footer><div class="wrap" data-i18n="footer">La Bàn DSA — một chiếc la bàn, không phải chìa khóa. Dữ liệu của bạn (từ điển, nhật ký, thiết lập) lưu cục bộ trong trình duyệt này.</div></footer>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
