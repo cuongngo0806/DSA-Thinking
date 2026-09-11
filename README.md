@@ -70,6 +70,7 @@ A built-in study plan for the **Top Interview 150** list — still in the compas
 
 ### Tính năng · Features
 - **Bàn làm việc 2 cột · Two-column workbench** — không cần lướt: bên **trái** là *Hôm nay cần giải* + *Ôn lại*, bên **phải** là gia sư AL (*La bàn sống*) luôn kề bên để hỏi ngay. Thống kê, lịch nhiệt, radar và *toàn bộ 150 câu* nằm gọn sau tab **Tiến độ / Toàn bộ 150 câu**; thiết lập AI ẩn sau nút ⚙. On narrow screens the two columns stack.
+- **Số câu mục tiêu · Target count** — không bắt buộc làm hết 150. Đặt **số câu mục tiêu** (ví dụ 75) thì kế hoạch, tiến độ, lô hàng ngày và radar chủ đề chỉ tính trên **{n} câu đầu trong thứ tự kế hoạch** (đã trộn chủ đề sẵn).
 - **Thời hạn tự đặt · Your own deadline** — không còn mốc 2 tháng cố định. Đặt **ngày bắt đầu**, **ngày kết thúc** và **số câu/ngày**; hai trong ba là tự do, cái còn lại **tự tính** (sửa ngày kết thúc → số câu/ngày đổi theo, và ngược lại), ô được suy ra có nhãn *(tự tính)*. Mọi dự báo tiến độ đều bám ngày kết thúc bạn chọn.
 - **Lịch chuỗi ngày · Streak calendar** — lịch theo tháng (điều hướng ‹ ›, nút *Hôm nay*): ngày có hoạt động tô đậm dần theo mức độ, **các ngày liên tiếp nối liền thành một dải** để bạn thấy chuỗi của mình, ngày trong kế hoạch có viền, hôm nay được khoanh. Kèm *chuỗi hiện tại* 🔥 và *dài nhất*.
 - **Kế hoạch hằng ngày trộn chủ đề · Interleaved daily plan** — lô mỗi ngày theo *số câu/ngày* (mặc định 3/ngày ≈ 50 ngày cho 150 câu). Lô mỗi ngày **luân phiên qua nhiều chủ đề** (round-robin) và tăng độ khó nhẹ từ dễ → khó, để **không đóng khung tư duy** vào một dạng bài duy nhất. Danh sách *Toàn bộ 150 câu* vẫn nhóm theo chủ đề để dễ tra cứu.
@@ -105,7 +106,9 @@ Trapping Rain Water (monotonic stack) · Binary Search · Two Sum (hashmap) · V
 
 ### Cấu hình AI · AI settings
 
-Mở **⚙ Thiết lập** ở thanh trên cùng (hoặc nút ⚙ trong khung chat / nút *Mở thiết lập AI* ở tab Tạo). Một nơi duy nhất cho **cả hai** vai trò AI: Base URL · Model · API key · **Max tokens** (mặc định 16000 — trace dài cần nhiều token). Nên chọn model mạnh về code, ngữ cảnh lớn.
+Mở **⚙ Thiết lập → tab AI** ở thanh trên cùng (hoặc nút ⚙ trong khung chat / nút *Mở thiết lập AI* ở tab Tạo). Một nơi duy nhất cho **cả hai** vai trò AI: Base URL · Model · API key · **Nên chọn model mạnh về code, ngữ cảnh lớn.
+
+> App **không gửi** `temperature` hay `max_tokens` — nhiều model đời mới từ chối hoặc bỏ qua hai trường này. · The app sends neither `temperature` nor `max_tokens`; many newer models reject or ignore them.
 
 > Nếu JSON sai, app báo **đúng trường bị lỗi** (ví dụ `steps[12].components[0].id "stack2" is not declared in the root "components" array.`) thay vì crash — cứ đưa thông báo đó lại cho AI để nó sửa.
 
@@ -167,6 +170,31 @@ ollama pull qwen2.5
 
 ### Kỷ luật Socratic
 Gia sư **không bao giờ đưa lời giải, mã nguồn, hay gọi tên pattern** — chỉ hỏi một câu mỗi lượt để bạn tự tìm ra. Nếu một mô hình nhỏ phá kỷ luật và tuôn ra lời giải, hãy **siết chặt system prompt**, đừng nới nó thành trả lời.
+
+---
+
+## 🔄 Đồng bộ Git · Git sync
+
+Mở **⚙ Thiết lập → Đồng bộ Git**. App đẩy/kéo một file JSON duy nhất qua **GitHub Contents API**, không cần cài `git` hay chạy server.
+
+Open **⚙ Settings → Git sync**. The app pushes/pulls one JSON file through the **GitHub Contents API** — no local `git`, no server.
+
+| Ô | Ý nghĩa |
+|---|---|
+| **Repo** | `owner/name` (dán cả URL GitHub cũng được, app tự cắt) |
+| **Nhánh · Branch** | mặc định `main` |
+| **Đường dẫn · Path** | mặc định `dsa-compass-data.json` |
+| **Token** | fine-grained PAT |
+
+- **⬆ Đẩy lên** — ghi toàn bộ dữ liệu thành một commit (tự lấy `sha` nếu file đã tồn tại nên ghi đè an toàn).
+- **⬇ Kéo về** — tải về rồi **gộp (union merge)**, không ghi đè mù quáng: tiến độ giữ bản đã *done*, hoạt động mỗi ngày lấy `max`, từ điển / nhật ký / visualization gộp theo định danh, chat giữ phiên dài hơn. Làm việc trên hai máy rồi sync — không mất bên nào.
+
+### Được đồng bộ · What syncs
+Tiến độ 150 câu + cấu hình kế hoạch · lịch hoạt động · từ điển tín hiệu riêng · nhật ký va chạm · lịch sử chat · visualization đã lưu.
+
+> 🔑 **Token và API key KHÔNG bao giờ được đồng bộ.** Chúng nằm riêng trong trình duyệt của bạn và không có mặt trong file JSON đẩy lên repo. Hãy dùng **fine-grained token** chỉ cấp **Contents: Read and write** cho đúng repo này; nếu repo là public thì file dữ liệu của bạn cũng public — cân nhắc dùng repo **private**.
+>
+> 🔑 **Tokens and API keys are never synced.** Prefer a **private** repo, and a fine-grained token limited to *Contents: Read and write* on it.
 
 ---
 
