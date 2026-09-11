@@ -177,7 +177,19 @@ Gia sư **không bao giờ đưa lời giải, mã nguồn, hay gọi tên patte
 
 ## 🔄 Đồng bộ Git · Git sync
 
-Mở **⚙ Thiết lập → Đồng bộ Git**. App đẩy/kéo một file JSON duy nhất qua **GitHub Contents API**, không cần cài `git` hay chạy server.
+Mở **⚙ Thiết lập → Đồng bộ Git**.
+
+> **Vì sao cần token trong khi file nằm sẵn trong repo?** Trang chạy trong **sandbox của trình duyệt**: nó không gọi được lệnh `git`, không ghi được vào thư mục repo, và không biết mình đang nằm trong một repo. Nó chỉ gửi được HTTP — nên **ghi** lên GitHub bắt buộc phải qua API có xác thực. Đọc thì không.
+>
+> **Why a token when the file already sits in the repo?** The page runs in the browser sandbox: it cannot invoke `git`, cannot write into the repo folder, and has no idea it lives in one. Only HTTP — so *writing* to GitHub needs auth. Reading does not.
+
+### Ba cách dùng · Three routes
+
+| Cách | Cần token? | Dùng khi |
+|---|---|---|
+| **⬇ Kéo về** | **Không** (repo public) | Lấy dữ liệu về máy mới. Đọc thẳng `raw.githubusercontent.com`. Repo private thì mới cần token. |
+| **💾 Tải file / 📂 Nạp từ file** | **Không** | Hoàn toàn offline. Tải `dsa-compass-data.json` về, đặt vào thư mục repo rồi `git commit` như bình thường — **đây là cách thay cho “đẩy lên” nếu bạn không muốn token.** |
+| **⬆ Đẩy lên** | **Có** | Muốn app tự commit lên GitHub, không đụng tới terminal. |
 
 Open **⚙ Settings → Git sync**. The app pushes/pulls one JSON file through the **GitHub Contents API** — no local `git`, no server.
 
@@ -188,8 +200,8 @@ Open **⚙ Settings → Git sync**. The app pushes/pulls one JSON file through t
 | **Đường dẫn · Path** | mặc định `dsa-compass-data.json` |
 | **Token** | fine-grained PAT |
 
-- **⬆ Đẩy lên** — ghi toàn bộ dữ liệu thành một commit (tự lấy `sha` nếu file đã tồn tại nên ghi đè an toàn).
-- **⬇ Kéo về** — tải về rồi **gộp (union merge)**, không ghi đè mù quáng: tiến độ giữ bản đã *done*, hoạt động mỗi ngày lấy `max`, từ điển / nhật ký / visualization gộp theo định danh, chat giữ phiên dài hơn. Làm việc trên hai máy rồi sync — không mất bên nào.
+- **⬆ Đẩy lên** (cần token) — ghi toàn bộ dữ liệu thành một commit qua **GitHub Contents API** (tự lấy `sha` nếu file đã tồn tại nên ghi đè an toàn).
+- **⬇ Kéo về** (không cần token với repo public) — tải về rồi **gộp (union merge)**, không ghi đè mù quáng: tiến độ giữ bản đã *done*, hoạt động mỗi ngày lấy `max`, từ điển / nhật ký / visualization gộp theo định danh, chat giữ phiên dài hơn. Làm việc trên hai máy rồi sync — không mất bên nào.
 
 ### Được đồng bộ · What syncs
 Tiến độ 150 câu + cấu hình kế hoạch · lịch hoạt động · từ điển tín hiệu riêng · nhật ký va chạm · lịch sử chat · visualization đã lưu.
