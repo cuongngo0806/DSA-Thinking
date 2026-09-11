@@ -23,7 +23,7 @@ npm run dev      # http://localhost:5173
 | `npm test` | Chạy test (Vitest) |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run lint` / `npm run format` | ESLint / Prettier |
-| `npm run sync` | Build, gom dữ liệu, commit & push (xem *Đồng bộ*) |
+| `npm start` | Chạy bản build kèm API đồng bộ (`http://localhost:5174`) |
 
 ---
 
@@ -57,10 +57,13 @@ npm run dev      # http://localhost:5173
 │  │  ├─ visualizer/       types · engine · validate · renderers · examples · aigen · library · view
 │  │  ├─ tutor/            prompt · chat
 │  │  ├─ theory/           map · dictionary · guided · drill · log · notes
-│  │  └─ sync/             cầu nối dữ liệu ↔ file
+│  │  └─ sync/             panel gọi API đồng bộ
 │  └─ styles/              tokens → base → layout → components → features/*
 ├─ data/store.json         ← DATABASE, git version cùng code
-├─ scripts/sync.mjs        đồng bộ web + database lên git
+├─ server/                 API đồng bộ: chỗ duy nhất chạy được git
+│  ├─ git-sync.mjs        status / pull / push
+│  └─ api.mjs             endpoint, dùng chung dev server và npm start
+├─ server.mjs             phục vụ dist/ + API (npm start)
 └─ tests/                  101 test cho phần logic thuần
 ```
 
@@ -110,23 +113,45 @@ App **không gửi** `temperature` hay `max_tokens` — nhiều model đời m�
 
 ---
 
-## 💾 Đồng bộ web + database lên git
+## 🔄 Đồng bộ web + database lên git
 
-Tiến độ học nằm trong `localStorage` — **git không nhìn thấy**, và một trang web thì không chạy được `git`. `scripts/sync.mjs` nối hai đầu đó.
+Tiến độ học nằm trong `localStorage` — **git không nhìn thấy**. Và một trang web **không chạy được `git`**: nó bị sandbox, không biết mình đang được phục vụ từ trong một repo.
+
+Nên app đi theo hướng của một **máy chủ cục bộ**: trình duyệt gọi API, còn tiến trình Node trên cùng máy chạy git thật. Đó là lý do đồng bộ cần `npm run dev` hoặc `npm start`, không dùng được với bản build tĩnh.
+
+### Dùng
+
+Mở **⚙ Thiết lập → Dữ liệu**:
+
+| Nút | Làm gì |
+|---|---|
+| **⬆ Đẩy lên** | Ghi `data/store.json`, stage kèm mọi thay đổi trong `src/`, `server/`, `index.html`… rồi commit + push — **database và web trong một commit** |
+| **⬇ Kéo về** | `fetch` + `merge --ff-only`, rồi **gộp** dữ liệu vào trình duyệt |
+| **⟳ Kiểm tra** | Nhánh, dữ liệu trên git cập nhật lúc nào, số commit đi trước/sau, file đang sửa, commit gần nhất |
+
+Panel cũng **đếm trước** số tin nhắn chat / nhật ký / ghi chú sắp đẩy lên — nếu repo public thì chúng cũng public.
+
+### Cấu hình
+
+Mặc định chạy được ngay khi mở app từ trong repo. Muốn đổi thì copy `.env.example` → `.env`:
 
 ```bash
-npm run sync              # build + gom dữ liệu + commit + push
-npm run sync -- --watch   # ngồi canh, hễ có bản xuất mới là đồng bộ
+SYNC_REPO_DIR=D:/DSA_Thinking      # mặc định: thư mục project
+SYNC_FILE=data/store.json
+SYNC_BRANCH=main
+SYNC_REMOTE=origin
+SYNC_APP_PATHS=src server index.html ...   # cái gì tính là "web"
 ```
 
-Hoặc bấm đúp **`sync.bat`** / **`sync-auto.bat`**.
+### Vì sao gộp chứ không ghi đè
 
-Quy trình: trong app bấm **⚙ Thiết lập → Dữ liệu → 💾 Lưu ra file** → chạy `npm run sync`. Script tự nhặt file mới nhất từ **Downloads** (kể cả dạng `store (1).json`), đặt vào `data/store.json`, build lại, rồi commit **cả code lẫn database** trong một lịch sử.
+Kéo về là **union merge**: tiến độ giữ bản đã *done*, hoạt động lấy `max` mỗi ngày, chat giữ phiên dài hơn, từ điển/nhật ký/visualization gộp theo định danh. Làm việc trên hai máy rồi sync — không mất bên nào. Có test chứng minh (`db.test.ts`).
 
-- Nạp lại là **gộp (union merge)**, không ghi đè: tiến độ giữ bản đã *done*, hoạt động lấy `max` mỗi ngày, chat giữ phiên dài hơn. Làm việc trên hai máy rồi sync — không mất bên nào.
-- Khi clone mới, app tự **nạp mồi từ `data/store.json`** (chỉ gộp, không bao giờ đè dữ liệu đang có trong trình duyệt).
+### Khi có xung đột
 
-> 🔑 **API key và token không bao giờ nằm trong `data/store.json`** — có test chứng minh điều đó. Nhưng nếu repo **public** thì lịch sử chat và ghi chú cá nhân của bạn cũng public. Script sẽ cảnh báo trước khi commit; cân nhắc repo **private** cho dữ liệu.
+Server dịch lỗi git sang câu hành động được: *"Push bị từ chối — remote đã đi trước. Kéo về trước rồi đẩy lại."*, *"Local và remote đã rẽ nhánh…"*, *"Xác thực git thất bại…"*.
+
+> 🔑 **API key không bao giờ nằm trong `data/store.json`** — có test chứng minh. Nhưng lịch sử chat và ghi chú thì có; repo public nghĩa là chúng public.
 
 ---
 
