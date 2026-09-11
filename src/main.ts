@@ -26,7 +26,7 @@ import { initLC, renderRoadmap } from '@/features/roadmap/view';
 import { initChatHistory, renderChatHist, renderChatLog } from '@/features/tutor/chat';
 import { initViz, mountViz, refreshViz } from '@/features/visualizer/view';
 import { initVizTabs, renderSaved } from '@/features/visualizer/library';
-import { initGitSync } from '@/features/sync/data-file';
+import { initGitSync } from '@/features/sync/git';
 
 /** Re-render everything that contains translated text. */
 export function applyLang(): void {
