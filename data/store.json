@@ -1,7 +1,7 @@
 {
   "app": "dsa-compass",
   "schema": 2,
-  "updatedAt": "2026-09-11T17:25:41.814Z",
+  "updatedAt": "2026-09-14T16:33:33.042Z",
   "data": {
     "plan": {
       "start": "2026-09-11",
@@ -44,6 +44,18 @@
       }
     ],
     "chats": [
+      {
+        "id": "cmu1gphuy",
+        "title": "",
+        "at": 1789403609770,
+        "msgs": []
+      },
+      {
+        "id": "cmu1gawdr",
+        "title": "",
+        "at": 1789402928751,
+        "msgs": []
+      },
       {
         "id": "cmtx88y93",
         "title": "",
@@ -273,6 +285,3840 @@
         "msgs": []
       }
     ],
-    "visualizations": []
+    "visualizations": [
+      {
+        "id": "vmu1gmmtj290e",
+        "title": "Search in Rotated Sorted Array",
+        "algorithm": "Binary Search One Pass",
+        "savedAt": 1789403476231,
+        "visualization": {
+          "title": "Search in Rotated Sorted Array",
+          "algorithm": "Binary Search One Pass",
+          "input": {
+            "name": "nums and target",
+            "value": {
+              "nums": [
+                3,
+                4,
+                5,
+                6,
+                1,
+                2
+              ],
+              "target": 1
+            },
+            "description": "A strictly increasing array was rotated, and we must find target 1 in logarithmic time."
+          },
+          "output": {
+            "name": "index",
+            "value": 4
+          },
+          "complexity": {
+            "time": "O(log n)",
+            "space": "O(1)"
+          },
+          "explanation": {
+            "intuition": "Although the whole array is not sorted after rotation, at least one half around every midpoint is still sorted. By identifying that sorted half, we can tell whether the target could lie inside it; if not, we discard it and continue in the other half.",
+            "approach": [
+              "Start with left pointer l at index 0 and right pointer r at the final index.",
+              "Compute the middle index mid of the current search range.",
+              "If nums[mid] equals the target, return mid immediately.",
+              "Check whether the left half from l through mid is sorted.",
+              "If the left half is sorted, keep it only when the target lies between nums[l] and nums[mid]; otherwise search the right half.",
+              "If the left half is not sorted, the right half must be sorted. Keep or discard that half using the same range test.",
+              "Repeat until the target is found or l moves beyond r."
+            ],
+            "whyItWorks": "Because all values are unique, each midpoint divides the current range into one sorted half and one possibly rotated half. The target can be ruled out of the sorted half exactly when it is outside that half's numeric range, so each update discards a half that cannot contain the target. Therefore, if the target exists it remains in the search range until it is found.",
+            "pitfalls": [
+              "Use l <= r rather than l < r, because a final one-element range must still be checked.",
+              "The comparisons use <= when deciding whether the left portion is sorted; this also correctly handles a one-element left portion.",
+              "Do not use ordinary binary-search comparisons alone, because the full rotated array is not globally sorted.",
+              "This version assumes all elements are unique. With duplicates, nums[l] == nums[mid] can make the sorted side ambiguous.",
+              "In languages where indexes can be very large, compute the midpoint as l + (r - l) / 2 to avoid overflow."
+            ]
+          },
+          "components": [
+            {
+              "type": "array",
+              "id": "nums",
+              "label": "Rotated sorted array"
+            },
+            {
+              "type": "variables",
+              "id": "vars",
+              "label": "Search variables"
+            }
+          ],
+          "sourceCode": {
+            "language": "cpp",
+            "code": "class Solution {\npublic:\n    int search(std::vector<int>& nums, int target) {\n        int l = 0, r = nums.size() - 1;\n\n        while (l <= r) {\n            int mid = (l + r) / 2;\n            if (target == nums[mid]) {\n                return mid;\n            }\n\n            if (nums[l] <= nums[mid]) {\n                if (target > nums[mid] || target < nums[l]) {\n                    l = mid + 1;\n                } else {\n                    r = mid - 1;\n                }\n            } else {\n                if (target < nums[mid] || target > nums[r]) {\n                    r = mid - 1;\n                } else {\n                    l = mid + 1;\n                }\n            }\n        }\n        return -1;\n    }\n};"
+          },
+          "steps": [
+            {
+              "id": 1,
+              "description": "The search begins on nums = [3, 4, 5, 6, 1, 2], with target 1. We set l to 0 and r to 5 so the initial search range includes every array position; no answer has been found yet.",
+              "phase": "Initialize",
+              "action": {
+                "type": "initialize",
+                "target": "vars"
+              },
+              "variables": {
+                "target": 1,
+                "l": 0,
+                "r": 5,
+                "mid": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 0,
+                    "r": 5,
+                    "mid": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0,
+                    5
+                  ],
+                  "role": "boundary"
+                },
+                {
+                  "component": "vars",
+                  "role": "active"
+                }
+              ],
+              "calculation": "l = 0, r = nums.size() - 1 = 6 - 1 = 5",
+              "result": "not found yet",
+              "codeLine": 4
+            },
+            {
+              "id": 2,
+              "description": "The current range runs from index 0 through index 5, so it contains all six values. Since 0 <= 5 is true, the while loop enters its first iteration and the target may still be present.",
+              "phase": "Check range",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 0,
+                "r": 5,
+                "mid": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 0,
+                    "r": 5,
+                    "mid": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0,
+                    5
+                  ],
+                  "role": "boundary"
+                }
+              ],
+              "calculation": "l <= r\n0 <= 5  ->  true",
+              "result": "not found yet",
+              "codeLine": 6
+            },
+            {
+              "id": 3,
+              "description": "The middle of the active range from 0 to 5 is index 2, where nums[2] is 5. This midpoint splits the current range into a left part and a right part that we can reason about.",
+              "phase": "Find middle",
+              "action": {
+                "type": "compute",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 0,
+                "r": 5,
+                "mid": 2
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 2,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 0,
+                    "r": 5,
+                    "mid": 2
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    2
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "mid = (l + r) / 2 = (0 + 5) / 2 = 2\nnums[2] = 5",
+              "result": "not found yet",
+              "codeLine": 7
+            },
+            {
+              "id": 4,
+              "description": "The midpoint value is nums[2] = 5, while the target is 1. Because 1 is not equal to 5, the function cannot return index 2 and must determine which half can contain 1.",
+              "phase": "Check middle",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 0,
+                "r": 5,
+                "mid": 2
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 2,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 0,
+                    "r": 5,
+                    "mid": 2
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    2
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "target == nums[mid]\n1 == 5  ->  false",
+              "result": "not found yet",
+              "codeLine": 8
+            },
+            {
+              "id": 5,
+              "description": "We compare the endpoints of the left half: nums[0] = 3 and nums[2] = 5. Since 3 <= 5, indices 0 through 2 form the sorted portion [3, 4, 5], so we can test whether target 1 belongs in that numeric interval.",
+              "phase": "Find sorted half",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 0,
+                "r": 5,
+                "mid": 2
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 0,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 2,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 0,
+                    "r": 5,
+                    "mid": 2
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "role": "active"
+                }
+              ],
+              "calculation": "nums[l] <= nums[mid]\nnums[0] = 3 <= nums[2] = 5  ->  true",
+              "result": "not found yet",
+              "codeLine": 12
+            },
+            {
+              "id": 6,
+              "description": "The first condition for excluding the sorted left half asks whether target 1 is greater than nums[2] = 5. Since 1 > 5 is false, C++ must evaluate the second part of the OR condition before choosing a direction.",
+              "phase": "Test target range",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 0,
+                "r": 5,
+                "mid": 2
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 0,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 2,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 0,
+                    "r": 5,
+                    "mid": 2
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    2
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "target > nums[mid]\n1 > 5  ->  false\nfalse || (...) requires evaluating the second comparison",
+              "result": "not found yet",
+              "codeLine": 13
+            },
+            {
+              "id": 7,
+              "description": "The second condition compares target 1 with the left endpoint nums[0] = 3. Because 1 < 3 is true, 1 cannot occur in the sorted values [3, 4, 5], so the algorithm must discard that entire left half.",
+              "phase": "Exclude left half",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 0,
+                "r": 5,
+                "mid": 2
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 0,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 2,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 0,
+                    "r": 5,
+                    "mid": 2
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0,
+                    1,
+                    2
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "target < nums[l]\n1 < nums[0] = 3  ->  true\nfalse || true  ->  true",
+              "result": "not found yet",
+              "codeLine": 13
+            },
+            {
+              "id": 8,
+              "description": "The target is outside the sorted interval from 3 through 5, so indices 0, 1, and 2 cannot contain it. We move l from 0 to mid + 1 = 3, preserving only indices 3 through 5 where the target could still appear.",
+              "phase": "Move left",
+              "action": {
+                "type": "move",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 5,
+                "mid": 2
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "mid",
+                      "index": 2,
+                      "role": "visited"
+                    },
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 5,
+                    "mid": 2
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    3,
+                    4,
+                    5
+                  ],
+                  "role": "active"
+                }
+              ],
+              "calculation": "l = mid + 1 = 2 + 1 = 3",
+              "result": "not found yet",
+              "codeLine": 14
+            },
+            {
+              "id": 9,
+              "description": "The remaining search range starts at index 3 and ends at index 5, containing [6, 1, 2]. Since 3 <= 5 is true, there are still candidates to inspect and the loop begins another iteration.",
+              "phase": "Check range",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 5,
+                "mid": 2
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "mid",
+                      "index": 2,
+                      "role": "visited"
+                    },
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 5,
+                    "mid": 2
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    3,
+                    4,
+                    5
+                  ],
+                  "role": "active"
+                }
+              ],
+              "calculation": "l <= r\n3 <= 5  ->  true",
+              "result": "not found yet",
+              "codeLine": 6
+            },
+            {
+              "id": 10,
+              "description": "The middle of the remaining range from index 3 to index 5 is index 4. At that position nums[4] = 1, which is the value we need to compare with the target.",
+              "phase": "Find middle",
+              "action": {
+                "type": "compute",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 5,
+                "mid": 4
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 4,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 5,
+                    "mid": 4
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "mid = (l + r) / 2 = (3 + 5) / 2 = 4\nnums[4] = 1",
+              "result": "not found yet",
+              "codeLine": 7
+            },
+            {
+              "id": 11,
+              "description": "The midpoint value nums[4] = 1 exactly matches target 1. The equality test succeeds, so index 4 is confirmed as the target's location and no more halves need to be examined.",
+              "phase": "Check middle",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 5,
+                "mid": 4
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 4,
+                      "role": "result"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 5,
+                    "mid": 4
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "result"
+                }
+              ],
+              "calculation": "target == nums[mid]\n1 == nums[4] = 1  ->  true",
+              "result": 4,
+              "codeLine": 8
+            },
+            {
+              "id": 12,
+              "description": "Because the target 1 was found at midpoint index 4, the function returns 4 immediately. This is correct because nums[4] = 1, and all earlier discarded ranges were proven unable to contain the target.",
+              "phase": "Return answer",
+              "action": {
+                "type": "return",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 5,
+                "mid": 4
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 4,
+                      "role": "result"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 5,
+                    "mid": 4
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "result"
+                }
+              ],
+              "calculation": "return mid = 4\nnums[4] = 1 = target",
+              "result": 4,
+              "codeLine": 9
+            }
+          ]
+        }
+      },
+      {
+        "id": "vmu1gkysfasg5",
+        "title": "Search in a Rotated Sorted Array",
+        "algorithm": "Find rotation pivot, then binary search each sorted segment",
+        "savedAt": 1789403398431,
+        "visualization": {
+          "title": "Search in a Rotated Sorted Array",
+          "algorithm": "Find rotation pivot, then binary search each sorted segment",
+          "input": {
+            "name": "nums and target",
+            "value": {
+              "nums": [
+                3,
+                4,
+                5,
+                6,
+                1,
+                2
+              ],
+              "target": 1
+            },
+            "description": "The array was sorted ascending and then rotated; every value is unique."
+          },
+          "output": {
+            "name": "index",
+            "value": 4
+          },
+          "complexity": {
+            "time": "O(log n)",
+            "space": "O(1)"
+          },
+          "explanation": {
+            "intuition": "A rotated sorted array has one special location: the smallest value, called the pivot. Everything before that location is sorted, and everything from that location to the end is also sorted. We can locate the pivot with binary search by comparing the middle value with the rightmost value, then use ordinary binary search on each sorted portion.",
+            "approach": [
+              "Start with pointers at both ends of the array.",
+              "Repeatedly inspect the middle value and compare it with the rightmost value.",
+              "If the middle value is larger than the rightmost value, the smallest value must be to the middle's right; otherwise it is at or to the middle's left.",
+              "When the pointers meet, that index is the pivot, or smallest value.",
+              "Binary-search the sorted segment before the pivot.",
+              "If the target is absent there, binary-search the sorted segment beginning at the pivot."
+            ],
+            "whyItWorks": "At every pivot-search iteration, the smallest value remains inside the interval from l through r. A middle value larger than nums[r] lies in the left, larger sorted run, so the pivot must be after it. Otherwise the middle is in the right run or is itself the pivot, so the pivot cannot be after it. Once the pivot splits the array into two normally sorted ranges, ordinary binary search correctly finds the target if it exists.",
+            "pitfalls": [
+              "The pivot loop uses l < r, not l <= r, because it stops when one possible pivot index remains.",
+              "The ordinary binary-search loop uses left <= right so that a one-element range is checked.",
+              "This version relies on unique values; duplicates make nums[m] == nums[r] ambiguous during pivot detection.",
+              "If the array is not rotated, the pivot is index 0 and the first binary-search range is empty.",
+              "For extremely large indices in C++, use left + (right - left) / 2 to avoid possible integer overflow."
+            ]
+          },
+          "components": [
+            {
+              "type": "array",
+              "id": "nums",
+              "label": "Rotated sorted array",
+              "values": [
+                3,
+                4,
+                5,
+                6,
+                1,
+                2
+              ]
+            },
+            {
+              "type": "variables",
+              "id": "vars",
+              "label": "Variables",
+              "values": {
+                "target": 1,
+                "l": null,
+                "r": null,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": null,
+                "returnValue": null
+              }
+            }
+          ],
+          "sourceCode": {
+            "language": "cpp",
+            "code": "class Solution {\npublic:\n    int search(vector<int>& nums, int target) {\n        int l = 0, r = nums.size() - 1;\n\n        while (l < r) {\n            int m = (l + r) / 2;\n            if (nums[m] > nums[r]) {\n                l = m + 1;\n            } else {\n                r = m;\n            }\n        }\n\n        int pivot = l;\n\n        int result = binarySearch(nums, target, 0, pivot - 1);\n        if (result != -1) {\n            return result;\n        }\n\n        return binarySearch(nums, target, pivot, nums.size() - 1);\n    }\n\n    int binarySearch(vector<int>& nums, int target, int left, int right) {\n        while (left <= right) {\n            int mid = (left + right) / 2;\n            if (nums[mid] == target) {\n                return mid;\n            } else if (nums[mid] < target) {\n                left = mid + 1;\n            } else {\n                right = mid - 1;\n            }\n        }\n        return -1;\n    }\n};"
+          },
+          "steps": [
+            {
+              "id": 1,
+              "description": "We begin search(nums, 1) with the rotated array [3, 4, 5, 6, 1, 2]. The goal is to first locate the smallest value, which will split the array into two sorted ranges for the final search.",
+              "phase": "Initialize",
+              "action": {
+                "type": "start",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": null,
+                "r": null,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": null,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": null,
+                    "r": null,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": null,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  "role": "active"
+                },
+                {
+                  "component": "vars",
+                  "role": "active"
+                }
+              ],
+              "calculation": "target = 1",
+              "result": null,
+              "codeLine": 3
+            },
+            {
+              "id": 2,
+              "description": "The pivot search starts over the entire six-element array, so l becomes 0 and r becomes 5. These pointers enclose every index that could still contain the smallest value; no answer has been found yet.",
+              "phase": "Initialize",
+              "action": {
+                "type": "initialize",
+                "target": "vars"
+              },
+              "variables": {
+                "target": 1,
+                "l": 0,
+                "r": 5,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": null,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 0,
+                    "r": 5,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": null,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0,
+                    5
+                  ],
+                  "role": "boundary"
+                },
+                {
+                  "component": "vars",
+                  "role": "active"
+                }
+              ],
+              "calculation": "l = 0, r = nums.size() - 1 = 6 - 1 = 5",
+              "result": null,
+              "codeLine": 4
+            },
+            {
+              "id": 3,
+              "description": "The current pivot interval runs from index 0 through index 5, so it contains more than one candidate. Because 0 < 5 is true, the loop continues and will inspect a middle position.",
+              "phase": "Find pivot",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 0,
+                "r": 5,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": null,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 0,
+                    "r": 5,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": null,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0,
+                    5
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "l < r  ->  0 < 5  ->  true",
+              "result": null,
+              "codeLine": 6
+            },
+            {
+              "id": 4,
+              "description": "The middle of indices 0 and 5 is index 2, whose value is 5. This value will tell us which side of the rotation boundary still contains the smallest element.",
+              "phase": "Find pivot",
+              "action": {
+                "type": "compute",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 0,
+                "r": 5,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 2,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "m",
+                      "index": 2,
+                      "role": "active"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 0,
+                    "r": 5,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 2,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    2
+                  ],
+                  "role": "active"
+                },
+                {
+                  "component": "nums",
+                  "indices": [
+                    0,
+                    5
+                  ],
+                  "role": "boundary"
+                }
+              ],
+              "calculation": "m = (l + r) / 2 = (0 + 5) / 2 = 2",
+              "result": null,
+              "codeLine": 7
+            },
+            {
+              "id": 5,
+              "description": "nums[2] is 5 while the rightmost value nums[5] is 2. Since 5 > 2, index 2 is in the larger left run, so the smallest value and pivot must lie strictly to its right.",
+              "phase": "Find pivot",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 0,
+                "r": 5,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 2,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "m",
+                      "index": 2,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "compare"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 0,
+                    "r": 5,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 2,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    2,
+                    5
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "nums[m] > nums[r]  ->  nums[2] = 5 > nums[5] = 2  ->  true",
+              "result": null,
+              "codeLine": 8
+            },
+            {
+              "id": 6,
+              "description": "Because the pivot cannot be at index 2 or anywhere before it, l moves to index 3. The remaining possible pivot interval is now indices 3 through 5, while the final answer is still unknown.",
+              "phase": "Move left",
+              "action": {
+                "type": "move",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 5,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 2,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "m",
+                      "index": 2,
+                      "role": "default"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 5,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 2,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    3
+                  ],
+                  "role": "boundary"
+                }
+              ],
+              "calculation": "l = m + 1 = 2 + 1 = 3",
+              "result": null,
+              "codeLine": 9
+            },
+            {
+              "id": 7,
+              "description": "The narrowed pivot interval is from index 3 to index 5, and it still has multiple candidates. Since 3 < 5 is true, another middle value must be examined.",
+              "phase": "Find pivot",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 5,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 2,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 5,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 2,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    3,
+                    5
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "l < r  ->  3 < 5  ->  true",
+              "result": null,
+              "codeLine": 6
+            },
+            {
+              "id": 8,
+              "description": "The middle of the current interval [3, 5] is index 4, containing value 1. Comparing this value to the interval's right edge determines whether the pivot is at or before this middle index.",
+              "phase": "Find pivot",
+              "action": {
+                "type": "compute",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 5,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 4,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "m",
+                      "index": 4,
+                      "role": "active"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 5,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 4,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "active"
+                },
+                {
+                  "component": "nums",
+                  "indices": [
+                    3,
+                    5
+                  ],
+                  "role": "boundary"
+                }
+              ],
+              "calculation": "m = (l + r) / 2 = (3 + 5) / 2 = 4",
+              "result": null,
+              "codeLine": 7
+            },
+            {
+              "id": 9,
+              "description": "nums[4] is 1 and nums[5] is 2, so the middle value is not larger than the rightmost value. That means index 4 is already in the right sorted run, and the pivot is at index 4 or somewhere to its left.",
+              "phase": "Find pivot",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 5,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 4,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "m",
+                      "index": 4,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "r",
+                      "index": 5,
+                      "role": "compare"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 5,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 4,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4,
+                    5
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "nums[m] > nums[r]  ->  nums[4] = 1 > nums[5] = 2  ->  false",
+              "result": null,
+              "codeLine": 8
+            },
+            {
+              "id": 10,
+              "description": "The pivot remains possible at index 4, so r is moved directly to the middle index rather than past it. The candidate interval becomes indices 3 through 4, and the answer is still being searched for.",
+              "phase": "Move right",
+              "action": {
+                "type": "move",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 4,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 4,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "r",
+                      "index": 4,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 4,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 4,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "boundary"
+                }
+              ],
+              "calculation": "r = m = 4",
+              "result": null,
+              "codeLine": 11
+            },
+            {
+              "id": 11,
+              "description": "Indices 3 and 4 are still different, so there are two possible pivot locations remaining. Because 3 < 4 is true, the pivot loop performs one more middle comparison.",
+              "phase": "Find pivot",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 4,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 4,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "r",
+                      "index": 4,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 4,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 4,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    3,
+                    4
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "l < r  ->  3 < 4  ->  true",
+              "result": null,
+              "codeLine": 6
+            },
+            {
+              "id": 12,
+              "description": "The middle of indices 3 and 4 is index 3 because integer division discards the fractional part. nums[3] is 6, and this is the final value needed to isolate the rotation point.",
+              "phase": "Find pivot",
+              "action": {
+                "type": "compute",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 4,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 3,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "m",
+                      "index": 3,
+                      "role": "active"
+                    },
+                    {
+                      "name": "r",
+                      "index": 4,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 4,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 3,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    3
+                  ],
+                  "role": "active"
+                },
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "boundary"
+                }
+              ],
+              "calculation": "m = (l + r) / 2 = (3 + 4) / 2 = 3",
+              "result": null,
+              "codeLine": 7
+            },
+            {
+              "id": 13,
+              "description": "nums[3] is 6, which is greater than nums[4], which is 1. Therefore index 3 is still in the left sorted run, and the smallest value must be immediately after it.",
+              "phase": "Find pivot",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 3,
+                "r": 4,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 3,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 3,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "m",
+                      "index": 3,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "r",
+                      "index": 4,
+                      "role": "compare"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 3,
+                    "r": 4,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 3,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    3,
+                    4
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "nums[m] > nums[r]  ->  nums[3] = 6 > nums[4] = 1  ->  true",
+              "result": null,
+              "codeLine": 8
+            },
+            {
+              "id": 14,
+              "description": "Since the pivot is strictly right of index 3, l advances to index 4. Both boundaries now meet at the only remaining pivot candidate, which is value 1.",
+              "phase": "Move left",
+              "action": {
+                "type": "move",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 3,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 4,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "r",
+                      "index": 4,
+                      "role": "boundary"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 3,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "boundary"
+                }
+              ],
+              "calculation": "l = m + 1 = 3 + 1 = 4",
+              "result": null,
+              "codeLine": 9
+            },
+            {
+              "id": 15,
+              "description": "The two pivot boundaries meet at index 4, so there is exactly one candidate remaining. Since 4 < 4 is false, the loop stops and confirms that this location is the pivot.",
+              "phase": "Find pivot",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": null,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 3,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "l",
+                      "index": 4,
+                      "role": "result"
+                    },
+                    {
+                      "name": "r",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": null,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 3,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "result"
+                }
+              ],
+              "calculation": "l < r  ->  4 < 4  ->  false",
+              "result": null,
+              "codeLine": 6
+            },
+            {
+              "id": 16,
+              "description": "The pivot is assigned from l, so pivot becomes index 4 where the smallest value 1 begins. This divides the array into sorted ranges [3, 4, 5, 6] and [1, 2] for ordinary binary searches.",
+              "phase": "Set pivot",
+              "action": {
+                "type": "assign",
+                "target": "vars"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": null,
+                "right": null,
+                "mid": 3,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": null,
+                    "right": null,
+                    "mid": 3,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "result"
+                },
+                {
+                  "component": "vars",
+                  "role": "active"
+                }
+              ],
+              "calculation": "pivot = l = 4",
+              "result": null,
+              "codeLine": 14
+            },
+            {
+              "id": 17,
+              "description": "The first binarySearch call examines the sorted range before the pivot, from index 0 through index 3. Its local bounds become left = 0 and right = 3; target 1 is not yet known to be absent or present.",
+              "phase": "Search left range",
+              "action": {
+                "type": "call",
+                "target": "binarySearch"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": 3,
+                "mid": null,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "right",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": 3,
+                    "mid": null,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0,
+                    1,
+                    2,
+                    3
+                  ],
+                  "role": "active"
+                }
+              ],
+              "calculation": "binarySearch(nums, 1, 0, pivot - 1) = binarySearch(nums, 1, 0, 4 - 1) = binarySearch(nums, 1, 0, 3)",
+              "result": null,
+              "codeLine": 16
+            },
+            {
+              "id": 18,
+              "description": "The first binary-search range from index 0 to index 3 is nonempty. Because 0 <= 3 is true, the helper will calculate and inspect its middle index.",
+              "phase": "Binary search",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": 3,
+                "mid": null,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "right",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": 3,
+                    "mid": null,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0,
+                    3
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "left <= right  ->  0 <= 3  ->  true",
+              "result": null,
+              "codeLine": 25
+            },
+            {
+              "id": 19,
+              "description": "The middle of the sorted range [0, 3] is index 1, whose value is 4. We now compare 4 with the target 1 to decide which half can still contain the target.",
+              "phase": "Binary search",
+              "action": {
+                "type": "compute",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": 3,
+                "mid": 1,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 1,
+                      "role": "active"
+                    },
+                    {
+                      "name": "right",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": 3,
+                    "mid": 1,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    1
+                  ],
+                  "role": "active"
+                }
+              ],
+              "calculation": "mid = (left + right) / 2 = (0 + 3) / 2 = 1",
+              "result": null,
+              "codeLine": 26
+            },
+            {
+              "id": 20,
+              "description": "The inspected value nums[1] is 4, not the target 1. Equality fails, so this call cannot return index 1 and must determine whether 1 belongs to a smaller or larger half.",
+              "phase": "Compare target",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": 3,
+                "mid": 1,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 1,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "right",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": 3,
+                    "mid": 1,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    1
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "nums[mid] == target  ->  nums[1] = 4 == 1  ->  false",
+              "result": null,
+              "codeLine": 27
+            },
+            {
+              "id": 21,
+              "description": "Value 4 is also not less than target 1, so the target would have to be on the smaller left side of index 1. The helper will discard index 1 and every larger index in this sorted range.",
+              "phase": "Compare target",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": 3,
+                "mid": 1,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 1,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "right",
+                      "index": 3,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": 3,
+                    "mid": 1,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    1
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "nums[mid] < target  ->  nums[1] = 4 < 1  ->  false",
+              "result": null,
+              "codeLine": 29
+            },
+            {
+              "id": 22,
+              "description": "Since nums[1] = 4 is greater than target 1, right moves left to index 0. Only nums[0] = 3 remains to be checked in this first sorted segment.",
+              "phase": "Shrink range",
+              "action": {
+                "type": "move",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": 0,
+                "mid": 1,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "right",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": 0,
+                    "mid": 1,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0
+                  ],
+                  "role": "active"
+                }
+              ],
+              "calculation": "right = mid - 1 = 1 - 1 = 0",
+              "result": null,
+              "codeLine": 32
+            },
+            {
+              "id": 23,
+              "description": "The remaining first-range interval contains exactly index 0, so it must still be checked. Because 0 <= 0 is true, binary search evaluates this last possible value.",
+              "phase": "Binary search",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": 0,
+                "mid": 1,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "right",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": 0,
+                    "mid": 1,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "left <= right  ->  0 <= 0  ->  true",
+              "result": null,
+              "codeLine": 25
+            },
+            {
+              "id": 24,
+              "description": "With left and right both at 0, the middle is index 0 and its value is 3. This is the final candidate in the array portion before the pivot.",
+              "phase": "Binary search",
+              "action": {
+                "type": "compute",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": 0,
+                "mid": 0,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 0,
+                      "role": "active"
+                    },
+                    {
+                      "name": "right",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": 0,
+                    "mid": 0,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0
+                  ],
+                  "role": "active"
+                }
+              ],
+              "calculation": "mid = (left + right) / 2 = (0 + 0) / 2 = 0",
+              "result": null,
+              "codeLine": 26
+            },
+            {
+              "id": 25,
+              "description": "nums[0] equals 3, while the target remains 1, so this candidate is not a match. The helper continues to its less-than comparison to choose the only possible direction.",
+              "phase": "Compare target",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": 0,
+                "mid": 0,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 0,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "right",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": 0,
+                    "mid": 0,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "nums[mid] == target  ->  nums[0] = 3 == 1  ->  false",
+              "result": null,
+              "codeLine": 27
+            },
+            {
+              "id": 26,
+              "description": "The value 3 is greater than 1, so nums[0] is not less than the target. Since this sorted range has no values further left, its search interval will become empty.",
+              "phase": "Compare target",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": 0,
+                "mid": 0,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 0,
+                      "role": "compare"
+                    },
+                    {
+                      "name": "right",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": 0,
+                    "mid": 0,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "nums[mid] < target  ->  nums[0] = 3 < 1  ->  false",
+              "result": null,
+              "codeLine": 29
+            },
+            {
+              "id": 27,
+              "description": "Because nums[0] = 3 is larger than target 1, right moves to -1. This places right before left, proving that target 1 does not occur in indices 0 through 3.",
+              "phase": "Shrink range",
+              "action": {
+                "type": "move",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": -1,
+                "mid": 0,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 0,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "right",
+                      "index": -1,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": -1,
+                    "mid": 0,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    0
+                  ],
+                  "role": "boundary"
+                }
+              ],
+              "calculation": "right = mid - 1 = 0 - 1 = -1",
+              "result": null,
+              "codeLine": 32
+            },
+            {
+              "id": 28,
+              "description": "The first binary-search interval is empty because left is 0 but right is -1. Since 0 <= -1 is false, the helper has exhausted the left sorted segment without finding target 1.",
+              "phase": "Finish first search",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": -1,
+                "mid": 0,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": -1,
+                    "mid": 0,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "vars",
+                  "role": "active"
+                }
+              ],
+              "calculation": "left <= right  ->  0 <= -1  ->  false",
+              "result": null,
+              "codeLine": 25
+            },
+            {
+              "id": 29,
+              "description": "The first binarySearch call returns -1 because none of its examined values 4 and 3 matched target 1. This only rules out the segment before the pivot; the pivot segment still may contain the answer.",
+              "phase": "Return not found",
+              "action": {
+                "type": "return",
+                "target": "binarySearch"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": null,
+                "left": 0,
+                "right": -1,
+                "mid": 0,
+                "returnValue": -1
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": null,
+                    "left": 0,
+                    "right": -1,
+                    "mid": 0,
+                    "returnValue": -1
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "vars",
+                  "role": "result"
+                }
+              ],
+              "calculation": "returnValue = -1",
+              "result": -1,
+              "codeLine": 35
+            },
+            {
+              "id": 30,
+              "description": "The returned value -1 is assigned to result, recording that target 1 was absent from indices 0 through 3. The outer method will now test this result before deciding whether to search the second sorted segment.",
+              "phase": "Store first result",
+              "action": {
+                "type": "assign",
+                "target": "vars"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": -1,
+                "left": null,
+                "right": null,
+                "mid": null,
+                "returnValue": -1
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": -1,
+                    "left": null,
+                    "right": null,
+                    "mid": null,
+                    "returnValue": -1
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "vars",
+                  "role": "active"
+                }
+              ],
+              "calculation": "result = binarySearch(...) = -1",
+              "result": -1,
+              "codeLine": 16
+            },
+            {
+              "id": 31,
+              "description": "The condition checks whether the first search found a valid index, but result is -1. Since -1 != -1 is false, the method does not return yet and must search from the pivot onward.",
+              "phase": "Check first result",
+              "action": {
+                "type": "compare",
+                "target": "vars"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": -1,
+                "left": null,
+                "right": null,
+                "mid": null,
+                "returnValue": -1
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": -1,
+                    "left": null,
+                    "right": null,
+                    "mid": null,
+                    "returnValue": -1
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "vars",
+                  "role": "compare"
+                }
+              ],
+              "calculation": "result != -1  ->  -1 != -1  ->  false",
+              "result": -1,
+              "codeLine": 17
+            },
+            {
+              "id": 32,
+              "description": "The final return statement calls binarySearch on the sorted pivot segment from index 4 through index 5. Its local bounds are left = 4 and right = 5, covering values [1, 2] where target 1 may appear.",
+              "phase": "Search right range",
+              "action": {
+                "type": "call",
+                "target": "binarySearch"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": -1,
+                "left": 4,
+                "right": 5,
+                "mid": null,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 4,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "right",
+                      "index": 5,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": -1,
+                    "left": 4,
+                    "right": 5,
+                    "mid": null,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4,
+                    5
+                  ],
+                  "role": "active"
+                }
+              ],
+              "calculation": "binarySearch(nums, 1, pivot, nums.size() - 1) = binarySearch(nums, 1, 4, 6 - 1) = binarySearch(nums, 1, 4, 5)",
+              "result": -1,
+              "codeLine": 21
+            },
+            {
+              "id": 33,
+              "description": "The second binary-search range from index 4 to index 5 contains two values and is nonempty. Because 4 <= 5 is true, the helper computes a middle index to test target 1.",
+              "phase": "Binary search",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": -1,
+                "left": 4,
+                "right": 5,
+                "mid": null,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 4,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "right",
+                      "index": 5,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": -1,
+                    "left": 4,
+                    "right": 5,
+                    "mid": null,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4,
+                    5
+                  ],
+                  "role": "compare"
+                }
+              ],
+              "calculation": "left <= right  ->  4 <= 5  ->  true",
+              "result": -1,
+              "codeLine": 25
+            },
+            {
+              "id": 34,
+              "description": "The middle of indices 4 and 5 is index 4 after integer division. nums[4] is 1, so this first probe in the pivot segment can be compared directly with target 1.",
+              "phase": "Binary search",
+              "action": {
+                "type": "compute",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": -1,
+                "left": 4,
+                "right": 5,
+                "mid": 4,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "left",
+                      "index": 4,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "mid",
+                      "index": 4,
+                      "role": "active"
+                    },
+                    {
+                      "name": "right",
+                      "index": 5,
+                      "role": "boundary"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": -1,
+                    "left": 4,
+                    "right": 5,
+                    "mid": 4,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "active"
+                }
+              ],
+              "calculation": "mid = (left + right) / 2 = (4 + 5) / 2 = 4",
+              "result": -1,
+              "codeLine": 26
+            },
+            {
+              "id": 35,
+              "description": "The middle value nums[4] is exactly 1, which matches the target 1. The second binary search has found the target's index, so it immediately returns index 4.",
+              "phase": "Find target",
+              "action": {
+                "type": "compare",
+                "target": "nums"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": -1,
+                "left": 4,
+                "right": 5,
+                "mid": 4,
+                "returnValue": null
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "mid",
+                      "index": 4,
+                      "role": "result"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": -1,
+                    "left": 4,
+                    "right": 5,
+                    "mid": 4,
+                    "returnValue": null
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "result"
+                }
+              ],
+              "calculation": "nums[mid] == target  ->  nums[4] = 1 == 1  ->  true",
+              "result": 4,
+              "codeLine": 27
+            },
+            {
+              "id": 36,
+              "description": "The helper returns mid, which is index 4, because nums[4] equals target 1. This valid index becomes the value returned by the outer search method's final return statement.",
+              "phase": "Return index",
+              "action": {
+                "type": "return",
+                "target": "binarySearch"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": -1,
+                "left": 4,
+                "right": 5,
+                "mid": 4,
+                "returnValue": 4
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "mid",
+                      "index": 4,
+                      "role": "result"
+                    },
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": -1,
+                    "left": 4,
+                    "right": 5,
+                    "mid": 4,
+                    "returnValue": 4
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "result"
+                },
+                {
+                  "component": "vars",
+                  "role": "result"
+                }
+              ],
+              "calculation": "return mid = 4",
+              "result": 4,
+              "codeLine": 28
+            },
+            {
+              "id": 37,
+              "description": "The outer search returns index 4, and nums[4] is indeed the target value 1. The pivot split allowed both sorted segments to be searched logarithmically, so the final answer is 4.",
+              "phase": "Finalize",
+              "action": {
+                "type": "return",
+                "target": "search"
+              },
+              "variables": {
+                "target": 1,
+                "l": 4,
+                "r": 4,
+                "pivot": 4,
+                "result": -1,
+                "left": null,
+                "right": null,
+                "mid": null,
+                "returnValue": 4
+              },
+              "components": [
+                {
+                  "type": "array",
+                  "id": "nums",
+                  "values": [
+                    3,
+                    4,
+                    5,
+                    6,
+                    1,
+                    2
+                  ],
+                  "pointers": [
+                    {
+                      "name": "pivot",
+                      "index": 4,
+                      "role": "result"
+                    },
+                    {
+                      "name": "target",
+                      "index": 4,
+                      "role": "result"
+                    }
+                  ]
+                },
+                {
+                  "type": "variables",
+                  "id": "vars",
+                  "values": {
+                    "target": 1,
+                    "l": 4,
+                    "r": 4,
+                    "pivot": 4,
+                    "result": -1,
+                    "left": null,
+                    "right": null,
+                    "mid": null,
+                    "returnValue": 4
+                  }
+                }
+              ],
+              "highlights": [
+                {
+                  "component": "nums",
+                  "indices": [
+                    4
+                  ],
+                  "role": "result"
+                },
+                {
+                  "component": "vars",
+                  "role": "result"
+                }
+              ],
+              "calculation": "search(...) returns binarySearch(...) = 4; nums[4] = 1 = target",
+              "result": 4,
+              "codeLine": 21
+            }
+          ]
+        }
+      }
+    ]
   }
 }
